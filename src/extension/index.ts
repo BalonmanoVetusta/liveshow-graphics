@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-import-module-exports
 import { NodeCG } from 'nodecg/types/server'
-// eslint-disable-next-line import/no-import-module-exports
 import { set } from './utils/nodecg-api-context'
 
 const init = async (nodecg: NodeCG) => {

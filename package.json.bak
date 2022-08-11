@@ -30,7 +30,7 @@
     "lint:fix": "eslint --fix ./src",
     "clean": "rm -rf .parcel-cache dashboard extension graphics",
     "prepare": "husky install",
-    "postinstall": "./bin/postinstall"
+    "postinstall": "include-nodecg postinstall"
   },
   "targets": {
     "default": {
@@ -67,14 +67,47 @@
     "compatibleRange": "1.9.0",
     "dashboardPanels": [
       {
-        "name": "scoreboard",
-        "title": "Scoreboard control",
-        "file": "scoreboard.html",
+        "name": "Panel",
+        "title": "Panel",
+        "file": "panel.html",
         "width": 2,
         "headerColor": "#525F78",
         "workspace": "workspace",
         "fullbleed": false,
         "dialog": false
+      },
+      {
+        "name": "Panel 2",
+        "title": "Panel Secondary",
+        "file": "panel-2.html",
+        "width": 4,
+        "headerColor": "#525F78",
+        "workspace": "workspace",
+        "fullbleed": false,
+        "dialog": false
+      },
+      {
+        "name": "custom-dialog-name",
+        "title": "Dialog",
+        "file": "dialog.html",
+        "width": 4,
+        "headerColor": "#525F78",
+        "fullbleed": false,
+        "dialog": true,
+        "dialogButtons": [
+          {
+            "name": "Save",
+            "type": "confirm"
+          },
+          {
+            "name": "Cancel",
+            "type": "dismiss"
+          },
+          {
+            "name": "Close",
+            "type": "dismiss"
+          }
+        ]
       }
     ],
     "graphics": [
@@ -113,10 +146,8 @@
   },
   "dependencies": {
     "@tanstack/react-query": "4.0.10",
-    "framer-motion": "7.1.0",
     "nodecg": "1.9.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "styled-components": "5.3.5"
+    "react-dom": "18.2.0"
   }
 }

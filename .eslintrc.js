@@ -8,7 +8,6 @@ module.exports = {
   extends: [
     "plugin:@typescript-eslint/recommended",
     'plugin:react/recommended',
-    'airbnb',
     'prettier'
   ],
   parser: '@typescript-eslint/parser',
@@ -37,4 +36,9 @@ module.exports = {
     "react/jsx-filename-extension": "off",
     "@typescript-eslint/triple-slash-reference": "off"
   },
+  settings: {
+    react: {
+      version: '18.2.0'
+    }
+  }
 };
