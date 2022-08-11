@@ -40,6 +40,23 @@ npm run dev
 3. Copy the folder, remember to change in the new html the path to the React loader (should rename `layout-1` string with the name of your new folder).
 4. Add your react components in the `app.tsx` and enjoy programming.
 
+
+## To use with Bun.sh
+
+After executing `npm install` (Installation must be done with npm due to github directly dependencies that can not be installed with bun until issue [#82](https://github.com/oven-sh/bun/issues/82) is fixed) modify `.nodecg/package.json` scripts section:
+
+```bash
+  "scripts": {
+    "start": "bun index.js",
+    "test": "bun run build && bun run instrument && nyc --reporter=none ava --config ava.config.js && nyc report --reporter=html --reporter=text && bun run typetest",
+    "static": "eslint index.js lib src test",
+    "build": "gulp",
+    "instrument": "nyc instrument ./src ./instrumented && bun test/helpers/retarget-browser-coverage.js",
+    "release": "bun run build && npm test && standard-version --commit-all",
+    "typetest": "cd typetest/fake-bundle && npm i && bun run build"
+  },
+```
+
 ## Known issues
 
 -   Extension fails when using `export default main;` instead of using `module.exports` so we are mixing `commonjs` modules with `esmodules` and that should not be done.
