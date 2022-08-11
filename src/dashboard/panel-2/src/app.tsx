@@ -30,27 +30,25 @@ function App(): ReactElement {
         })
     }, [])
 
-    return (
-        <div>
-            <h1>Hello, i{`'`}m one of your dashboards</h1>
-            <p>
-                To edit me, open {`"`}
-                <span id="path" className="monospace">
-                    {__filename}
-                </span>
-                {`"`} in your favorite text editor or IDE.
-            </p>
+    return (<div>
+        <h1>Hello, i{`'`}m one of your dashboards</h1>
+        <p>
+            To edit me, open {`"`}
+            <span id="path" className="monospace">
+                {__filename}
+            </span>
+            {`"`} in your favorite text editor or IDE.
+        </p>
 
-            <p>
-                You can open a dialog by clicking on button, currently the
-                dialog is {dialogStatus}
-            </p>
+        <p>
+            You can open a dialog by clicking on button, currently the
+            dialog is {dialogStatus}
+        </p>
 
-            <button type="button" nodecg-dialog="custom-dialog-name">
-                Open the dialog
-            </button>
-        </div>
-    )
+        <button type="button" nodecg-dialog="custom-dialog-name">
+            Open the dialog
+        </button>
+    </div>)
 }
 
 export default App
