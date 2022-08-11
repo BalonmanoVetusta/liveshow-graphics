@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [[ ! -d ".nodecg" ]]; then
+  echo "Installing NodeCG..."
+  include-nodecg postinstall
+else
+  echo "NodeCG is already installed."
+fi
