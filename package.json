@@ -12,7 +12,7 @@
     "extension"
   ],
   "scripts": {
-    "predev:start": "bun run watch",
+    "predev:start": "bun run build",
     "dev:start": "include-nodecg start",
     "prestart": "bun run build",
     "start": "bun run watch",
