@@ -3,28 +3,27 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
-    commonjs: true
+    commonjs: true,
   },
   extends: [
     "plugin:@typescript-eslint/recommended",
-    'plugin:react/recommended',
-    'prettier'
+    "plugin:react/recommended",
+    'plugin:react/jsx-runtime',
+    "prettier",
   ],
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: "module",
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-  ],
+  plugins: ["import", "react", "jsx-a11y", "@typescript-eslint"],
   globals: {
-    'nodecg': true,
-    "NodeCG": true
+    nodecg: true,
+    NodeCG: true,
+    React: true,
   },
   rules: {
     "array-callback-return": "off",
@@ -34,11 +33,21 @@ module.exports = {
     "global-require": "off",
     "no-use-before-define": "off",
     "react/jsx-filename-extension": "off",
-    "@typescript-eslint/triple-slash-reference": "off"
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/triple-slash-reference": "off",
   },
   settings: {
     react: {
-      version: '18.2.0'
-    }
-  }
+      version: "18.2.0",
+    },
+    "import/resolver": {
+      [require.resolve("eslint-import-resolver-node")]: {
+        extensions: [".ts", ".tsx", ".js", ".jsx"],
+      },
+      [require.resolve("eslint-import-resolver-typescript")]: {
+        alwaysTryTypes: true,
+      },
+    },
+  },
 };
