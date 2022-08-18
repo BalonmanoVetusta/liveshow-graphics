@@ -84,6 +84,20 @@
         "height": 1080,
         "singleInstance": false
       }
+    ],
+    "assetCategories": [
+      {
+        "name": "shields",
+        "title": "Team Shields",
+        "allowedTypes": [
+          "jpg",
+          "jpeg",
+          "gif",
+          "png",
+          "webp",
+          "svg"
+        ]
+      }
     ]
   },
   "license": "MIT",
@@ -93,6 +107,7 @@
     "@parcel/validator-typescript": "2.7.0",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
+    "@types/styled-components": "5.1.26",
     "@typescript-eslint/eslint-plugin": "5.33.0",
     "@typescript-eslint/parser": "5.33.0",
     "eslint": "8.21.0",
