@@ -1,3 +1,7 @@
+## Stuff no compatible with bun
+
+`npm run build:schema` is not compatible for any reason with `bun.sh`
+
 ## About the copied source code
 
 The hooks:

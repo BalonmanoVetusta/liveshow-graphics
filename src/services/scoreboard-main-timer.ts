@@ -1,0 +1,1 @@
+export const scoreboardMainTimer = 'scoreboard:main-timer';
