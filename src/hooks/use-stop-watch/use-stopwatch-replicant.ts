@@ -1,16 +1,14 @@
 import { ReplicantOptions } from "nodecg/types/server";
+import { Stopwatch } from "types/schemas/stopwatch";
+import { StopwatchLap } from "types/schemas/stopwatch-lap";
 import useStopwatch from "./use-stopwatch";
-import {
-  StopwatchReplicant,
-  StopwatchReplicantValue,
-  useStopwatchTickReplicant,
-} from "./use-stopwatch-tick-replicant";
+import { useStopwatchTickReplicant } from "./use-stopwatch-tick-replicant";
 
 export function useStopwatchReplicant(
   replicantName: string,
   context: string = "stopwatch:default",
-  initialValue = {} as StopwatchReplicantValue,
-  options: ReplicantOptions<StopwatchReplicant> = {
+  initialValue = {} as StopwatchLap,
+  options: ReplicantOptions<Stopwatch> = {
     persistent: true,
   },
   bundle: string = "CURR_BNDL"
@@ -26,7 +24,7 @@ export function useStopwatchReplicant(
   const stopwatchInitialValues = {
     initialTime: initialValue.totalTime ?? 0,
     limitMiliseconds: initialValue.limitMiliseconds ?? 0,
-    backwardsMiliseconds: initialValue.backwardsMiliseconds ?? false,
+    backwards: initialValue.backwards ?? false,
   };
   const stopwatch = useStopwatch({
     onTick,

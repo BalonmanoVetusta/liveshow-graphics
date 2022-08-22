@@ -9,9 +9,9 @@ export {
 export type { TimeUnit } from "./lib/get-time-from-miliseconds";
 export { default as useStopwatch } from "./use-stopwatch";
 export type {
-  OnTickType as onTickType,
+  OnTickFunctionType as onTickType,
   TimeOffset,
-  useStopwatchProps,
+  UseStopwatchProps as useStopwatchProps,
   UseStopwatchReturn as useStopwatchReturn,
 } from "./use-stopwatch";
 export { useStopwatchReplicant } from "./use-stopwatch-replicant";

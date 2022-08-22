@@ -1,12 +1,10 @@
 import { motion } from "framer-motion";
 import { useReplicant } from "hooks/use-replicant";
-import {
-  StopwatchReplicant,
-  StopwatchReplicantValue,
-} from "hooks/use-stop-watch/use-stopwatch-tick-replicant";
 import { ReactElement } from "react";
 import { scoreboardMainTimer } from "services/scoreboard-main-timer";
 import { STOPWATCH_REPLICANT_NAME } from "services/stopwatch-replicant-name";
+import { Stopwatch } from "types/schemas/stopwatch";
+import { StopwatchLap } from "types/schemas/stopwatch-lap";
 
 interface SeparatorProps {
   char: string;
@@ -27,19 +25,20 @@ export function ScoreBoard(): ReactElement {
   //   seconds,
   //   miliseconds,
   // } = useStopwatchReplicant(STOPWATCH_REPLICANT_NAME, scoreboardMainTimer);
-  const [replicant] = useReplicant<StopwatchReplicant, StopwatchReplicant>(
+  const [replicant] = useReplicant<Stopwatch, Stopwatch>(
     STOPWATCH_REPLICANT_NAME,
-    {} as StopwatchReplicant
+    {} as Stopwatch
   );
 
-  replicant[scoreboardMainTimer] ??= {} as StopwatchReplicantValue;
+  replicant[scoreboardMainTimer] ??= {} as StopwatchLap;
   const {
     totalTime = 0,
     isRunning = false,
     minutes = 0,
     seconds = 0,
     miliseconds = 0,
-  } = replicant[scoreboardMainTimer] ?? {};
+  } = replicant[scoreboardMainTimer];
+  console.log({ scoreboardMainTimer });
 
   return (
     <motion.div>
@@ -49,13 +48,13 @@ export function ScoreBoard(): ReactElement {
         <motion.span>
           {seconds}
           <>
-            {console.log({
+            {/* {console.log({
               totalTime,
               isRunning,
               minutes,
               seconds,
               miliseconds,
-            })}
+            })} */}
           </>
         </motion.span>
       </motion.div>

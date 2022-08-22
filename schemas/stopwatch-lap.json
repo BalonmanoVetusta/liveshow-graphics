@@ -2,6 +2,17 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "additionalProperties": false,
+  "required": [
+    "totalTime",
+    "isRunning",
+    "isEnded",
+    "hours",
+    "minutes",
+    "seconds",
+    "miliseconds",
+    "limitMiliseconds",
+    "backwards"
+  ],
   "properties": {
     "totalTime": {
       "type": "number",
@@ -45,6 +56,12 @@
       "default": 0,
       "title": "Seconds",
       "description": "Seconds of the stopwatch, this will be a countdown if backwards is set and limitMiliseconds greater than 0"
+    },
+    "miliseconds": {
+      "type": "number",
+      "default": 0,
+      "title": "Miliseconds",
+      "description": "Miliseconds of the stopwatch, this will be a countdown if backwards is set and limitMiliseconds greater than 0"
     },
     "limitMiliseconds": {
       "type": "number",

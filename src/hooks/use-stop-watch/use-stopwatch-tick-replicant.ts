@@ -1,50 +1,37 @@
 import { useReplicant } from "hooks/use-replicant";
 import { useReplicantOnce } from "hooks/use-replicant-once";
-import { OnTickProps, OnTickType } from "./use-stopwatch";
+import { Stopwatch } from "types/schemas/stopwatch";
+import { StopwatchLap } from "types/schemas/stopwatch-lap";
+import { OnTickFunctionType } from "./use-stopwatch";
 import { ReplicantOptions } from "/.nodecg/types/server";
-
-export declare interface StopwatchReplicantValue {
-  startTime?: number;
-  isRunning: boolean;
-  totalTime: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-  miliseconds: number;
-  limitMiliseconds: number;
-  backwardsMiliseconds: boolean;
-}
-
-export declare interface StopwatchReplicant {
-  [key: string]: StopwatchReplicantValue;
-}
 
 export function useStopwatchTickReplicant(
   replicantName: string,
   context: string = "stopwatch:default",
-  initialValue: StopwatchReplicantValue = {
+  initialValue: StopwatchLap = {
     totalTime: 0,
     isRunning: false,
-    backwardsMiliseconds: false,
+    isEnded: false,
+    backwards: false,
     limitMiliseconds: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
     miliseconds: 0,
   },
-  options: ReplicantOptions<StopwatchReplicant> = {
+  options: ReplicantOptions<Stopwatch> = {
     persistent: false,
   },
   bundle: string = "CURR_BNDL"
-): [StopwatchReplicant, OnTickType] {
+): [Stopwatch, OnTickFunctionType] {
   const [stopwatchReplicant, setStopwatchReplicant] = useReplicant<
-    ReplicantOptions<StopwatchReplicant>,
-    StopwatchReplicant
+    ReplicantOptions<Stopwatch>,
+    Stopwatch
   >(replicantName, { [context]: initialValue }, options);
 
-  const initialStopwatchState = useReplicantOnce<StopwatchReplicant>(
+  const initialStopwatchState = useReplicantOnce<Stopwatch>(
     replicantName,
-    { [context]: {} as StopwatchReplicantValue },
+    { [context]: {} as StopwatchLap },
     { bundle }
   );
 
@@ -56,25 +43,30 @@ export function useStopwatchTickReplicant(
     seconds,
     miliseconds,
     startTime,
-  }: OnTickProps) {
-    const prev = JSON.parse(
-      JSON.stringify(stopwatchReplicant)
-    ) as StopwatchReplicant;
+    limitMiliseconds,
+    backwards,
+    isEnded,
+  }: StopwatchLap) {
+    const prev = JSON.parse(JSON.stringify(stopwatchReplicant)) as Stopwatch;
 
-    prev[context] ??= {} as StopwatchReplicantValue;
+    prev[context] ??= {} as StopwatchLap;
 
-    if (startTime > 0) {
+    if (startTime && startTime > 0) {
       prev[context].startTime ??= startTime;
     }
 
     prev[context] = {
       ...prev[context],
-      totalTime,
       isRunning,
+      totalTime,
       hours,
       minutes,
       seconds,
       miliseconds,
+      startTime,
+      limitMiliseconds,
+      backwards,
+      isEnded,
     };
 
     setStopwatchReplicant(JSON.parse(JSON.stringify(prev)));

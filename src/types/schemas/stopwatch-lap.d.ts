@@ -5,14 +5,52 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+/**
+ * Total miliseconds of the stopwatch after applying offset and calculated miliseconds after last startTime, is is always a positive value and backwards value does not affect this value
+ */
+export type TotalTimeInMiliseconds = number;
+/**
+ * Start time in miliseconds since epoch, is null if the stopwatch is stopped or paused
+ */
+export type StartTimeInMilisecondsSinceEpoch = number | null;
+/**
+ * If defined limitMiliseconds then this value will be true when totalTime is equal or greater than limitMiliseconds
+ */
+export type StopwatchReachLimitMiliseconds = boolean;
+/**
+ * Hours of the stopwatch, this will be a countdown if backwards is set and limitMiliseconds greater than 0
+ */
+export type Hours = number;
+/**
+ * Minutes of the stopwatch, this will be a countdown if backwards is set and limitMiliseconds greater than 0
+ */
+export type Minutes = number;
+/**
+ * Seconds of the stopwatch, this will be a countdown if backwards is set and limitMiliseconds greater than 0
+ */
+export type Seconds = number;
+/**
+ * Miliseconds of the stopwatch, this will be a countdown if backwards is set and limitMiliseconds greater than 0
+ */
+export type Miliseconds = number;
+/**
+ * If this value is greater than 0 then stopwatch will be stopped when totalTime is equal or greater than this value
+ */
+export type LimitMiliseconds = number;
+/**
+ * If this value is true and limitMiliseconds greater than 0 then stopwatch will be a countdown
+ */
+export type Backwards = boolean;
+
 export interface StopwatchLap {
-  totalTime?: number;
-  startTime?: number | null;
-  isRunning?: boolean;
-  isEnded?: boolean;
-  hours?: number;
-  minutes?: number;
-  seconds?: number;
-  limitMiliseconds?: number;
-  backwards?: boolean;
+  totalTime: TotalTimeInMiliseconds;
+  startTime?: StartTimeInMilisecondsSinceEpoch;
+  isRunning: boolean;
+  isEnded: StopwatchReachLimitMiliseconds;
+  hours: Hours;
+  minutes: Minutes;
+  seconds: Seconds;
+  miliseconds: Miliseconds;
+  limitMiliseconds: LimitMiliseconds;
+  backwards: Backwards;
 }

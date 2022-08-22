@@ -44,7 +44,7 @@ function App(): ReactElement {
         <h3>Match time</h3>
 
         <div className="error">{error ? error : null}</div>
-        <>{console.log({ stopwatch })}</>
+        {/* <>{console.log({ stopwatch })}</> */}
 
         <div>
           <form action="#">
