@@ -31,7 +31,7 @@
     "clean": "rm -rf .parcel-cache dashboard extension graphics",
     "prepare": "husky install",
     "postinstall": "bun ./bin/postinstall.mjs",
-    "build:schemas": "rm -rf ./types/schemas/*.d.ts && json2ts -i './schemas/*.json' -o ./types/schemas/"
+    "build:schemas": "rm -rf ./types/schemas/*.d.ts && cd schemas && json2ts -i '*.json' -o ../types/schemas/"
   },
   "targets": {
     "default": {

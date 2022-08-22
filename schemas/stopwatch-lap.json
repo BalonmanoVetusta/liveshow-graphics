@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "totalTime": {
+      "type": "number",
+      "default": 0
+    },
+    "startTime": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null
+    },
+    "isRunning": {
+      "type": "boolean",
+      "default": false
+    },
+    "isEnded": {
+      "type": "boolean",
+      "default": false
+    },
+    "hours": {
+      "type": "number",
+      "default": 0
+    },
+    "minutes": {
+      "type": "number",
+      "default": 0
+    },
+    "seconds": {
+      "type": "number",
+      "default": 0
+    },
+    "limitMiliseconds": {
+      "type": "number",
+      "default": 0
+    },
+    "backwards": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

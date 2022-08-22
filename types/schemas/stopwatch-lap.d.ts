@@ -5,13 +5,6 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface Stopwatch {
-  [k: string]: StopwatchLap;
-}
-/**
- * This interface was referenced by `Stopwatch`'s JSON-Schema definition
- * via the `patternProperty` ".+".
- */
 export interface StopwatchLap {
   totalTime?: number;
   startTime?: number | null;
