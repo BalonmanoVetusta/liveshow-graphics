@@ -1,7 +1,7 @@
 // import useCtx from "hooks/useCtx";
 import { createContext, useContext } from "react";
 
-export default function createNewContextOf<A extends {} | null>(
+export default function createNewContextOf<A extends object | null>(
   defaultState: A | undefined = undefined
 ) {
   const Ctx = createContext<A | undefined>(defaultState);

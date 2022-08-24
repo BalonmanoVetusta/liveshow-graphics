@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { SendMessageReturnType } from "/.nodecg/types/lib/nodecg-static";
+import { Platform } from "/.nodecg/types/lib/platform";
 
 export type ListenForFunction<T> = (message: T) => void;
 
@@ -8,6 +10,7 @@ export declare type UseMessageProps<T> = {
   listenFor: ListenForFunction<T> | undefined;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type UseMessageReturn<T> = {
   sendMessage: <T>(message: T) => void;
 };
@@ -18,13 +21,13 @@ export default function useMessage<T>({
   bundleName = "CURR_BNDL",
   listenFor = undefined,
 }: UseMessageProps<T>): UseMessageReturn<T> {
-  function sendMessage<T>(data: T) {
+  function sendMessage<T>(data: T): SendMessageReturnType<Platform> {
     const { nodecg = undefined } = window || globalThis;
     if (typeof nodecg === typeof undefined) {
       throw new Error("No nodecg found");
     }
 
-    return nodecg!.sendMessageToBundle(messageName, bundleName, data);
+    return nodecg?.sendMessageToBundle(messageName, bundleName, data);
   }
 
   useEffect(() => {
@@ -37,13 +40,14 @@ export default function useMessage<T>({
       throw new Error("No nodecg found");
     }
 
-    nodecg!.listenFor(messageName, bundleName, listenFor);
+    nodecg?.listenFor(messageName, bundleName, listenFor);
 
     return () => {
       if (listenFor) {
-        nodecg!.unlisten(messageName, listenFor);
+        nodecg?.unlisten(messageName, listenFor);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { sendMessage };

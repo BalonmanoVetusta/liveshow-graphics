@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StopwatchLap } from "types/schemas/stopwatch-lap";
 import getTimeFromMiliseconds from "./lib/get-time-from-miliseconds";
 
@@ -35,42 +35,92 @@ export declare interface UseStopwatchReturn extends UseStopwatchValues {
   stop: () => void;
   reset: () => void;
   setTime: (time: TimeOffset) => void;
+  setLimitMiliseconds: (timeLimit: number) => void;
   setOffset: (offset: TimeOffset | number) => void;
+}
+
+export class StopwatchErrorOnReset extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "StopwatchErrorOnReset";
+    // Set the prototype explicitly.
+    Object.setPrototypeOf(this, StopwatchErrorOnReset.prototype);
+  }
+}
+export class StopwatchErrorWithTimelimit extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "StopwatchErrorOnReset";
+    // Set the prototype explicitly.
+    Object.setPrototypeOf(this, StopwatchErrorWithTimelimit.prototype);
+  }
 }
 
 export default function useStopwatch({
   initialTime = 0,
   limitMiliseconds: startLimitMiliseconds = 0,
   backwards = false,
-  onTick = () => {},
+  onTick = () => undefined,
 }: UseStopwatchProps): UseStopwatchReturn {
-  // Interval variable
-  let timer: number | null = null;
+  const canTick = useRef<boolean>(false);
+  const timer = useRef<number | null>(null);
+  const totalOffset = useRef<number>(initialTime);
+  const startTime = useRef<number | undefined>(undefined);
+
+  const [totalTime, setTotalTime] = useState<number>(initialTime);
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [limitMiliseconds, setLimitMiliseconds] = useState<number>(
     startLimitMiliseconds
   );
-  const [totalTime, setTotalTime] = useState(0);
-  const [startTime, setStartTime] = useState<number | undefined>(undefined); // is running? startTime !== null
-  const [totalOffset, setTotalOffset] = useState<number>(initialTime);
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
   const [miliseconds, setMiliseconds] = useState<number>(0);
 
+  const _callTick = (props: Partial<StopwatchLap> = {}) => {
+    const {
+      isRunning: isRun = isRunning ?? false,
+      totalTime: total = totalTime ?? 0,
+      hours: hs = hours ?? 0,
+      minutes: mss = minutes ?? 0,
+      seconds: ss = seconds ?? 0,
+      miliseconds: ms = miliseconds ?? 0,
+      startTime: st = startTime.current ?? 0,
+      limitMiliseconds: limit = limitMiliseconds ?? 0,
+      backwards: isBack = backwards ?? false,
+      isEnded: isFinished = isEnded(),
+    } = props;
+
+    if (canTick.current) {
+      onTick({
+        isRunning: isRun,
+        totalTime: total,
+        hours: hs,
+        minutes: mss,
+        seconds: ss,
+        miliseconds: ms,
+        startTime: st,
+        limitMiliseconds: limit,
+        backwards: isBack,
+        isEnded: isFinished,
+      });
+    }
+  };
+
   const isEnded = () => limitMiliseconds > 0 && totalTime >= limitMiliseconds;
 
   const stop = () => {
-    setStartTime(undefined);
+    startTime.current = undefined;
     setIsRunning(false);
+    totalOffset.current = totalTime;
   };
 
   const reset = () => {
-    if (startTime !== null) {
-      setStartTime(Date.now());
-    } else {
-      stop();
+    if (isRunning) {
+      throw new StopwatchErrorOnReset("Cannot reset while running");
     }
+    startTime.current = undefined;
+    totalOffset.current = 0;
     setTotalTime(0);
   };
 
@@ -78,26 +128,32 @@ export default function useStopwatch({
     if (limitMiliseconds > 0 && totalTime >= limitMiliseconds) {
       throw new Error("Time limit reached");
     }
-    const now = Date.now();
-    setStartTime(now);
-    setIsRunning(true);
+
+    if (!isRunning) {
+      canTick.current = true;
+      const now = Date.now();
+      startTime.current = now;
+      setIsRunning(true);
+    }
   };
 
-  const setTime = ({
-    hours = 0,
-    minutes = 0,
-    seconds = 0,
-    miliseconds = 0,
-  }: TimeOffset): void => {
-    let total = 0;
-    total += hours * 3600000;
-    total += minutes * 60000;
-    total += seconds * 1000;
-    total += miliseconds;
+  const setTime = (time: TimeOffset | number): void => {
+    if (typeof time === "number") {
+      setTotalTime(time);
+    } else {
+      const { hours = 0, minutes = 0, seconds = 0, miliseconds = 0 } = time;
+      let total = 0;
+      total += hours * 3600000;
+      total += minutes * 60000;
+      total += seconds * 1000;
+      total += miliseconds;
+      setTotalTime(total);
+    }
 
-    setTotalTime(total);
+    startTime.current = Date.now();
   };
 
+  // Sums previous offset and new offset
   const setOffset = (offset: TimeOffset | number = 0): void => {
     let total = 0;
 
@@ -116,90 +172,108 @@ export default function useStopwatch({
       total += miliseconds;
     }
 
-    setTotalOffset((prev) => prev + total);
+    totalOffset.current += total;
   };
 
   const setNewLimit = (limit: number) => {
     if (limit > totalTime) {
-      throw new Error("New limit must be greater than current time");
+      throw new StopwatchErrorWithTimelimit(
+        "New limit must be greater than current time"
+      );
     }
 
     setLimitMiliseconds(limit);
   };
 
   useEffect(() => {
-    if (startTime !== undefined && timer === null) {
-      const { setInterval } = window || globalThis || {};
-      timer = setInterval(() => {
-        const totalInMiliseconds = Date.now() - (startTime ?? 0) + totalOffset;
-        setTotalTime(totalInMiliseconds);
+    const { addEventListener, removeEventListener } =
+      globalThis || window || {};
 
-        // Calculate time from limit to 0
-        const calculateTime =
-          limitMiliseconds > 0 && backwards
-            ? limitMiliseconds - totalInMiliseconds
-            : totalInMiliseconds;
+    const listenClose = (event) => {
+      _callTick({ isRunning: false });
+      canTick.current = false;
+      if (timer.current) {
+        clearInterval(timer.current);
+      }
+    };
+    addEventListener("beforeunload", listenClose);
+    return () => {
+      removeEventListener("beforeunload", listenClose);
+    };
+  }, []);
 
-        // use short vars because its behind and rename vars
-        // to avoid confusion with state vars
-        const {
-          miliseconds: ms = 0,
-          seconds: ss = 0,
-          minutes: mss = 0,
-          hours: hs = 0,
-        } = getTimeFromMiliseconds(calculateTime);
+  useEffect(() => {
+    _callTick();
+  }, [
+    totalTime,
+    hours,
+    minutes,
+    seconds,
+    miliseconds,
+    isRunning,
+    startTime.current,
+  ]);
 
-        setHours(hs);
-        setMinutes(mss);
-        setSeconds(ss);
-        setMiliseconds(ms);
+  useEffect(() => {
+    const {
+      miliseconds: ms = 0,
+      seconds: ss = 0,
+      minutes: mss = 0,
+      hours: hs = 0,
+    } = getTimeFromMiliseconds(totalTime);
+    setMiliseconds(ms);
+    setSeconds(ss);
+    setMinutes(mss);
+    setHours(hs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalTime]);
 
-        onTick({
-          isRunning,
-          totalTime: totalInMiliseconds,
-          hours: hs,
-          minutes: mss,
-          seconds: ss,
-          miliseconds: ms,
-          startTime,
-          limitMiliseconds,
-          backwards: backwards,
-          isEnded: isEnded(),
-        });
+  useEffect(() => {
+    const { setInterval } = window || globalThis || {};
+    const currentStartTime = startTime.current ?? 0;
+    const internalIsRunning = currentStartTime > 0;
+    setIsRunning(internalIsRunning);
 
-        if (limitMiliseconds > 0 && miliseconds >= limitMiliseconds) {
-          stop();
+    // Running but not timer
+    if (internalIsRunning && !timer.current) {
+      timer.current = setInterval(() => {
+        if (startTime.current) {
+          const timeStart = startTime.current ?? 0;
+          const offset = totalOffset.current;
+
+          let total = 0;
+          if (timeStart > 0) {
+            total = Date.now() - timeStart + offset;
+          }
+          total = isNaN(total) ? 0 : total;
+
+          setTotalTime(total);
         }
       }, STOPWATCH_TICK_MILISECONDS);
     }
 
-    // Not sure if this will be called anytime
-    if (startTime === null && timer !== null) {
-      clearInterval(timer);
+    if (!internalIsRunning && timer.current) {
+      clearInterval(timer.current);
+      timer.current = null;
     }
 
-    if (startTime === null) {
+    if (!internalIsRunning) {
       setIsRunning(false);
+      totalOffset.current = totalTime || initialTime || 0;
+
+      _callTick({
+        totalTime: totalOffset.current,
+      });
     }
 
     return () => {
-      if (timer) {
-        clearInterval(timer);
-        timer = null;
+      if (timer.current) {
+        clearInterval(timer.current);
+        timer.current = null;
       }
     };
-  }, [startTime]);
-
-  useEffect(() => {
-    if (totalTime === 0) {
-      setHours(0);
-      setMinutes(0);
-      setSeconds(0);
-      setMiliseconds(0);
-
-      return;
-    }
-  }, [totalTime]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startTime.current]);
 
   return {
     start,
@@ -207,6 +281,7 @@ export default function useStopwatch({
     reset,
     setTime,
     setOffset,
+    setLimitMiliseconds: setNewLimit,
     isRunning,
     totalTime,
     hours,

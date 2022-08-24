@@ -14,17 +14,7 @@ function Separator({ char }: SeparatorProps): ReactElement<SeparatorProps> {
   return <motion.span>{` ${char} `}</motion.span>;
 }
 
-export function ScoreBoard(): ReactElement {
-  // const {
-  //   totalTime,
-  //   isRunning,
-  //   start,
-  //   stop,
-  //   reset,
-  //   minutes,
-  //   seconds,
-  //   miliseconds,
-  // } = useStopwatchReplicant(STOPWATCH_REPLICANT_NAME, scoreboardMainTimer);
+export function ScoreboardResults(): ReactElement {
   const [replicant] = useReplicant<Stopwatch, Stopwatch>(
     STOPWATCH_REPLICANT_NAME,
     {} as Stopwatch
@@ -32,32 +22,22 @@ export function ScoreBoard(): ReactElement {
 
   replicant[scoreboardMainTimer] ??= {} as StopwatchLap;
   const {
-    totalTime = 0,
-    isRunning = false,
     minutes = 0,
     seconds = 0,
-    miliseconds = 0,
+    isRunning = false,
+    totalTime = 0,
   } = replicant[scoreboardMainTimer];
-  console.log({ scoreboardMainTimer });
 
   return (
     <motion.div>
+      <h2>{isRunning ? "IN PROGRESS" : "PAUSED"}</h2>
       <motion.div className="scoreboardTime">
         <motion.span>{minutes}</motion.span>
         <Separator char=":" />
-        <motion.span>
-          {seconds}
-          <>
-            {/* {console.log({
-              totalTime,
-              isRunning,
-              minutes,
-              seconds,
-              miliseconds,
-            })} */}
-          </>
-        </motion.span>
+        <motion.span>{seconds}</motion.span>
       </motion.div>
+
+      <div>Total time: {totalTime}</div>
 
       <motion.div className="local-team">
         <motion.div className="local-shield">

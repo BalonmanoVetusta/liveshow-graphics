@@ -22,7 +22,9 @@ export default function Webcam(): ReactElement | null {
         .getUserMedia({ video: true })
         .then((stream) => {
           console.log({ stream });
-          videoRef.current!.srcObject = stream;
+          if (videoRef?.current) {
+            videoRef.current.srcObject = stream;
+          }
         })
         .catch((err) => {
           console.error(err);
@@ -82,8 +84,10 @@ export default function Webcam(): ReactElement | null {
           <option value="null">Choose a device</option>
           {streamDevices
             .filter((device) => device.kind === MediaDeviceKind.videoinput)
-            .map((device) => (
-              <option>{`${device.kind}: ${device.label} id = ${device.deviceId}`}</option>
+            .map((device, key) => (
+              <option
+                key={key}
+              >{`${device.kind}: ${device.label} id = ${device.deviceId}`}</option>
             ))}
         </select>
       )}

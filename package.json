@@ -12,26 +12,26 @@
     "extension"
   ],
   "scripts": {
-    "predev:start": "bun run build",
-    "dev:start": "include-nodecg start",
+    "dev:start": "bun run dev",
     "prestart": "bun run build",
     "start": "bun run watch",
     "watch": "bun run watch:dashboard && bun run watch:graphics && bun run watch:extension",
     "watch:dashboard": "parcel watch src/dashboard/*.html --dist-dir ./ --target dashboard",
     "watch:graphics": "parcel watch src/graphics/*.html --dist-dir ./ --target graphics",
     "watch:extension": "parcel watch --dist-dir ./ --target extension",
+    "prebuild": "bun run build:schemas",
     "build": "bun run build:dashboard && bun run build:graphics && bun run build:extension",
+    "build:schemas": "rm -rf ./types/schemas/*.d.ts && cd schemas && json2ts -i '*.json' -o ../src/types/schemas/ && cd ..",
     "build:dashboard": "parcel build src/dashboard/*.html --dist-dir ./ --target dashboard",
     "build:graphics": "parcel build src/graphics/*.html --dist-dir ./ --target graphics",
     "build:extension": "parcel build --dist-dir ./ --target extension",
-    "predev": "bun run clean && bun run build",
+    "predev": "bun run build",
     "dev": "include-nodecg start",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
     "clean": "rm -rf .parcel-cache dashboard extension graphics",
     "prepare": "husky install",
-    "postinstall": "bun ./bin/postinstall.mjs",
-    "build:schemas": "rm -rf ./types/schemas/*.d.ts && cd schemas && json2ts -i '*.json' -o ../src/types/schemas/"
+    "postinstall": "bun ./bin/postinstall.mjs"
   },
   "targets": {
     "default": {
@@ -113,6 +113,7 @@
     "@typescript-eslint/parser": "5.33.1",
     "eslint": "8.22.0",
     "eslint-config-prettier": "8.5.0",
+    "eslint-import-resolver-typescript": "3.5.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsx-a11y": "6.6.1",
     "eslint-plugin-react": "7.30.1",

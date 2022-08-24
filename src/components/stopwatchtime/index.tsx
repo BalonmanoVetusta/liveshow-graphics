@@ -69,9 +69,9 @@ export default function StopwatchTime({
     const isLast = index === timeKeys.length - 1;
 
     return (
-      <Fragment>
+      <Fragment key={`${id}-${key}-${index}`}>
         <span key={`${id}-${key}-${index}`} className={key}>
-          {convertedTime[key]}
+          {convertedTime[key].toString().padStart(fixedDigits, "0")}
         </span>
         {!isLast ? <Separator separator={separator} /> : null}
       </Fragment>

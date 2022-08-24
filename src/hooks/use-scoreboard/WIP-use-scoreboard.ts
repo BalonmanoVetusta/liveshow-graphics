@@ -1,3 +1,4 @@
+/* eslint-disable */
 // TODO: WIP hook (Work in progress; not finished) ** Optional hook
 // 1. Add type annotations to useScoreboard hook, now it is incomplete
 // 2. Implement the actions for the useScoreboard hook

@@ -43,6 +43,7 @@ export const useReplicant = <T, U>(
     return () => {
       replicant.removeListener("change", changeHandler);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [replicant]);
 
   return [

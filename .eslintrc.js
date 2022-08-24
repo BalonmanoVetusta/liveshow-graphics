@@ -8,7 +8,8 @@ module.exports = {
   extends: [
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    'plugin:react/jsx-runtime',
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
     "prettier",
   ],
   parser: "@typescript-eslint/parser",
@@ -19,7 +20,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["import", "react", "jsx-a11y", "@typescript-eslint"],
+  plugins: ["import", "react", "react-hooks", "jsx-a11y", "@typescript-eslint"],
   globals: {
     nodecg: true,
     NodeCG: true,
@@ -35,6 +36,8 @@ module.exports = {
     "react/jsx-filename-extension": "off",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "@typescript-eslint/triple-slash-reference": "off",
   },
   settings: {

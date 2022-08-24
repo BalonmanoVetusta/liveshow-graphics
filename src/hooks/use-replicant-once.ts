@@ -1,8 +1,8 @@
 // Copied from: https://github.com/Hoishin/use-nodecg/blob/master/src/use-replicant-once.ts
-import { useState } from "react";
+import { useRef } from "react";
 
 export type UseReplicantOnceOptions = {
-  bundle: string;
+  namespace: string;
 };
 
 export const useReplicantOnce = <T>(
@@ -10,15 +10,15 @@ export const useReplicantOnce = <T>(
   initialValue: T,
   options?: UseReplicantOnceOptions
 ): T => {
-  const [state, setState] = useState(initialValue);
-  if (options && options.bundle) {
-    nodecg.readReplicant<T>(replicantName, options.bundle, (value) => {
-      setState(value);
+  const state = useRef<T>(initialValue);
+  if (options && options.namespace) {
+    nodecg.readReplicant<T>(replicantName, options.namespace, (value) => {
+      state.current = value;
     });
   } else {
     nodecg.readReplicant<T>(replicantName, (value) => {
-      setState(value);
+      state.current = value;
     });
   }
-  return state;
+  return state.current;
 };

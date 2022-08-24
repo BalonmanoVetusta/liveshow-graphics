@@ -1,10 +1,10 @@
-import { ScoreBoard } from "components/scoreboard";
+import { ScoreboardResults } from "components/scoreboard/scoreboard-results";
 import { ReactElement } from "react";
 
 function App(): ReactElement | null {
   return (
     <div>
-      <ScoreBoard />
+      <ScoreboardResults />
     </div>
   );
 }
