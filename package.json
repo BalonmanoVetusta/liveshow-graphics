@@ -1,5 +1,6 @@
 {
   "name": "handball-liveshow-spain",
+  "private": true,
   "version": "1.0.0",
   "description": "NodeCG for Handball matches Live streamings in Spain (valid for other countries but could have calls to spanish league api)",
   "homepage": "https://github.com/balonmanovetusta/liveshow-graphics",
