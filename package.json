@@ -39,7 +39,7 @@
       "distDir": "../",
       "publicUrl": "./",
       "engines": {
-        "browsers": "> 1%, last 2 versions, not dead"
+        "browsers": "cover 90% in ES"
       },
       "context": "browser",
       "outputFormat": "esmodule"
@@ -56,7 +56,8 @@
       "context": "node",
       "outputFormat": "commonjs",
       "engines": {
-        "node": ">=14.0.0"
+        "browsers": "node >= 18",
+        "node": ">=18"
       }
     }
   },
@@ -115,6 +116,7 @@
     "eslint": "8.22.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-import-resolver-typescript": "3.5.0",
+    "eslint-plugin-compat": "4.0.2",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsx-a11y": "6.6.1",
     "eslint-plugin-react": "7.30.1",

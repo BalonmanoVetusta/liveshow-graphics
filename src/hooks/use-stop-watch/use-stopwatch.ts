@@ -189,7 +189,7 @@ export default function useStopwatch({
     const { addEventListener, removeEventListener } =
       globalThis || window || {};
 
-    const listenClose = (event) => {
+    const listenClose = () => {
       _callTick({ isRunning: false });
       canTick.current = false;
       if (timer.current) {
@@ -200,10 +200,12 @@ export default function useStopwatch({
     return () => {
       removeEventListener("beforeunload", listenClose);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     _callTick();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     totalTime,
     hours,
