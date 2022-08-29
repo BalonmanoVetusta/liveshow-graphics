@@ -6,37 +6,17 @@
  */
 
 /**
- * Total miliseconds of the stopwatch after applying offset and calculated miliseconds after last startTime, is is always a positive value and backwards value does not affect this value
- */
-export type TotalTimeInMiliseconds = number;
-/**
  * Start time in miliseconds since epoch, is null if the stopwatch is stopped or paused
  */
 export type StartTimeInMilisecondsSinceEpoch = number | null;
 /**
- * If defined limitMiliseconds then this value will be true when totalTime is equal or greater than limitMiliseconds
+ * Offset in miliseconds, this will be added when calculate the totalTime
  */
-export type StopwatchReachLimitMiliseconds = boolean;
+export type Offset = number;
 /**
- * Hours of the stopwatch, this will be a countdown if backwards is set and limitMiliseconds greater than 0
+ * Limit of time to stop the stopwatch in miliseconds. If this value is greater than 0 then stopwatch will be stopped when totalTime is equal or greater than this value
  */
-export type Hours = number;
-/**
- * Minutes of the stopwatch, this will be a countdown if backwards is set and limitMiliseconds greater than 0
- */
-export type Minutes = number;
-/**
- * Seconds of the stopwatch, this will be a countdown if backwards is set and limitMiliseconds greater than 0
- */
-export type Seconds = number;
-/**
- * Miliseconds of the stopwatch, this will be a countdown if backwards is set and limitMiliseconds greater than 0
- */
-export type Miliseconds = number;
-/**
- * If this value is greater than 0 then stopwatch will be stopped when totalTime is equal or greater than this value
- */
-export type LimitMiliseconds = number;
+export type TimeLimitToStopTheStopwatch = number;
 /**
  * If this value is true and limitMiliseconds greater than 0 then stopwatch will be a countdown
  */
@@ -50,14 +30,8 @@ export interface Stopwatch {
  * via the `patternProperty` ".+".
  */
 export interface StopwatchLap {
-  totalTime: TotalTimeInMiliseconds;
-  startTime?: StartTimeInMilisecondsSinceEpoch;
-  isRunning: boolean;
-  isEnded: StopwatchReachLimitMiliseconds;
-  hours: Hours;
-  minutes: Minutes;
-  seconds: Seconds;
-  miliseconds: Miliseconds;
-  limitMiliseconds: LimitMiliseconds;
-  backwards: Backwards;
+  startTime: StartTimeInMilisecondsSinceEpoch;
+  offset?: Offset;
+  limit?: TimeLimitToStopTheStopwatch;
+  backwards?: Backwards;
 }

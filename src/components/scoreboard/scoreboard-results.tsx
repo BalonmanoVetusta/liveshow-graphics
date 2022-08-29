@@ -30,7 +30,6 @@ export function ScoreboardResults(): ReactElement {
 
   return (
     <motion.div>
-      <h2>{isRunning ? "IN PROGRESS" : "PAUSED"}</h2>
       <motion.div className="scoreboardTime">
         <motion.span>{minutes}</motion.span>
         <Separator char=":" />

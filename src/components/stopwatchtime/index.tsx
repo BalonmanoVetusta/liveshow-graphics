@@ -1,4 +1,7 @@
-import { getTimeFromMiliseconds, MaxTimeUnit } from "hooks/use-stop-watch";
+import {
+  getTimeFromMiliseconds,
+  MaxTimeUnit,
+} from "hooks/react-use-stop-watch";
 import { Fragment, ReactElement, useId } from "react";
 
 enum STOPWATCH_TIME_SHOW {

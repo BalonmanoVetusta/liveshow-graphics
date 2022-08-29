@@ -1,24 +1,20 @@
-import { NodeCG } from 'nodecg/types/server'
-import { set } from './utils/nodecg-api-context'
+import { NodeCG } from "nodecg/types/server";
+import { init } from "./init";
+import { stopwatchReplicantMessages } from "./stopwatch-replicant-messages";
 
-const init = async (nodecg: NodeCG) => {
-    nodecg.log.info('Initializing backend...')
-    nodecg.log.info("Hello, from your bundle's extension!")
-    nodecg.log.info("I'm where you put all your server-side code.")
+export type ExtensionFunction = (nodecg: NodeCG) => Promise<void>;
 
-    // You can load your modules with require("") here
+function main(...calls: Array<ExtensionFunction>) {
+  return (nodecg: NodeCG) => {
+    calls.forEach(async (fn: ExtensionFunction) => {
+      try {
+        await fn(nodecg);
+        nodecg.log.info(`Successfully initialized ${fn?.name ?? fn.toString}`);
+      } catch (error) {
+        nodecg.log.error(`Call to ${fn.toString} failed.`, { error });
+      }
+    });
+  };
 }
 
-function main(nodecg: NodeCG) {
-    // Set the context api so all the modules can access it
-    set(nodecg)
-    init(nodecg)
-        .then(() => {
-            nodecg.log.info('Initialization successful.')
-        })
-        .catch((error) => {
-            nodecg.log.error('Failed to initialize:', error)
-        })
-}
-
-module.exports = main
+module.exports = main(init, stopwatchReplicantMessages);
