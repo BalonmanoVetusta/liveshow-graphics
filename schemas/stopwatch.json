@@ -2,11 +2,31 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "additionalProperties": false,
-  "patternProperties": {
-    ".+": {
-      "type": "object",
-      "additionalProperties": false,
-      "$ref": "./stopwatch-lap.json"
+  "required": ["startTime", "offset", "limit", "backwards"],
+  "properties": {
+    "startTime": {
+      "type": "number",
+      "default": 0,
+      "title": "Start time in miliseconds since epoch",
+      "description": "Start time in miliseconds since epoch, is null if the stopwatch is stopped or paused"
+    },
+    "offset": {
+      "type": "number",
+      "default": 0,
+      "title": "Offset",
+      "description": "Offset in miliseconds, this will be added when calculate the totalTime"
+    },
+    "limit": {
+      "type": "number",
+      "default": 0,
+      "title": "Time limit to stop the stopwatch",
+      "description": "Limit of time to stop the stopwatch in miliseconds. If this value is greater than 0 then stopwatch will be stopped when totalTime is equal or greater than this value"
+    },
+    "backwards": {
+      "type": "boolean",
+      "default": false,
+      "title": "Backwards",
+      "description": "If this value is true and limitMiliseconds greater than 0 then stopwatch will be a countdown"
     }
   }
 }

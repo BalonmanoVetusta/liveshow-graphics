@@ -15,7 +15,7 @@ export const useReplicant = <T, U>(
   initialValue: U,
   options?: ReplicantOptions<T> & { namespace?: string }
 ): [T | U, (newValue: T) => void] => {
-  const [value, updateValue] = useState<T | U>(initialValue);
+  const [value, setValue] = useState<T | U>(initialValue);
 
   const replicantOptions = options && {
     defaultValue: options.defaultValue,
@@ -28,20 +28,26 @@ export const useReplicant = <T, U>(
       : nodecg.Replicant(replicantName, replicantOptions);
 
   const changeHandler = (newValue: T): void => {
-    updateValue((oldValue) => {
+    console.log({ newValue }, JSON.parse(JSON.stringify(newValue)));
+    setValue((oldValue) => {
+      console.log("Change of value detected", { oldValue, newValue });
       if (newValue !== oldValue) {
         return newValue;
       }
-
       // replicant.value has always the same reference. Cloning to cause re-rendering
       return JSON.parse(JSON.stringify(newValue));
     });
   };
 
   useEffect(() => {
-    replicant.on("change", changeHandler);
+    if (replicant) {
+      replicant.on("change", changeHandler);
+    }
+
     return () => {
-      replicant.removeListener("change", changeHandler);
+      if (replicant) {
+        replicant.removeListener("change", changeHandler);
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [replicant]);
@@ -49,7 +55,8 @@ export const useReplicant = <T, U>(
   return [
     value,
     (newValue) => {
-      replicant.value = newValue;
+      replicant.value =
+        typeof newValue === "function" ? newValue(replicant.value) : newValue;
     },
   ];
 };

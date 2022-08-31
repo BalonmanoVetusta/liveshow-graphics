@@ -1,9 +1,7 @@
 /* eslint-disable compat/compat */
 import { ListenForCb } from "nodecg/types/lib/nodecg-instance";
 import { NodeCG } from "nodecg/types/server";
-import { STOPWATCH_MESSAGES_NAME } from "services/stopwatch-messages-name";
-import { STOPWATCH_REPLICANT_NAME } from "services/stopwatch-replicant-name";
-import { Stopwatch, StopwatchLap } from "types/schemas/stopwatch";
+import { Stopwatch } from "types/schemas/stopwatch";
 import {
   StopwatchAction,
   StopwatchActionPayloadType,
@@ -12,12 +10,16 @@ import {
   StopwatchStartActionTypePayloadObject,
 } from "./types";
 
-const defaultStopwatchLapValues: StopwatchLap = {
+// FIXME: Should use services
+const STOPWATCH_MESSAGES_NAME = "stopwatchMessages";
+const STOPWATCH_REPLICANT_NAME = "stopwatch";
+
+const defaultStopwatchValues: Stopwatch = {
   startTime: 0,
   offset: 0,
   backwards: false,
   limit: 0,
-} as StopwatchLap;
+} as Stopwatch;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function assertPayload(ack: ListenForCb, payload: any = undefined) {
@@ -28,53 +30,70 @@ function assertPayload(ack: ListenForCb, payload: any = undefined) {
 
 export async function stopwatchReplicantMessages(
   nodecg: NodeCG
-): Promise<void | StopwatchLap> {
+): Promise<void> {
   return nodecg.listenFor(
     STOPWATCH_MESSAGES_NAME,
     nodecg.bundleName,
     (
       {
         type,
-        context,
         payload = undefined,
       }: StopwatchAction & {
         payload: StopwatchActionPayloadType;
       },
       ack: ListenForCb
     ) => {
-      const stopwatch = nodecg.Replicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, {
-        [context]: defaultStopwatchLapValues,
-      } as Stopwatch);
+      // TODO: Good idea is to define in message if the replicant must be persistent or not
+      const stopwatch = nodecg.Replicant<Stopwatch>(
+        STOPWATCH_REPLICANT_NAME,
+        nodecg.bundleName,
+        {
+          defaultValue: defaultStopwatchValues,
+          persistent: true,
+        }
+      );
 
-      const { startTime, offset, backwards, limit } = stopwatch[context];
-      let newValue: number | boolean;
+      let currentValue: Stopwatch = { ...stopwatch.value } || {
+        ...defaultStopwatchValues,
+      };
+      let tmpValue: number | boolean;
 
       try {
         switch (type) {
           case StopwatchActions.START:
             const {
-              offset: newOffset = offset ?? 0,
-              backwards: newBackwards = backwards ?? false,
-              limit: newLimit = limit ?? 0,
-            } = payload as StopwatchStartActionTypePayloadObject;
-            stopwatch[context].startTime = Date.now();
-            stopwatch[context].offset = newOffset;
-            stopwatch[context].backwards = newBackwards;
-            stopwatch[context].limit = newLimit;
+              offset: newOffset = 0,
+              backwards: newBackwards = false,
+              limit: newLimit = 0,
+            } = (payload as StopwatchStartActionTypePayloadObject) || {};
+            currentValue = {
+              startTime: Date.now(),
+              offset: newOffset || currentValue.offset,
+              backwards: newBackwards || currentValue.backwards,
+              limit: newLimit || currentValue.limit,
+            } as Stopwatch;
+            break;
 
-            break;
           case StopwatchActions.STOP:
-            stopwatch[context].start = 0;
+            const total =
+              currentValue.startTime > 0
+                ? Date.now() - currentValue.startTime + currentValue.offset
+                : 0;
+            currentValue.startTime = 0;
+            currentValue.offset = total;
             break;
+
           case StopwatchActions.RESET:
-            if (stopwatch[context].startTime) {
-              stopwatch[context].startTime = Date.now();
-            }
-            stopwatch[context] = {
-              start: 0,
-              limit: 0,
-              offset: 0,
-              backwards: false,
+            const {
+              limit = currentValue.limit,
+              offset = 0,
+              backwards = currentValue.backwards,
+            } = (payload as StopwatchStartActionTypePayloadObject) || {};
+            currentValue = {
+              startTime: currentValue.startTime > 0 ? Date.now() : 0,
+              limit,
+              offset,
+              backwards,
             };
             break;
 
@@ -84,44 +103,70 @@ export async function stopwatchReplicantMessages(
 
             if (typeof payload === typeof Function) {
               const callback = payload as StopwatchSetTypeByCallback<boolean>;
-              newValue = callback(backwards, startTime);
+              tmpValue = callback(
+                currentValue.backwards,
+                currentValue.startTime,
+                currentValue.limit,
+                currentValue.offset
+              );
             } else {
-              newValue = payload as boolean;
+              tmpValue = payload as boolean;
             }
 
-            stopwatch[context].backwards = newValue;
+            if (currentValue.limit === 0 && tmpValue === true) {
+              throw new Error("Cannot set backwards when limit is 0");
+            }
+
+            currentValue.backwards = tmpValue;
             break;
+
           case StopwatchActions.SET_OFFSET:
             assertPayload(ack, payload);
 
             if (typeof payload === typeof Function) {
               const callback = payload as StopwatchSetTypeByCallback<number>;
-              newValue = callback(offset, startTime);
+              tmpValue = callback(
+                currentValue.offset,
+                currentValue.startTime,
+                currentValue.limit,
+                currentValue.offset
+              );
             } else {
-              newValue = payload as number;
+              tmpValue = payload as number;
             }
 
-            stopwatch[context].offset = newValue;
+            currentValue.offset = tmpValue;
             break;
+
           case StopwatchActions.SET_TIME_LIMIT:
             assertPayload(ack, payload);
 
             if (typeof payload === typeof Function) {
               const callback = payload as StopwatchSetTypeByCallback<number>;
-              newValue = callback(limit, startTime);
+              tmpValue = callback(
+                currentValue.limit,
+                currentValue.startTime,
+                currentValue.limit,
+                currentValue.offset
+              );
             } else {
-              newValue = payload as number;
+              tmpValue = payload as number;
             }
 
-            stopwatch[context].limit = newValue;
+            currentValue.limit = tmpValue;
             break;
+
           case StopwatchActions.ADD_OFFSET:
-            stopwatch[context].offset += (payload as number) ?? 0;
+            currentValue.offset += (payload as number) ?? 0;
             break;
+
           default:
             throw new Error(`Unknown action type: ${type}`);
         }
+
+        stopwatch.value = { ...currentValue };
       } catch (error) {
+        console.error(error);
         if (!ack?.handled) {
           return ack(error);
         }
@@ -129,7 +174,7 @@ export async function stopwatchReplicantMessages(
       }
 
       if (!ack?.handled) {
-        return ack(null, stopwatch[context]);
+        return ack(null, stopwatch.value);
       }
     }
   );

@@ -1,83 +1,39 @@
-import { useStopwatchReplicant } from "hooks/react-use-stop-watch";
+import {
+  MaxTimeUnit,
+  useStopwatchReplicantControl,
+  useStopwatchReplicantReader,
+} from "hooks/use-stopwatch-replicant";
 import { ReactElement, useEffect, useState } from "react";
-import { scoreboardMainTimer } from "services/scoreboard-main-timer";
-import { STOPWATCH_REPLICANT_NAME } from "services/stopwatch-replicant-name";
-import { StopwatchLap } from "types/schemas/stopwatch-lap";
 
-enum Keyboardkey {
-  Enter = "Enter",
-  Escape = "Escape",
-  Tab = "Tab",
-  ArrowRight = "ArrowRight",
-  ArrowLeft = "ArrowLeft",
-  ArrowUp = "ArrowUp",
-  ArrowDown = "ArrowDown",
-}
+// enum Keyboardkey {
+//   Enter = "Enter",
+//   Escape = "Escape",
+//   Tab = "Tab",
+//   ArrowRight = "ArrowRight",
+//   ArrowLeft = "ArrowLeft",
+//   ArrowUp = "ArrowUp",
+//   ArrowDown = "ArrowDown",
+// }
 
 export function StopwatchPanel(): ReactElement {
   const [showMiliseconds, setShowMiliseconds] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
-  const {
-    isRunning,
-    start,
-    stop,
-    reset,
-    minutes,
-    seconds,
-    setOffset,
-    isEnded,
-  } = useStopwatchReplicant(STOPWATCH_REPLICANT_NAME, scoreboardMainTimer, {
-    limitMiliseconds: 5000,
-  } as StopwatchLap);
+  const { start, stop, reset } = useStopwatchReplicantControl();
+  const { minutes, seconds, isEnded, isRunning } = useStopwatchReplicantReader({
+    maxTimeUnit: MaxTimeUnit.MINUTES,
+  });
   const [enableReset, setEnableReset] = useState(false);
 
   const [minutesInput, setMinutesInput] = useState("");
   const [secondsInput, setSecondsInput] = useState("");
   const [isModifying, setIsModifying] = useState(false);
 
-  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (isRunning) {
-      return;
-    }
-
-    const { name, value } = event.target;
-    // oldValue
-    const newValue = parseInt(value, 10);
-    if (name === "minutes" && isNaN(newValue)) {
-      setMinutesInput(minutes.toString().padStart(2, "0"));
-    } else if (name === "seconds" && isNaN(newValue)) {
-      setSecondsInput(seconds.toString().padStart(2, "0"));
-    }
-
-    if (!isNaN(newValue)) {
-      setError(null);
-      setEnableReset(true);
-      let offset = 0;
-      if (name === "minutes") {
-        offset = (minutes - newValue) * 60;
-      } else if (name === "seconds") {
-        offset = (seconds - newValue) * 60;
-      }
-      setOffset(offset);
-    }
-  };
-
-  // const handleSet: React.KeyboardEventHandler<HTMLInputElement> = (
-  //   event: React.KeyboardEvent<HTMLInputElement>
-  // ) => {
-  //   switch (event.key) {
-  //     case Keyboardkey.Enter:
-  //       break;
-  //     default:
-  //       return;
-  //   }
-  // };
-
   useEffect(() => {
     if (isModifying) return;
 
-    setMinutesInput(minutes.toString().padStart(2, "0"));
-    setSecondsInput(seconds.toString().padStart(2, "0"));
+    setMinutesInput((minutes ?? 0).toString().padStart(2, "0"));
+    setSecondsInput((seconds ?? 0).toString().padStart(2, "0"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [minutes, seconds]);
 
@@ -98,7 +54,9 @@ export function StopwatchPanel(): ReactElement {
               readOnly={isRunning}
               onFocus={() => setIsModifying(true)}
               onBlur={() => setIsModifying(false)}
-              onChange={handleTimeChange}
+              onChange={() => {
+                return;
+              }}
               // onKeyDown={handleSet}
             />
             <span> : </span>
@@ -110,7 +68,9 @@ export function StopwatchPanel(): ReactElement {
               readOnly={isRunning}
               onFocus={() => setIsModifying(true)}
               onBlur={() => setIsModifying(false)}
-              onChange={handleTimeChange}
+              onChange={() => {
+                return;
+              }}
               // onKeyDown={handleSet}
             />
             <p>
@@ -124,7 +84,7 @@ export function StopwatchPanel(): ReactElement {
           <button
             onClick={(event) => {
               event.preventDefault();
-              isRunning ? stop() : start();
+              isRunning ? stop() : start({});
             }}
             disabled={isModifying}
           >

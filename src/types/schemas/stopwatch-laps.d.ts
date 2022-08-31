@@ -22,6 +22,13 @@ export type TimeLimitToStopTheStopwatch = number;
  */
 export type Backwards = boolean;
 
+export interface StopwatchLaps {
+  [k: string]: Stopwatch;
+}
+/**
+ * This interface was referenced by `StopwatchLaps`'s JSON-Schema definition
+ * via the `patternProperty` ".+".
+ */
 export interface Stopwatch {
   startTime: StartTimeInMilisecondsSinceEpoch;
   offset: Offset;

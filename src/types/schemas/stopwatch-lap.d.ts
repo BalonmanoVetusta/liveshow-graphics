@@ -8,7 +8,7 @@
 /**
  * Start time in miliseconds since epoch, is null if the stopwatch is stopped or paused
  */
-export type StartTimeInMilisecondsSinceEpoch = number | null;
+export type StartTimeInMilisecondsSinceEpoch = number;
 /**
  * Offset in miliseconds, this will be added when calculate the totalTime
  */
@@ -24,7 +24,7 @@ export type Backwards = boolean;
 
 export interface StopwatchLap {
   startTime: StartTimeInMilisecondsSinceEpoch;
-  offset?: Offset;
-  limit?: TimeLimitToStopTheStopwatch;
-  backwards?: Backwards;
+  offset: Offset;
+  limit: TimeLimitToStopTheStopwatch;
+  backwards: Backwards;
 }

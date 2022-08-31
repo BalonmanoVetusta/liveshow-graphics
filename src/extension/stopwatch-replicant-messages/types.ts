@@ -11,23 +11,24 @@ export enum StopwatchActions {
 
 export type StopwatchSetTypeByCallback<T> = (
   prev: T,
-  startTime: number | undefined
+  startTime: number | undefined,
+  limit: number | undefined,
+  offset: number | undefined
 ) => T;
 
 export interface StopwatchAction {
   type: StopwatchActions;
-  context: string;
 }
 
 export interface StopwatchStartActionTypePayloadObject {
-  offset: number;
-  backwards: boolean | false;
-  limit: number;
+  offset?: number;
+  backwards?: boolean | false;
+  limit?: number;
 }
 
 export interface StartActionType extends StopwatchAction {
   type: StopwatchActions.START;
-  payload: StopwatchStartActionTypePayloadObject;
+  payload: StopwatchStartActionTypePayloadObject | undefined;
 }
 
 export interface StopActionType extends StopwatchAction {

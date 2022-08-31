@@ -13,9 +13,10 @@ import {
 import { STOPWATCH_MESSAGES_NAME } from "services/stopwatch-messages-name";
 
 function sendStopwatchMessage(
-  context: string,
   type: StopwatchActions,
-  payload: StopwatchActionPayloadType = undefined
+  payload:
+    | StopwatchActionPayloadType
+    | Partial<StartActionType["payload"]> = undefined
 ): void | Promise<StopActionType> {
   const { nodecg = undefined } = window || globalThis;
   if (typeof nodecg === typeof undefined) {
@@ -24,50 +25,41 @@ function sendStopwatchMessage(
 
   const data: StopwatchActionType = {
     type,
-    context,
   };
 
   if (payload !== undefined) {
-    data.payload = payload;
+    data.payload = payload as StopwatchActionPayloadType;
   }
 
   return nodecg?.sendMessage(STOPWATCH_MESSAGES_NAME, data);
 }
 
-export const start = (context: string, payload: StartActionType["payload"]) =>
-  sendStopwatchMessage(context, StopwatchActions.START, payload);
+export const start = (
+  payload: StartActionType["payload"] | undefined = undefined
+) => sendStopwatchMessage(StopwatchActions.START, payload);
 
-export const stop = (context: string) =>
-  sendStopwatchMessage(context, StopwatchActions.STOP);
+export const stop = () => sendStopwatchMessage(StopwatchActions.STOP);
 
-export const reset = (context: string) =>
-  sendStopwatchMessage(context, StopwatchActions.RESET);
+export const reset = (
+  payload: Partial<StartActionType["payload"]> = undefined
+) => sendStopwatchMessage(StopwatchActions.RESET, payload);
 
-export const updateTime = (
-  context: string,
-  payload: UpdateTimeActionType["payload"]
-) => sendStopwatchMessage(context, StopwatchActions.UPDATE_TIME, payload);
+export const updateTime = (payload: UpdateTimeActionType["payload"]) =>
+  sendStopwatchMessage(StopwatchActions.UPDATE_TIME, payload);
 
 // time limit
-export const setTimeLimit = (
-  context: string,
-  payload: TimeLimitActionType["payload"]
-) => sendStopwatchMessage(context, StopwatchActions.SET_TIME_LIMIT, payload);
+export const setTimeLimit = (payload: TimeLimitActionType["payload"]) =>
+  sendStopwatchMessage(StopwatchActions.SET_TIME_LIMIT, payload);
 
 // set offset
-export const setOffset = (
-  context: string,
-  payload: OffsetActionType["payload"]
-) => sendStopwatchMessage(context, StopwatchActions.SET_OFFSET, payload);
+export const setOffset = (payload: OffsetActionType["payload"]) =>
+  sendStopwatchMessage(StopwatchActions.SET_OFFSET, payload);
 
 // add offset
-export const addOffset = (
-  context: string,
-  payload: AddOffsetActionType["payload"]
-) => sendStopwatchMessage(context, StopwatchActions.ADD_OFFSET, payload);
+export const addOffset = (payload: AddOffsetActionType["payload"]) =>
+  sendStopwatchMessage(StopwatchActions.ADD_OFFSET, payload);
 
-// set backwards
+// set backwards. This function can throw an error if you try to set a backwards (true) without any limit
 export const setBackwards = (
-  context: string,
-  payload: SetBackwardsActionType["payload"]
-) => sendStopwatchMessage(context, StopwatchActions.SET_BACKWARDS, payload);
+  payload: SetBackwardsActionType["payload"] | undefined = undefined
+) => sendStopwatchMessage(StopwatchActions.SET_BACKWARDS, payload);
