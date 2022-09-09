@@ -2,6 +2,7 @@ import {
   AddOffsetActionType,
   OffsetActionType,
   SetBackwardsActionType,
+  SetPeriodTimeActionType,
   StartActionType,
   StopActionType,
   StopwatchActionPayloadType,
@@ -10,7 +11,9 @@ import {
   TimeLimitActionType,
   UpdateTimeActionType,
 } from "extension/stopwatch-replicant-messages/types";
-import { STOPWATCH_MESSAGES_NAME } from "services/stopwatch-messages-name";
+
+// FIXME: This should not be hardcoded, use service instead or configuration
+export const STOPWATCH_MESSAGES_NAME = "stopwatchMessages";
 
 function sendStopwatchMessage(
   type: StopwatchActions,
@@ -63,3 +66,7 @@ export const addOffset = (payload: AddOffsetActionType["payload"]) =>
 export const setBackwards = (
   payload: SetBackwardsActionType["payload"] | undefined = undefined
 ) => sendStopwatchMessage(StopwatchActions.SET_BACKWARDS, payload);
+
+export const setPeriodTime = (payload: SetPeriodTimeActionType["payload"]) => {
+  return sendStopwatchMessage(StopwatchActions.SET_PERIOD_TIME, payload);
+};

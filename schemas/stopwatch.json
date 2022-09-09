@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "additionalProperties": false,
-  "required": ["startTime", "offset", "limit", "backwards"],
+  "required": ["startTime", "offset", "limit", "backwards", "periodTime"],
   "properties": {
     "startTime": {
       "type": "number",
@@ -27,6 +27,18 @@
       "default": false,
       "title": "Backwards",
       "description": "If this value is true and limitMiliseconds greater than 0 then stopwatch will be a countdown"
+    },
+    "periodTime": {
+      "type": "number",
+      "default": 0,
+      "title": "How many time is a period",
+      "description": "Period time in miliseconds to know in which period it is the match. 0 means no period."
+    },
+    "total": {
+      "type": "number",
+      "default": 0,
+      "title": "How many time has passed",
+      "description": "Calculated time"
     }
   }
 }

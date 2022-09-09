@@ -1,4 +1,4 @@
-import { ScoreboardResults } from "components/scoreboard/scoreboard-results";
+import { StopwatchTime } from "components/stopwatch-time";
 import { ReactElement } from "react";
 // import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
 
@@ -6,7 +6,7 @@ function App(): ReactElement | null {
   return (
     <div>
       {/* <ScoreboardResults stopwatchContext={SCOREBOARD_MAIN_TIMER} /> */}
-      <ScoreboardResults />
+      <StopwatchTime lastMinuteShowMiliseconds={true} />
     </div>
   );
 }

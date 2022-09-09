@@ -12,6 +12,7 @@ import {
   AddOffsetActionType,
   OffsetActionType,
   SetBackwardsActionType,
+  SetPeriodTimeActionType,
   StartActionType,
   TimeLimitActionType,
   UpdateTimeActionType,
@@ -22,6 +23,7 @@ import {
   reset as resetSw,
   setBackwards as setBackwardsSw,
   setOffset as setOffsetSw,
+  setPeriodTime as setPeriodTimeSw,
   setTimeLimit as setTimeLimitSw,
   start as startSw,
   stop as stopSw,
@@ -37,6 +39,7 @@ interface UseStopwatchReplicantControlReturn {
   setOffset: (payload: OffsetActionType["payload"]) => void;
   addOffset: (payload: AddOffsetActionType["payload"]) => void;
   setBackwards: (payload: SetBackwardsActionType["payload"]) => void;
+  setPeriodTime: (payload: SetPeriodTimeActionType["payload"]) => void;
 }
 
 export function useStopwatchReplicantControl(): UseStopwatchReplicantControlReturn {
@@ -63,6 +66,9 @@ export function useStopwatchReplicantControl(): UseStopwatchReplicantControlRetu
     payload: SetBackwardsActionType["payload"] | undefined = undefined
   ) => setBackwardsSw(payload);
 
+  const setPeriodTime = (payload: SetPeriodTimeActionType["payload"]) =>
+    setPeriodTimeSw(payload);
+
   return {
     start,
     stop,
@@ -72,5 +78,6 @@ export function useStopwatchReplicantControl(): UseStopwatchReplicantControlRetu
     setOffset,
     addOffset,
     setBackwards,
+    setPeriodTime,
   };
 }

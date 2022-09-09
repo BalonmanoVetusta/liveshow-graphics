@@ -39,6 +39,7 @@
       "nodecg/*": ["../.nodecg/*"]
     }
   },
+  "files": ["globals.d.ts"],
   "include": [
     "./src/**/*.tsx",
     "./src/**/*.ts",

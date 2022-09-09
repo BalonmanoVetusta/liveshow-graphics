@@ -13,20 +13,27 @@ import {
 // FIXME: Should use services
 const STOPWATCH_MESSAGES_NAME = "stopwatchMessages";
 const STOPWATCH_REPLICANT_NAME = "stopwatch";
+const STOPWATCH_TICK_TIME = 10;
 
 const defaultStopwatchValues: Stopwatch = {
   startTime: 0,
   offset: 0,
   backwards: false,
   limit: 0,
+  periodTime: 0,
 } as Stopwatch;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function assertPayload(ack: ListenForCb, payload: any = undefined) {
-  if (typeof payload === typeof undefined || !payload) {
+function assertPayload(
+  ack: ListenForCb,
+  payload: StopwatchActionPayloadType | undefined = undefined
+) {
+  if (typeof payload === typeof undefined || payload === null) {
     throw new Error("Payload is required");
   }
 }
+
+// Timer
+let timer: NodeJS.Timeout | null = null;
 
 export async function stopwatchReplicantMessages(
   nodecg: NodeCG
@@ -53,48 +60,115 @@ export async function stopwatchReplicantMessages(
         }
       );
 
-      let currentValue: Stopwatch = { ...stopwatch.value } || {
+      let currentValue: Stopwatch = {
         ...defaultStopwatchValues,
+        ...stopwatch.value,
       };
-      let tmpValue: number | boolean;
 
       try {
+        const currentTotalTime =
+          Date.now() - currentValue.startTime + currentValue.offset;
+        let tmpValue: number | boolean;
+
+        if (currentTotalTime < 0) {
+          throw new Error("Time is negative, reset the stopwatch");
+        }
+
         switch (type) {
           case StopwatchActions.START:
+          case StopwatchActions.RESET:
+            // New possible values
             const {
-              offset: newOffset = 0,
-              backwards: newBackwards = false,
-              limit: newLimit = 0,
+              offset: newOffset = null,
+              backwards: newBackwards = null,
+              limit: newLimit = null,
+              periodTime: newPeriodTime = null,
             } = (payload as StopwatchStartActionTypePayloadObject) || {};
+
+            // Set common values between start and reset
             currentValue = {
-              startTime: Date.now(),
-              offset: newOffset || currentValue.offset,
-              backwards: newBackwards || currentValue.backwards,
-              limit: newLimit || currentValue.limit,
+              offset: newOffset ?? currentValue.offset ?? 0,
+              backwards: newBackwards ?? currentValue.backwards ?? false,
+              limit: newLimit ?? currentValue.limit ?? 0,
+              periodTime: newPeriodTime ?? currentValue.periodTime ?? 0,
             } as Stopwatch;
+
+            // Reset
+            if (type === StopwatchActions.RESET) {
+              currentValue.startTime =
+                currentValue.startTime > 0 ? Date.now() : 0;
+              currentValue.offset = 0;
+            }
+
+            // Start
+            if (type === StopwatchActions.START) {
+              currentValue.startTime = Date.now();
+              currentValue.offset ??= 0;
+
+              // Set the interval if it was not started
+              // This stops the stopwatch automatically
+              // at the end of each period
+
+              timer ??= setInterval(() => {
+                const stopwatchInterval = nodecg.Replicant<Stopwatch>(
+                  STOPWATCH_REPLICANT_NAME,
+                  nodecg.bundleName,
+                  {
+                    defaultValue: defaultStopwatchValues,
+                    persistent: true,
+                  }
+                );
+
+                const total =
+                  Date.now() +
+                  stopwatchInterval.value.offset -
+                  stopwatchInterval.value.startTime;
+
+                const isEndOfLimit =
+                  stopwatchInterval.value.limit > 0 &&
+                  total >= stopwatchInterval.value.limit;
+
+                // Because we are only saving the duration of each period we
+                // need to know current relative time
+                let isEndOfPeriod = false;
+                if (
+                  stopwatchInterval.value.startTime > 0 &&
+                  stopwatchInterval.value.periodTime > 0
+                ) {
+                  const periodNumber = Math.ceil(
+                    total / stopwatchInterval.value.periodTime
+                  );
+                  const relativePeriodTime =
+                    total % stopwatchInterval.value.periodTime;
+                  isEndOfPeriod =
+                    relativePeriodTime < STOPWATCH_TICK_TIME &&
+                    periodNumber > 1;
+                }
+
+                // End of limit or period
+                if (
+                  stopwatchInterval.value.startTime === 0 ||
+                  isEndOfLimit ||
+                  isEndOfPeriod
+                ) {
+                  stopwatchInterval.value.startTime = 0;
+                  stopwatchInterval.value.offset = total > 0 ? total : 0;
+                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                  clearInterval(timer!);
+                  timer = null;
+                  return;
+                }
+              }, STOPWATCH_TICK_TIME);
+            }
             break;
 
           case StopwatchActions.STOP:
-            const total =
-              currentValue.startTime > 0
-                ? Date.now() - currentValue.startTime + currentValue.offset
-                : 0;
             currentValue.startTime = 0;
-            currentValue.offset = total;
-            break;
-
-          case StopwatchActions.RESET:
-            const {
-              limit = currentValue.limit,
-              offset = 0,
-              backwards = currentValue.backwards,
-            } = (payload as StopwatchStartActionTypePayloadObject) || {};
-            currentValue = {
-              startTime: currentValue.startTime > 0 ? Date.now() : 0,
-              limit,
-              offset,
-              backwards,
-            };
+            currentValue.offset = currentTotalTime;
+            if (timer) {
+              clearInterval(timer);
+              timer = null;
+            }
             break;
 
           // update, timeLimit, offset, backwards
@@ -135,7 +209,24 @@ export async function stopwatchReplicantMessages(
               tmpValue = payload as number;
             }
 
+            if (tmpValue > currentValue.limit) {
+              throw new Error("Offset cannot be greater than limit");
+            }
+
+            if (tmpValue + currentTotalTime < 0) {
+              throw new Error("The time can not be less than 0");
+            }
+
             currentValue.offset = tmpValue;
+            break;
+
+          case StopwatchActions.ADD_OFFSET:
+            if (currentValue.offset + ((payload as number) ?? 0) < 0) {
+              throw new Error(
+                "You can not set an offset that makes the stopwatch restart or have negative values, use backwards instead"
+              );
+            }
+            currentValue.offset += (payload as number) ?? 0;
             break;
 
           case StopwatchActions.SET_TIME_LIMIT:
@@ -156,8 +247,26 @@ export async function stopwatchReplicantMessages(
             currentValue.limit = tmpValue;
             break;
 
-          case StopwatchActions.ADD_OFFSET:
-            currentValue.offset += (payload as number) ?? 0;
+          case StopwatchActions.SET_PERIOD_TIME:
+            assertPayload(ack, payload);
+
+            if (typeof payload === typeof Function) {
+              const callback = payload as StopwatchSetTypeByCallback<number>;
+              tmpValue = callback(
+                currentValue.periodTime,
+                currentValue.startTime,
+                currentValue.limit,
+                currentValue.offset
+              );
+            } else {
+              tmpValue = payload as number;
+            }
+
+            if (currentValue.limit > 0 && tmpValue > currentValue.limit) {
+              throw new Error("Period time cannot be greater than limit");
+            }
+
+            currentValue.periodTime = tmpValue;
             break;
 
           default:

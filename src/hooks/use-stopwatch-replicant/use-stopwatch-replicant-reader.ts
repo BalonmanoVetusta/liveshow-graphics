@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { STOPWATCH_REPLICANT_NAME } from "services/stopwatch-replicant-name";
 import {
   getStopwatchTimeValues,
-  StopwatchPropsFromLapReturn,
+  StopwatchPropsReturn,
 } from "./lib/get-stopwatch-time-values";
 import { ReplicantOptions } from "/.nodecg/types/server";
 
@@ -26,7 +26,7 @@ export function useStopwatchReplicantReader({
   replicantOptions = { persistent: true },
   maxTimeUnit = MaxTimeUnit.HOURS,
   tickTime = 10,
-}: Partial<UseStopwatchReplicantReaderProps> = {}): StopwatchPropsFromLapReturn {
+}: Partial<UseStopwatchReplicantReaderProps> = {}): StopwatchPropsReturn {
   const [stopwatch] = useReplicant<Stopwatch, Stopwatch>(
     STOPWATCH_REPLICANT_NAME,
     {
@@ -34,59 +34,90 @@ export function useStopwatchReplicantReader({
       offset: 0,
       limit: 0,
       backwards: false,
+      periodTime: 0,
     } as Stopwatch,
     replicantOptions
   );
 
   const timer = useRef<number | null>(null);
-  const [days, setDays] = useState(0);
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  const [milliseconds, setMilliseconds] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const [isEnded, setIsEnded] = useState(false);
-  const [isBackwards, setIsBackwards] = useState(false);
-  const [limit, setLimit] = useState(0);
-  const [time, setTime] = useState(0);
+  const [days, setDays] = useState<number>(0);
+  const [hours, setHours] = useState<number>(0);
+  const [minutes, setMinutes] = useState<number>(0);
+  const [seconds, setSeconds] = useState<number>(0);
+  const [milliseconds, setMilliseconds] = useState<number>(0);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [isEnded, setIsEnded] = useState<boolean>(false);
+  const [isBackwards, setIsBackwards] = useState<boolean>(false);
+  const [limit, setLimit] = useState<number>(0);
+  const [time, setTime] = useState<number>(0);
+  const [periodTime, setPeriodTime] = useState<number>(0);
+  const [currentPeriod, setCurrentPeriod] = useState<number>(0);
+  const [totalPeriods, setTotalPeriods] = useState<number>(0);
+  const [isEndOfPeriod, setIsEndOfPeriod] = useState<boolean>(false);
+
+  const updateStates = (): void => {
+    const currentValues = getStopwatchTimeValues(
+      stopwatch,
+      maxTimeUnit,
+      tickTime
+    );
+
+    console.log({ currentValues });
+
+    setTime(currentValues.time);
+    setDays(currentValues.days ?? 0);
+    setHours(currentValues.hours ?? 0);
+    setMinutes(currentValues.minutes ?? 0);
+    setSeconds(currentValues.seconds ?? 0);
+    setMilliseconds(currentValues.milliseconds);
+
+    if (currentValues.isBackwards !== isBackwards) {
+      setIsBackwards(currentValues.isBackwards);
+    }
+
+    if (currentValues.limit !== limit) {
+      setLimit(currentValues.limit);
+    }
+
+    if (currentValues.isRunning !== isRunning) {
+      setIsRunning(currentValues.isRunning);
+    }
+
+    if (currentValues.isEndOfPeriod !== isEndOfPeriod) {
+      setIsEndOfPeriod(currentValues.isEndOfPeriod);
+    }
+
+    if (currentValues.isEnded !== isEnded) {
+      setIsEnded(currentValues.isEnded);
+    }
+
+    if (currentValues.periodTime !== periodTime) {
+      setPeriodTime(currentValues.periodTime);
+    }
+
+    if (currentValues.currentPeriod !== currentPeriod) {
+      setCurrentPeriod(currentValues.currentPeriod ?? 0);
+    }
+
+    if (currentValues.totalPeriods !== totalPeriods) {
+      setTotalPeriods(currentValues.totalPeriods);
+    }
+  };
 
   useEffect(() => {
-    const {
-      startTime = 0,
-      limit: swLimit = 0,
-      backwards = false,
-    } = stopwatch || {};
+    const { startTime = 0 } = stopwatch || {};
 
     if (timer.current === null && (startTime ?? 0) > 0 && !isEnded) {
       timer.current = window.setInterval(() => {
         const props = getStopwatchTimeValues(stopwatch, maxTimeUnit);
-        setIsRunning(props.isRunning);
+        updateStates();
         if (props.isEnded || stopwatch.startTime === 0) {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           clearInterval(timer.current!);
         }
-        setTime(props.time);
-        setDays(props.days ?? 0);
-        setHours(props.hours ?? 0);
-        setMinutes(props.minutes ?? 0);
-        setSeconds(props.seconds ?? 0);
-        setMilliseconds(props.milliseconds);
-        setIsEnded(props.isEnded);
-        setIsBackwards(backwards ?? false);
-        setLimit(swLimit ?? 0);
       }, tickTime);
     } else {
-      const props = getStopwatchTimeValues(stopwatch, maxTimeUnit);
-      setIsRunning(props.isRunning);
-      setTime(props.time);
-      setDays(props.days ?? 0);
-      setHours(props.hours ?? 0);
-      setMinutes(props.minutes ?? 0);
-      setSeconds(props.seconds ?? 0);
-      setMilliseconds(props.milliseconds);
-      setIsEnded(props.isEnded);
-      setIsBackwards(backwards ?? false);
-      setLimit(swLimit ?? 0);
+      updateStates();
     }
 
     return () => {
@@ -106,8 +137,12 @@ export function useStopwatchReplicantReader({
     milliseconds,
     isRunning,
     isEnded,
+    isEndOfPeriod,
     isBackwards,
     limit,
     time,
+    periodTime,
+    currentPeriod,
+    totalPeriods,
   };
 }

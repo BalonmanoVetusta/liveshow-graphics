@@ -21,10 +21,20 @@ export type TimeLimitToStopTheStopwatch = number;
  * If this value is true and limitMiliseconds greater than 0 then stopwatch will be a countdown
  */
 export type Backwards = boolean;
+/**
+ * Period time in miliseconds to know in which period it is the match. 0 means no period.
+ */
+export type HowManyTimeIsAPeriod = number;
+/**
+ * Calculated time
+ */
+export type HowManyTimeHasPassed = number;
 
 export interface Stopwatch {
   startTime: StartTimeInMilisecondsSinceEpoch;
   offset: Offset;
   limit: TimeLimitToStopTheStopwatch;
   backwards: Backwards;
+  periodTime: HowManyTimeIsAPeriod;
+  total?: HowManyTimeHasPassed;
 }

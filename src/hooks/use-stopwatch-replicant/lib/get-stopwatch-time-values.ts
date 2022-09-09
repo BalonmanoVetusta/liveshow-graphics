@@ -3,42 +3,49 @@ import getTimeFromMiliseconds, {
 } from "hooks/use-stopwatch-replicant/lib/get-time-from-miliseconds";
 import { Stopwatch } from "types/schemas/stopwatch";
 
-export declare interface StopwatchPropsFromLapReturn {
+const DEFAULT_STOPWATCH_TICK_TIME = 10;
+
+export declare interface StopwatchPropsReturn {
   time: number;
   limit: number;
   isEnded: boolean;
   isRunning: boolean;
+  isEndOfPeriod: boolean;
   isBackwards: boolean;
   days?: number;
   hours?: number;
   minutes?: number;
   seconds?: number;
   milliseconds: number;
+  periodTime: number;
+  currentPeriod: number;
+  totalPeriods: number;
 }
 
 export function getStopwatchTimeValues(
   sw: Stopwatch,
-  maxTimeUnit: MaxTimeUnit = MaxTimeUnit.HOURS
-): StopwatchPropsFromLapReturn {
+  maxTimeUnit: MaxTimeUnit = MaxTimeUnit.HOURS,
+  tickTime = DEFAULT_STOPWATCH_TICK_TIME
+): StopwatchPropsReturn {
   let totalTime = 0;
-  let isRunning = false;
-  let isEnded = false;
 
-  const { startTime = 0, offset = 0, limit = 0, backwards = false } = sw;
+  const {
+    startTime = 0,
+    offset = 0,
+    limit = 0,
+    backwards = false,
+    periodTime = 0,
+  } = sw;
 
   if (startTime > 0) {
     totalTime = Date.now() - startTime + offset;
-    if (limit > 0 && totalTime >= limit) {
-      isRunning = false;
-      isEnded = true;
-      totalTime = limit;
-    } else if (totalTime > 0) {
-      isRunning = true;
-    } else {
-      totalTime = 0;
+    if (totalTime < 0) {
+      throw new Error("Time is negative and can not be negative.");
     }
-  } else {
-    totalTime = offset;
+
+    if (limit > 0 && totalTime >= limit) {
+      totalTime = limit;
+    }
   }
 
   const {
@@ -48,15 +55,27 @@ export function getStopwatchTimeValues(
     milliseconds = 0,
   } = getTimeFromMiliseconds(totalTime, maxTimeUnit);
 
+  const isRunning = totalTime > 0;
+  const isEnded =
+    limit > 0 &&
+    !isRunning &&
+    (totalTime >= limit || totalTime - limit < tickTime);
   return {
-    time: totalTime,
+    time: totalTime || offset,
     isRunning,
     isBackwards: backwards,
     isEnded,
+    isEndOfPeriod:
+      isEnded || (periodTime > 0 && totalTime % periodTime < tickTime),
     limit,
     hours,
     minutes,
     seconds,
     milliseconds,
+    periodTime: sw.periodTime,
+    currentPeriod:
+      periodTime > 0 ? Math.max(Math.ceil(totalTime / periodTime), 1) : 0,
+    totalPeriods:
+      limit > 0 && periodTime > 0 ? Math.ceil(limit / periodTime) : 0,
   };
 }

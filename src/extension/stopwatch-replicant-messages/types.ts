@@ -7,6 +7,7 @@ export enum StopwatchActions {
   SET_OFFSET = "SET_OFFSET",
   ADD_OFFSET = "ADD_OFFSET",
   SET_BACKWARDS = "SET_BACKWARDS",
+  SET_PERIOD_TIME = "SET_PERIOD_TIME",
 }
 
 export type StopwatchSetTypeByCallback<T> = (
@@ -24,6 +25,7 @@ export interface StopwatchStartActionTypePayloadObject {
   offset?: number;
   backwards?: boolean | false;
   limit?: number;
+  periodTime?: number;
 }
 
 export interface StartActionType extends StopwatchAction {
@@ -64,6 +66,11 @@ export interface SetBackwardsActionType extends StopwatchAction {
   payload: boolean | StopwatchSetTypeByCallback<boolean>;
 }
 
+export interface SetPeriodTimeActionType extends StopwatchAction {
+  type: StopwatchActions.SET_PERIOD_TIME;
+  payload: number | StopwatchSetTypeByCallback<number>;
+}
+
 export declare type StopwatchActionPayloadType =
   | StartActionType["payload"]
   | TimeLimitActionType["payload"]
@@ -71,6 +78,7 @@ export declare type StopwatchActionPayloadType =
   | OffsetActionType["payload"]
   | AddOffsetActionType["payload"]
   | SetBackwardsActionType["payload"]
+  | SetPeriodTimeActionType["payload"]
   | undefined;
 
 export declare type StopwatchActionType = StopwatchAction & {
