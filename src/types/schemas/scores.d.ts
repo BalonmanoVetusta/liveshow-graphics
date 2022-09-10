@@ -6,26 +6,20 @@
  */
 
 export interface Scores {
-  local?: {
-    goals?: number;
-    timeouts?: number;
-    warnings?: {
-      time?: number;
-      type?: "2minute" | "yellow-card" | "red-card" | "blue-card";
-      player?: number | string | null;
-      [k: string]: unknown;
-    }[];
+  "local-goals"?: number;
+  "local-timeouts"?: number;
+  "local-warnings"?: {
+    time?: number;
+    type?: "2minute" | "yellow-card" | "red-card" | "blue-card";
+    player?: number | string | null;
     [k: string]: unknown;
-  };
-  visitor?: {
-    goals?: number;
-    timeouts?: number;
-    warnings?: {
-      time?: number;
-      type?: "2minute" | "yellow-card" | "red-card" | "blue-card";
-      player?: number | string | null;
-      [k: string]: unknown;
-    }[];
+  }[];
+  "visitor-goals"?: number;
+  "visitor-timeouts"?: number;
+  "visitor-warnings"?: {
+    time?: number;
+    type?: "2minute" | "yellow-card" | "red-card" | "blue-card";
+    player?: number | string | null;
     [k: string]: unknown;
-  };
+  }[];
 }

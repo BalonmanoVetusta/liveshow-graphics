@@ -5,6 +5,8 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+export type MatchActions = MatchAction[];
+
 export interface MatchAction {
   id: string;
   gmtTimestamp: number;

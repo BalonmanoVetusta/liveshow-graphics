@@ -62,8 +62,6 @@ export function useStopwatchReplicantReader({
       tickTime
     );
 
-    console.log({ currentValues });
-
     setTime(currentValues.time);
     setDays(currentValues.days ?? 0);
     setHours(currentValues.hours ?? 0);
