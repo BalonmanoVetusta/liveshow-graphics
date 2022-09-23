@@ -1,4 +1,5 @@
 import { useReplicant } from "hooks/use-replicant";
+import { useStopwatchReplicantReader } from "hooks/use-stopwatch-replicant";
 import { ReplicantOptions } from "nodecg/types/server";
 import { MatchAction } from "types/schemas/match-action";
 import { MatchActions } from "types/schemas/match-actions";
@@ -58,7 +59,7 @@ export type MatchActionsReplicantOptions = ReplicantOptions<MatchActions> & {
 export type UseMatchActionsMatchActionType = Omit<MatchAction, "gmtTimestamp">;
 export type UseMatchActionsAddActionType = Omit<
   MatchAction,
-  "gmtTimestamp" | "id"
+  "gmtTimestamp" | "id" | "matchTime"
 >;
 
 export interface UseMatchActionsReturn extends MatchActions {
@@ -68,27 +69,24 @@ export interface UseMatchActionsReturn extends MatchActions {
   removeActionById: (id: string) => void;
   removeActionsByTimestamp: (timestamp: number) => void;
   addGoal: (matchTime: number, goal: GoalActionType) => void;
+  removeLastGoal: (team: Team) => void;
   addWarning: (matchTime: number, warning: WarningActionType) => void;
+  reset: () => void;
 }
 
 export function useMatchActions(
   initialActions: MatchActions = [],
   options: MatchActionsReplicantOptions = {}
 ) {
+  const { time } = useStopwatchReplicantReader();
+
   const [actions, setActions] = useReplicant<MatchActions, MatchActions>(
     "match-actions",
     initialActions,
     options
   );
 
-  const addAction = (
-    matchTime: number,
-    action: UseMatchActionsAddActionType
-  ) => {
-    if (action.matchTime === undefined || action.matchTime === null) {
-      throw new Error("matchTime is required");
-    }
-
+  const addAction = (action: UseMatchActionsAddActionType) => {
     if (action.team === undefined || action.team === null) {
       throw new Error("team is required");
     }
@@ -97,61 +95,74 @@ export function useMatchActions(
       throw new Error("action is required");
     }
 
-    const newActions = [...actions];
-    const newAction = action as MatchAction;
+    const newAction = structuredClone(action) as MatchAction;
 
+    newAction.id ??= crypto.randomUUID();
+    newAction.matchTime = time;
     newAction.gmtTimestamp = Date.now();
-    newActions.push(newAction);
+    actions.push(newAction);
 
-    setActions(newActions);
+    setActions(actions);
+
+    console.log(actions);
   };
 
   const removeActionById = (id: string) => {
-    setActions([...actions.filter((action) => action.id !== id)]);
+    setActions(actions.filter((action) => action.id !== id));
   };
 
   const removeActionsByTimestamp = (gmtTimestamp: number) => {
-    setActions([
-      ...actions.filter((action) => action.gmtTimestamp !== gmtTimestamp),
-    ]);
+    setActions(
+      actions.filter((action) => action.gmtTimestamp !== gmtTimestamp)
+    );
   };
 
-  const addGoal = (
-    matchTime: number,
-    team: Team,
-    goal: GoalActionType = { quantity: 1 }
-  ) => {
-    addAction(matchTime, {
+  const addGoal = (team: Team, goal: GoalActionType = { quantity: 1 }) => {
+    addAction({
       action: "GOAL",
-      matchTime,
       team,
       payload: goal,
     });
   };
 
-  const addWarning = (
-    matchTime: number,
-    team: Team,
-    warning: WarningActionType
-  ) => {
-    addAction(matchTime, {
+  const removeLastGoal = (team: Team) => {
+    const goals = actions.filter(
+      (action) => action.action === "GOAL" && action.team === team
+    );
+
+    if (goals.length > 0) {
+      removeActionById(goals[goals.length - 1].id);
+    }
+  };
+
+  const addWarning = (team: Team, warning: WarningActionType) => {
+    addAction({
       action: "WARNING",
-      matchTime,
       team,
       payload: warning,
     });
   };
 
+  const reset = () => {
+    setActions([]);
+  };
+
   return {
     goals: {
-      local: [...actions].filter(
-        (action) =>
-          action.action === MatchActionType.GOAL && action.team === Team.LOCAL
-      ),
-      visitor: [...actions].filter(
-        (action) =>
-          action.action === MatchActionType.GOAL && action.team === Team.VISITOR
-      ),
+      local: Array.isArray(actions)
+        ? actions.filter(
+            (action) =>
+              action.action === MatchActionType.GOAL &&
+              action.team === Team.LOCAL
+          )
+        : [],
+      visitor: Array.isArray(actions)
+        ? actions.filter(
+            (action) =>
+              action.action === MatchActionType.GOAL &&
+              action.team === Team.VISITOR
+          )
+        : [],
     },
     actions,
     setActions,
@@ -159,6 +170,8 @@ export function useMatchActions(
     removeActionById,
     removeActionsByTimestamp,
     addGoal,
+    removeLastGoal,
     addWarning,
+    reset,
   };
 }

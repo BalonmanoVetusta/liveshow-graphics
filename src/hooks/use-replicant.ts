@@ -1,6 +1,7 @@
 // Copied from https://github.com/Hoishin/use-nodecg/blob/master/src/use-replicant.ts
 import { ReplicantOptions } from "nodecg/types/server";
 import { useEffect, useState } from "react";
+import structuredClone from "core-js-pure/actual/structured-clone";
 
 /**
  * Subscribe to a replicant, returns tuple of the replicant value and `setValue` function.
@@ -28,14 +29,12 @@ export const useReplicant = <T, U>(
       : nodecg.Replicant(replicantName, replicantOptions);
 
   const changeHandler = (newValue: T): void => {
-    console.log({ newValue }, JSON.parse(JSON.stringify(newValue)));
     setValue((oldValue) => {
-      console.log("Change of value detected", { oldValue, newValue });
       if (newValue !== oldValue) {
         return newValue;
       }
       // replicant.value has always the same reference. Cloning to cause re-rendering
-      return JSON.parse(JSON.stringify(newValue));
+      return structuredClone(newValue);
     });
   };
 

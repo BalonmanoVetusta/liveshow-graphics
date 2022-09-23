@@ -1,32 +1,37 @@
-import getTimeFromMiliseconds, {
-  MaxTimeUnit,
-} from "hooks/use-stopwatch-replicant/lib/get-time-from-miliseconds";
-import { Stopwatch } from "types/schemas/stopwatch";
+function getTimeFromMiliseconds(milliseconds, maxUnit = "MINUTES") {
+  const result = {};
+
+  if (maxUnit === "MILISECONDS") {
+    result.milliseconds = milliseconds;
+  }
+  result.milliseconds = milliseconds % 1000;
+
+  if (maxUnit === "SECONDS") {
+    return { ...result, seconds: Math.floor(milliseconds / 1000) };
+  }
+  result.seconds = Math.floor(milliseconds / 1000) % 60;
+
+  if (maxUnit === "MINUTES") {
+    return { ...result, minutes: Math.floor(milliseconds / 60000) };
+  }
+  result.minutes = Math.floor(milliseconds / (1000 * 60)) % 60;
+
+  if (maxUnit === "HOURS") {
+    return { ...result, hours: Math.floor(milliseconds / 3600000) };
+  }
+  result.hours = Math.floor(milliseconds / (1000 * 60 * 60)) % 24;
+  result.days = Math.floor(milliseconds / (1000 * 60 * 60 * 24));
+
+  return result;
+}
 
 const DEFAULT_STOPWATCH_TICK_TIME = 10;
 
-export declare interface StopwatchPropsReturn {
-  time: number;
-  limit: number;
-  isEnded: boolean;
-  isRunning: boolean;
-  isEndOfPeriod: boolean;
-  isBackwards: boolean;
-  days?: number;
-  hours?: number;
-  minutes?: number;
-  seconds?: number;
-  milliseconds: number;
-  periodTime: number;
-  currentPeriod: number;
-  totalPeriods: number;
-}
-
-export function getStopwatchTimeValues(
-  sw: Stopwatch,
-  maxTimeUnit: MaxTimeUnit = MaxTimeUnit.HOURS,
+function getStopwatchTimeValues(
+  sw,
+  maxTimeUnit = "MINUTES",
   tickTime = DEFAULT_STOPWATCH_TICK_TIME
-): StopwatchPropsReturn {
+) {
   let totalTime = 0;
 
   const {
@@ -55,12 +60,6 @@ export function getStopwatchTimeValues(
     milliseconds = 0,
   } = getTimeFromMiliseconds(totalTime || offset, maxTimeUnit);
 
-  // const isRunning = totalTime > 0;
-  // const isEnded =
-  //   limit > 0 &&
-  //   !isRunning &&
-  //   (totalTime >= limit || limit - totalTime < tickTime);
-
   const isEnded = limit > 0 && totalTime >= limit;
   const isRunning = !isEnded && totalTime > 0;
   const periodMod = totalTime % periodTime;
@@ -85,3 +84,16 @@ export function getStopwatchTimeValues(
       limit > 0 && periodTime > 0 ? Math.ceil(limit / periodTime) : 0,
   };
 }
+
+const st = {
+  startTime: Date.now() - 60000 - 10,
+  offset: 0,
+  limit: 120000,
+  backwards: false,
+  periodTime: 60000,
+};
+
+// st.startTime = Date.now() - 120000;
+
+const props = getStopwatchTimeValues(st);
+console.log(props);

@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Livescore";
+  font-style: normal;
+  font-weight: 100 900;
+  src: url(/bundles/handball-liveshow-spain/assets/fonts/CursedTimerUlil-Aznm.ttf)
+    format("truetype-variations");
+}
+
+body {
+  font-family: "Livescore";
+  font-size: 1.5rem;
+}

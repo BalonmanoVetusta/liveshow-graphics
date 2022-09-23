@@ -10,3 +10,7 @@ The hooks:
 - [`useReplicantOnce`](https://github.com/Hoishin/use-nodecg/blob/master/src/use-replicant-once.ts)
 
 Were copied from project [use-nodecg](https://github.com/Hoishin/use-nodecg). The `useReplicant` were modified to delete the depency of lodash library.
+
+## Scoreboard Font
+
+- https://www.fontspace.com/cursed-timer-ulil-font-f29411

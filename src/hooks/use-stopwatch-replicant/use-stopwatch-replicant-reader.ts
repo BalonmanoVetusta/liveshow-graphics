@@ -8,6 +8,7 @@ import {
   getStopwatchTimeValues,
   StopwatchPropsReturn,
 } from "./lib/get-stopwatch-time-values";
+import { useStopwatchReplicantControl } from "./use-stopwatch-replicant-control";
 import { ReplicantOptions } from "/.nodecg/types/server";
 
 export interface UseStopwatchReplicantReaderProps {
@@ -27,6 +28,7 @@ export function useStopwatchReplicantReader({
   maxTimeUnit = MaxTimeUnit.HOURS,
   tickTime = 10,
 }: Partial<UseStopwatchReplicantReaderProps> = {}): StopwatchPropsReturn {
+  const { stop } = useStopwatchReplicantControl();
   const [stopwatch] = useReplicant<Stopwatch, Stopwatch>(
     STOPWATCH_REPLICANT_NAME,
     {
@@ -108,8 +110,11 @@ export function useStopwatchReplicantReader({
     if (timer.current === null && (startTime ?? 0) > 0 && !isEnded) {
       timer.current = window.setInterval(() => {
         const props = getStopwatchTimeValues(stopwatch, maxTimeUnit);
+        console.log({ props });
         updateStates();
-        if (props.isEnded || stopwatch.startTime === 0) {
+        // TODO: Not sure if isEndOfPeriod can introduce a bug that stopwatch does not work
+        if (props.isEnded || stopwatch.startTime === 0 || props.isEndOfPeriod) {
+          stop();
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           clearInterval(timer.current!);
         }

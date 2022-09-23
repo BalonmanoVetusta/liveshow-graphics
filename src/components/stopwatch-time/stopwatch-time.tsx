@@ -4,15 +4,15 @@ import { useStopwatchReplicantReader } from "hooks/use-stopwatch-replicant";
 import { ReactElement } from "react";
 
 interface StopwatchTimeProps {
-  periodText: string | null;
-  periodMinutes: number; // Must be equal or greater than 1 to be showed
+  // periodText: string | null;
+  // periodMinutes: number; // Must be equal or greater than 1 to be showed
   lastMinuteShowMiliseconds: boolean;
   padZeroes: number;
 }
 
 export function StopwatchTime({
-  periodText = null,
-  periodMinutes = 30,
+  // periodText = null,
+  // periodMinutes = 30,
   lastMinuteShowMiliseconds = false,
   padZeroes = 2,
 }: Partial<StopwatchTimeProps> = {}): ReactElement {
@@ -22,8 +22,8 @@ export function StopwatchTime({
     seconds = 0,
     milliseconds = 0,
     limit = 0,
-    isEnded = false,
-    isEndOfPeriod = false,
+    // isEnded = false,
+    // isEndOfPeriod = false,
   } = useStopwatchReplicantReader();
 
   const renderLastMinute = (): ReactElement => {
@@ -43,14 +43,11 @@ export function StopwatchTime({
 
   return (
     <motion.div>
-      {periodMinutes > 0 ? (
+      {/* {periodMinutes > 0 ? (
         <motion.div className="period-time">
           {periodText} {minutes > 0 ? Math.ceil(minutes / periodMinutes) : 1}
         </motion.div>
-      ) : null}
-
-      {isEnded ? "Final" : "Partido"}
-      {isEndOfPeriod ? "Final periodo" : "Running"}
+      ) : null} */}
 
       <motion.div className="scoreboard-time">
         <motion.span>{minutes.toString().padStart(padZeroes, "0")}</motion.span>
