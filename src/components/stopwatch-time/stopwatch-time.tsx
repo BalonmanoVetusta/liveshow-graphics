@@ -1,6 +1,9 @@
 import { Separator } from "components/separator";
 import { motion } from "framer-motion";
-import { useStopwatchReplicantReader } from "hooks/use-stopwatch-replicant";
+import {
+  MaxTimeUnit,
+  useStopwatchReplicantReader,
+} from "hooks/use-stopwatch-replicant";
 import { ReactElement } from "react";
 
 interface StopwatchTimeProps {
@@ -24,7 +27,7 @@ export function StopwatchTime({
     limit = 0,
     // isEnded = false,
     // isEndOfPeriod = false,
-  } = useStopwatchReplicantReader();
+  } = useStopwatchReplicantReader({ maxTimeUnit: MaxTimeUnit.MINUTES });
 
   const renderLastMinute = (): ReactElement => {
     if (lastMinuteShowMiliseconds && limit - 60000 <= totalTime) {
