@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "additionalProperties": false,
+  "type": "object",
+  "required": ["id", "gmtTimestamp", "matchTime", "team", "action"],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "gmtTimestamp": {
+      "type": "number"
+    },
+    "matchTime": {
+      "type": "number",
+      "minimum": 0
+    },
+    "team": {
+      "enum": ["LOCAL", "VISITOR"]
+    },
+    "action": {
+      "enum": [
+        "GOAL",
+        "TIMEOUT",
+        "WARNING",
+        "MATCH_START",
+        "MATCH_END",
+        "OTHER"
+      ]
+    },
+    "payload": {}
+  }
+}

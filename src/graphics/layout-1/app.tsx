@@ -1,18 +1,16 @@
-import React, { ReactElement } from 'react'
+import { ScoreboardResults } from "components/scoreboard/scoreboard-results";
+import { StopwatchTime } from "components/stopwatch-time/stopwatch-time";
+import { ReactElement } from "react";
+// import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
 
 function App(): ReactElement | null {
-    return (
-        <div>
-            <h1>Hello, this is one of your graphics</h1>
-            <p>
-                To edit me, open {`"`}
-                <span id="path" className="monospace">
-                    {__filename}
-                </span>
-                {`"`} in your favorite text editor or IDE.
-            </p>
-        </div>
-    )
+  return (
+    <div>
+      {/* <ScoreboardResults stopwatchContext={SCOREBOARD_MAIN_TIMER} /> */}
+      <StopwatchTime lastMinuteShowMiliseconds={false} />
+      <ScoreboardResults />
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -1,5 +1,6 @@
 {
   "name": "handball-liveshow-spain",
+  "private": true,
   "version": "1.0.0",
   "description": "NodeCG for Handball matches Live streamings in Spain (valid for other countries but could have calls to spanish league api)",
   "homepage": "https://github.com/balonmanovetusta/liveshow-graphics",
@@ -12,32 +13,35 @@
     "extension"
   ],
   "scripts": {
-    "predev:start": "bun run watch",
-    "dev:start": "include-nodecg start",
+    "dev:start": "bun run dev",
     "prestart": "bun run build",
     "start": "bun run watch",
     "watch": "bun run watch:dashboard && bun run watch:graphics && bun run watch:extension",
     "watch:dashboard": "parcel watch src/dashboard/*.html --dist-dir ./ --target dashboard",
     "watch:graphics": "parcel watch src/graphics/*.html --dist-dir ./ --target graphics",
     "watch:extension": "parcel watch --dist-dir ./ --target extension",
+    "prebuild": "bun run build:schemas",
     "build": "bun run build:dashboard && bun run build:graphics && bun run build:extension",
+    "build:schemas": "rm -rf ./types/schemas/*.d.ts && cd schemas && json2ts -i '*.json' -o ../src/types/schemas/ && cd ..",
     "build:dashboard": "parcel build src/dashboard/*.html --dist-dir ./ --target dashboard",
     "build:graphics": "parcel build src/graphics/*.html --dist-dir ./ --target graphics",
     "build:extension": "parcel build --dist-dir ./ --target extension",
-    "predev": "bun run clean && bun run build",
+    "predev": "bun run build",
     "dev": "include-nodecg start",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
     "clean": "rm -rf .parcel-cache dashboard extension graphics",
     "prepare": "husky install",
-    "postinstall": "./bin/postinstall"
+    "postinstall": "bun ./bin/postinstall.mjs",
+    "test": "ts-node test.ts",
+    "rr": "typescript ./src/hooks/use-stopwatch-replicant/lib/get-stopwatch-time-values.ts"
   },
   "targets": {
     "default": {
       "distDir": "../",
       "publicUrl": "./",
       "engines": {
-        "browsers": "> 1%, last 2 versions, not dead"
+        "browsers": "last 2 Chrome versions, last 2 Firefox versions, last 2 Safari versions, last 2 edge versions"
       },
       "context": "browser",
       "outputFormat": "esmodule"
@@ -54,7 +58,8 @@
       "context": "node",
       "outputFormat": "commonjs",
       "engines": {
-        "node": ">=14.0.0"
+        "browsers": "node >= 18",
+        "node": ">=18"
       }
     }
   },
@@ -67,9 +72,29 @@
     "compatibleRange": "1.9.0",
     "dashboardPanels": [
       {
+        "name": "Match Configuration ",
+        "title": "Match Configuration & Time Control",
+        "file": "matchconfig.html",
+        "width": 4,
+        "headerColor": "#525F78",
+        "workspace": "workspace",
+        "fullbleed": false,
+        "dialog": false
+      },
+      {
         "name": "scoreboard",
-        "title": "Scoreboard control",
+        "title": "Score Controls",
         "file": "scoreboard.html",
+        "width": 2,
+        "headerColor": "#525F78",
+        "workspace": "workspace",
+        "fullbleed": false,
+        "dialog": false
+      },
+      {
+        "name": "stopwatch",
+        "title": "Match Time View & Edit",
+        "file": "stopwatch.html",
         "width": 2,
         "headerColor": "#525F78",
         "workspace": "workspace",
@@ -84,6 +109,26 @@
         "height": 1080,
         "singleInstance": false
       }
+    ],
+    "assetCategories": [
+      {
+        "name": "shields",
+        "title": "Team Shields",
+        "allowedTypes": [
+          "jpg",
+          "jpeg",
+          "gif",
+          "png",
+          "webp",
+          "svg"
+        ]
+      }
+    ],
+    "mount": [
+      {
+        "directory": "assets",
+        "endpoint": "assets"
+      }
     ]
   },
   "license": "MIT",
@@ -91,29 +136,35 @@
     "@parcel/transformer-svg-react": "2.7.0",
     "@parcel/transformer-typescript-tsc": "2.7.0",
     "@parcel/validator-typescript": "2.7.0",
-    "@types/react": "18.0.17",
+    "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
-    "@typescript-eslint/eslint-plugin": "5.33.0",
-    "@typescript-eslint/parser": "5.33.0",
-    "eslint": "8.21.0",
+    "@types/styled-components": "5.1.26",
+    "@typescript-eslint/eslint-plugin": "5.38.0",
+    "@typescript-eslint/parser": "5.38.0",
+    "eslint": "8.23.1",
     "eslint-config-prettier": "8.5.0",
+    "eslint-import-resolver-typescript": "3.5.1",
+    "eslint-plugin-compat": "4.0.2",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsx-a11y": "6.6.1",
-    "eslint-plugin-react": "7.30.1",
+    "eslint-plugin-react": "7.31.8",
     "eslint-plugin-react-hooks": "4.6.0",
     "events": "3.3.0",
     "husky": "8.0.1",
     "include-nodecg": "0.0.3",
+    "json-schema-to-typescript": "11.0.2",
     "parcel": "2.7.0",
     "parcel-resolver-ts-base-url": "1.1.5",
     "parcel-resolver-tspaths": "0.0.9",
     "prettier": "2.7.1",
     "process": "0.11.10",
-    "typescript": "4.7.4"
+    "typescript": "4.8.3"
   },
   "dependencies": {
-    "@tanstack/react-query": "4.0.10",
-    "framer-motion": "7.1.0",
+    "@mdi/js": "7.0.96",
+    "@mdi/react": "1.6.1",
+    "core-js": "3.25.2",
+    "framer-motion": "7.3.6",
     "nodecg": "1.9.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

@@ -1,73 +1,16 @@
-# Nodecg-react-template
+## Stuff no compatible with bun
 
-This is an updated revision of [Hectorban work](https://github.com/Hectorban/Nodecg-react-typescript-template).
+`npm run build:schema` is not compatible for any reason with `bun.sh`
 
-Nodecg react template done with parcel and typescript
+## About the copied source code
 
-This is a [NodeCG](http://github.com/nodecg/nodecg) bundle, powered by Typescript, React and Parcel.
+The hooks:
 
-If you use this template probably you are interested in [`use-nodecg`](https://github.com/Hoishin/use-nodecg) package.
+- [`useReplicant`](https://github.com/Hoishin/use-nodecg/blob/master/src/use-replicant.ts)
+- [`useReplicantOnce`](https://github.com/Hoishin/use-nodecg/blob/master/src/use-replicant-once.ts)
 
-It works with NodeCG versions which satisfy this [semver](https://docs.npmjs.com/getting-started/semantic-versioning) range: `1.9.0`
+Were copied from project [use-nodecg](https://github.com/Hoishin/use-nodecg). The `useReplicant` were modified to delete the depency of lodash library.
 
-## Getting started
+## Scoreboard Font
 
-This template includes `include-nodecg` package so it is not necessary to install `nodecg-cli` before.
-
-1. Install dependencies and build the bundle with `npm`
-
-```bash
-npm i
-```
-
-2. To start developing run:
-
-```bash
-npm run dev
-```
-
-## Add a dashboard
-1. Add the configuration in [`package.json`](https://www.nodecg.dev/docs/manifest#nodecggraphics). You can see how is added the current as example.
-2. Copy any of the current html and rename it to the given name in the `package.json` to your new panel.
-3. Copy any of the `panel` folders and rename it.
-4. Replace the path to the React loader (`index.tsx`) in your new html with the name of your folder (if you don't do this, you will load other panel 😅).
-5. Add your react components in the `app.tsx` and enjoy programming.
-
-## Add new graphics
-
-1. Add the configuration in [`package.json`](https://www.nodecg.dev/docs/manifest#nodecggraphics). You can see how is added the current one as example.
-2. Copy the current `layout-1.html` and rename it inside the same folder with the given name for the graphics html in the `package.json`.
-3. Copy the folder, remember to change in the new html the path to the React loader (should rename `layout-1` string with the name of your new folder).
-4. Add your react components in the `app.tsx` and enjoy programming.
-
-
-## To use with Bun.sh
-
-After executing `npm install` (Installation must be done with npm due to github directly dependencies that can not be installed with bun until issue [#82](https://github.com/oven-sh/bun/issues/82) is fixed) modify `.nodecg/package.json` scripts section:
-
-```bash
-  "scripts": {
-    "start": "bun index.js",
-    "test": "bun run build && bun run instrument && nyc --reporter=none ava --config ava.config.js && nyc report --reporter=html --reporter=text && bun run typetest",
-    "static": "eslint index.js lib src test",
-    "build": "gulp",
-    "instrument": "nyc instrument ./src ./instrumented && bun test/helpers/retarget-browser-coverage.js",
-    "release": "bun run build && npm test && standard-version --commit-all",
-    "typetest": "cd typetest/fake-bundle && npm i && bun run build"
-  },
-```
-
-## Known issues
-
--   Extension fails when using `export default main;` instead of using `module.exports` so we are mixing `commonjs` modules with `esmodules` and that should not be done.
-
-## TODO
-
--   [x] Sample how to handle [Dialogs](https://www.nodecg.dev/docs/making-dialogs) and use Messages from Dialog to Dashboard panel.
--   [ ] Sample how to use Replicants
--   [ ] Sample how to use Messages and return errors sent from backend (extension).
--   [ ] React Hooks to use Replicants and messages are available here: https://github.com/Hoishin/use-nodecg
--   [ ] Testing. Check this for graphics: https://github.com/nodecg/nodecg-screenshot-tester
--   [ ] Generator to create Dashboard.
--   [ ] Generator to create a graphics layout.
--   [ ] Distribute only generated html instead of all package.
+- https://www.fontspace.com/cursed-timer-ulil-font-f29411

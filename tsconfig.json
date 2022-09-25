@@ -5,8 +5,9 @@
     "module": "esnext", //commonjs destroys 'dynamic imports' which is used for code splitting
     "noImplicitAny": false,
     "preserveConstEnums": true,
-    "jsx": "react", // process JSX
+    "jsx": "react-jsx", // process JSX
     "jsxImportSource": "react",
+    "jsxFragmentFactory": "Fragment",
     "isolatedModules": true,
     "lib": ["dom", "es5", "es6", "es7", "es2017"],
     "allowSyntheticDefaultImports": true, // no errors with commonjs modules interop
@@ -38,7 +39,14 @@
       "nodecg/*": ["../.nodecg/*"]
     }
   },
-  "include": ["./src/**/*.tsx", "./src/**/*.ts", "src/stores/NodecgStore.ts"],
+  "files": ["globals.d.ts"],
+  "include": [
+    "./src/**/*.tsx",
+    "./src/**/*.ts",
+    "./src/**/*.jsx",
+    "./src/**/*.js",
+    "src/hooks/use-match-actions"
+  ],
   "exclude": ["node_modules"],
   "typeRoots": ["src/types", "node_modules/@types"]
 }
