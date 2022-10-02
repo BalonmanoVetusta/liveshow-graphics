@@ -20,14 +20,17 @@ export function StopwatchTime({
   padZeroes = 2,
 }: Partial<StopwatchTimeProps> = {}): ReactElement {
   const {
-    time: totalTime = 0,
+    time: totalTime,
     minutes = 0,
     seconds = 0,
     milliseconds = 0,
-    limit = 0,
-    // isEnded = false,
-    // isEndOfPeriod = false,
-  } = useStopwatchReplicantReader({ maxTimeUnit: MaxTimeUnit.MINUTES });
+    // isEnded,
+    // isRunning,
+    // periodTime,
+    limit,
+  } = useStopwatchReplicantReader({
+    maxTimeUnit: MaxTimeUnit.MINUTES,
+  });
 
   const renderLastMinute = (): ReactElement => {
     if (lastMinuteShowMiliseconds && limit - 60000 <= totalTime) {

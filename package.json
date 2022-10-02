@@ -25,7 +25,7 @@
     "build:schemas": "rm -rf ./types/schemas/*.d.ts && cd schemas && json2ts -i '*.json' -o ../src/types/schemas/ && cd ..",
     "build:dashboard": "parcel build src/dashboard/*.html --dist-dir ./ --target dashboard",
     "build:graphics": "parcel build src/graphics/*.html --dist-dir ./ --target graphics",
-    "build:extension": "parcel build --dist-dir ./ --target extension",
+    "build:extension": "parcel build --no-content-hash --dist-dir ./ --target extension",
     "predev": "bun run build",
     "dev": "include-nodecg start",
     "lint": "eslint ./src",
@@ -136,6 +136,7 @@
     "@parcel/transformer-svg-react": "2.7.0",
     "@parcel/transformer-typescript-tsc": "2.7.0",
     "@parcel/validator-typescript": "2.7.0",
+    "@types/express-serve-static-core": "4.17.31",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "@types/styled-components": "5.1.26",
@@ -158,7 +159,8 @@
     "parcel-resolver-tspaths": "0.0.9",
     "prettier": "2.7.1",
     "process": "0.11.10",
-    "typescript": "4.8.3"
+    "typescript": "4.8.3",
+    "uuidv4": "6.2.13"
   },
   "dependencies": {
     "@mdi/js": "7.0.96",
