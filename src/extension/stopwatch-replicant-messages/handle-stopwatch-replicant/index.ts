@@ -70,8 +70,11 @@ export function handleStopwatchReplicant(
       break;
 
     case StopwatchActions.STOP:
-      newValue.startTime = 0;
-      newValue.offset = currentTotalTime;
+      if (stopwatch.value.startTime > 0) {
+        newValue.startTime = 0;
+        newValue.offset = currentTotalTime;
+      }
+
       clearHandleInterval();
       break;
 
