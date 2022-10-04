@@ -13,15 +13,16 @@ Were copied from project [use-nodecg](https://github.com/Hoishin/use-nodecg). Th
 
 ## API REST
 
-### `/{bundle-name}/api/stopwatch/{action}`
+### `/{bundle-name}/stopwatch/{action}`
 
 #### action
 
 - `start`
 - `stop`
 - `reset`
+- `toggle`
 
-### `/{bundle-name}/api/score/{team}/{action}`
+### `/{bundle-name}/scoreboard/{team}/{action}`
 
 #### team
 
@@ -31,4 +32,4 @@ Were copied from project [use-nodecg](https://github.com/Hoishin/use-nodecg). Th
 #### action
 
 - `add`
-- `substract`
+- `remove`
