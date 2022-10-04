@@ -8,12 +8,34 @@ const STOPWATCH_REPLICANT_NAME = "stopwatch";
 export function handleApiRoutes(nodecg: NodeCG) {
   const router = nodecg.Router();
 
+  router.get("/", (req, res) => {
+    try {
+      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
+        STOPWATCH_REPLICANT_NAME,
+        nodecg.bundleName
+      );
+
+      return res.status(200).json(stopwatchCurrentValue);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ ok: false, error });
+    }
+  });
+
   router.get("/start", (req, res) => {
     try {
-      handleStopwatchReplicant(nodecg, {
-        type: StopwatchActions.START,
-        payload: undefined,
-      });
+      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
+        STOPWATCH_REPLICANT_NAME,
+        nodecg.bundleName
+      );
+
+      if (stopwatchCurrentValue.startTime === 0) {
+        handleStopwatchReplicant(nodecg, {
+          type: StopwatchActions.START,
+          payload: undefined,
+        });
+      }
+
       return res.sendStatus(200);
     } catch (error) {
       console.error(error);
@@ -23,10 +45,18 @@ export function handleApiRoutes(nodecg: NodeCG) {
 
   router.get("/stop", (req, res) => {
     try {
-      handleStopwatchReplicant(nodecg, {
-        type: StopwatchActions.STOP,
-        payload: undefined,
-      });
+      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
+        STOPWATCH_REPLICANT_NAME,
+        nodecg.bundleName
+      );
+
+      if (stopwatchCurrentValue.startTime > 0) {
+        handleStopwatchReplicant(nodecg, {
+          type: StopwatchActions.STOP,
+          payload: undefined,
+        });
+      }
+
       return res.sendStatus(200);
     } catch (error) {
       console.error(error);
@@ -49,14 +79,14 @@ export function handleApiRoutes(nodecg: NodeCG) {
 
   router.get("/toggle", (req, res) => {
     try {
-      const stopwwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
+      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
         STOPWATCH_REPLICANT_NAME,
         nodecg.bundleName
       );
 
       let type = StopwatchActions.STOP;
 
-      if (stopwwatchCurrentValue.startTime === 0) {
+      if (stopwatchCurrentValue.startTime === 0) {
         type = StopwatchActions.START;
       }
 
