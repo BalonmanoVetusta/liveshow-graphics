@@ -26,6 +26,7 @@
     "resolveJsonModule": true,
     "strict": true,
     "strictFunctionTypes": false,
+    "skipLibCheck": true,
     "pretty": true,
     "removeComments": true,
     "sourceMap": true,
@@ -45,7 +46,8 @@
     "./src/**/*.ts",
     "./src/**/*.jsx",
     "./src/**/*.js",
-    "src/hooks/use-match-actions"
+    "src/hooks/use-match-actions",
+    "src/extension/tsconfig.json"
   ],
   "exclude": ["node_modules"],
   "typeRoots": ["src/types", "node_modules/@types"]

@@ -1,4 +1,5 @@
-import { Team, useMatchActions } from "hooks/use-match-actions";
+import { useMatchActions } from "hooks/use-match-actions";
+import { Team } from "hooks/use-match-actions/types";
 import { ReactElement } from "react";
 
 export function ScoreboardPanel(): ReactElement {

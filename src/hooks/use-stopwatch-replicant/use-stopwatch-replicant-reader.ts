@@ -37,6 +37,7 @@ export function useStopwatchReplicantReader({
       limit: 0,
       backwards: false,
       periodTime: 0,
+      total: 0,
     } as Stopwatch,
     replicantOptions
   );

@@ -10,7 +10,7 @@ import {
   StopwatchActionType,
   TimeLimitActionType,
   UpdateTimeActionType,
-} from "extension/stopwatch-replicant-messages/types";
+} from "/src/extension/stopwatch-replicant-messages/types";
 
 // FIXME: This should not be hardcoded, use service instead or configuration
 export const STOPWATCH_MESSAGES_NAME = "stopwatchMessages";

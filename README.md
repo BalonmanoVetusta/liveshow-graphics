@@ -11,6 +11,24 @@ The hooks:
 
 Were copied from project [use-nodecg](https://github.com/Hoishin/use-nodecg). The `useReplicant` were modified to delete the depency of lodash library.
 
-## Scoreboard Font
+## API REST
 
-- https://www.fontspace.com/cursed-timer-ulil-font-f29411
+### `/{bundle-name}/api/stopwatch/{action}`
+
+#### action
+
+- `start`
+- `stop`
+- `reset`
+
+### `/{bundle-name}/api/score/{team}/{action}`
+
+#### team
+
+- `LOCAL`
+- `VISITOR`
+
+#### action
+
+- `add`
+- `substract`
