@@ -1,14 +1,14 @@
 import { NodeCG } from "nodecg/types/server";
+import { Stopwatch } from "types/schemas/stopwatch";
 import { handleStopwatchReplicant } from "./handle-stopwatch-replicant";
-import { scoreboardActions } from "./scoreboard-actions";
 import { StopwatchActions } from "./types";
+
+const STOPWATCH_REPLICANT_NAME = "stopwatch";
 
 export function handleApiRoutes(nodecg: NodeCG) {
   const router = nodecg.Router();
 
-  const { removeLastGoal } = scoreboardActions(nodecg);
-
-  router.get("/stopwatch/start", (req, res) => {
+  router.get("/start", (req, res) => {
     try {
       handleStopwatchReplicant(nodecg, {
         type: StopwatchActions.START,
@@ -20,7 +20,8 @@ export function handleApiRoutes(nodecg: NodeCG) {
     }
     return res.sendStatus(500);
   });
-  router.get("/stopwatch/stop", (req, res) => {
+
+  router.get("/stop", (req, res) => {
     try {
       handleStopwatchReplicant(nodecg, {
         type: StopwatchActions.STOP,
@@ -33,25 +34,43 @@ export function handleApiRoutes(nodecg: NodeCG) {
     return res.sendStatus(500);
   });
 
-  // router.get("/scoreboard/visitor/add", (req, res) => {
-  //   try {
-  //     // addGoal(Team.VISITOR);
-  //     return res.sendStatus(200);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  //   return res.sendStatus(500);
-  // });
+  router.get("/reset", (req, res) => {
+    try {
+      handleStopwatchReplicant(nodecg, {
+        type: StopwatchActions.RESET,
+        payload: undefined,
+      });
+      return res.sendStatus(200);
+    } catch (error) {
+      console.error(error);
+    }
+    return res.sendStatus(500);
+  });
 
-  // router.get("/scoreboard/visitor/remove", (req, res) => {
-  //   try {
-  //     removeLastGoal(Team.VISITOR);
-  //     return res.sendStatus(200);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  //   return res.sendStatus(500);
-  // });
+  router.get("/toggle", (req, res) => {
+    try {
+      const stopwwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
+        STOPWATCH_REPLICANT_NAME,
+        nodecg.bundleName
+      );
 
-  nodecg.mount(`/${nodecg.bundleName}`, router);
+      let type = StopwatchActions.STOP;
+
+      if (stopwwatchCurrentValue.startTime === 0) {
+        type = StopwatchActions.START;
+      }
+
+      handleStopwatchReplicant(nodecg, {
+        type,
+        payload: undefined,
+      });
+      return res.sendStatus(200);
+    } catch (error) {
+      console.error(error);
+    }
+
+    return res.sendStatus(500);
+  });
+
+  nodecg.mount(`/${nodecg.bundleName}/stopwatch`, router);
 }

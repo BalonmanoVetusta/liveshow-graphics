@@ -1,29 +1,36 @@
-import { randomUUID } from "crypto";
 import {
   GoalActionType,
   Team,
   UseMatchActionsAddActionType,
-} from "hooks/use-match-actions/types";
-import { NodeCG } from "nodecg/types/server";
-import { MatchAction, MatchActions } from "types/schemas/match-actions";
-import { Stopwatch } from "types/schemas/stopwatch";
+} from "/src/hooks/use-match-actions/types";
+import { NodeCG } from "/.nodecg/types/server";
+import { MatchAction, MatchActions } from "/src/types/schemas/match-actions";
+import { Stopwatch } from "/src/types/schemas/stopwatch";
 
 const MATCH_ACTIONS_REPLICANT_NAME = "match-actions";
 const STOPWATCH_REPLICANT_NAME = "stopwatch";
 
-export function scoreboardActions(nodecg: NodeCG) {
-  // const actions = nodecg.Replicant<MatchActions>(
-  //   MATCH_ACTIONS_REPLICANT_NAME,
-  //   nodecg.bundleName,
-  //   {
-  //     defaultValue: [],
-  //     persistent: true,
-  //   }
-  // );
+export function scoreboardActions(nodecg: NodeCG, uuidGenerator: () => string) {
+  const actions = nodecg.Replicant<MatchActions>(
+    MATCH_ACTIONS_REPLICANT_NAME,
+    nodecg.bundleName,
+    {
+      defaultValue: [],
+      persistent: true,
+    }
+  );
 
-  const actions = { value: [] as MatchActions };
+  // const actions = { value: [] as MatchActions };
 
-  const setActions = (newActions: MatchActions) => {
+  const setActions = (
+    newActions: MatchActions | ((prev: MatchActions) => MatchActions)
+  ) => {
+    // typeof newActions === typeof Function
+    if (typeof newActions === "function") {
+      actions.value = newActions(actions.value);
+      return;
+    }
+
     actions.value = newActions;
   };
 
@@ -46,17 +53,17 @@ export function scoreboardActions(nodecg: NodeCG) {
       STOPWATCH_REPLICANT_NAME,
       nodecg.bundleName
     );
-    const absoluteTime = total || offset || 0;
+    const absoluteTime = total || offset;
     let time = absoluteTime;
 
     if (backwards) {
       time = limit - absoluteTime;
     }
 
-    newAction.id ??= randomUUID();
+    newAction.id ??= uuidGenerator();
     newAction.matchTime = time;
     newAction.gmtTimestamp = Date.now();
-    actions.value.push(newAction);
+    setActions((prev) => [...prev, newAction]);
   };
 
   const removeActionById = (id: string) => {

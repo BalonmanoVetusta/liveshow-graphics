@@ -12,6 +12,12 @@ export function setHandleInterval(
   tickTime: number
 ): NodeJS.Timeout | null {
   if (!timer) {
+    const stopwatch = nodecg.Replicant<Stopwatch>(
+      replicantName,
+      nodecg.bundleName,
+      { defaultValue: defaultStopwatchValues, persistent: true }
+    );
+
     timer = setInterval(() => {
       const stopwwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
         replicantName,
@@ -21,12 +27,6 @@ export function setHandleInterval(
       const { totalTime, shouldStop } = stopwatchTickChecks(
         stopwwatchCurrentValue,
         tickTime
-      );
-
-      const stopwatch = nodecg.Replicant<Stopwatch>(
-        replicantName,
-        nodecg.bundleName,
-        { defaultValue: defaultStopwatchValues, persistent: true }
       );
 
       stopwatch.value.total = totalTime >= 0 ? totalTime : 0;

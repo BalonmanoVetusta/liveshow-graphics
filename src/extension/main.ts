@@ -1,5 +1,6 @@
 import { NodeCG } from "nodecg/types/server";
 import { init } from "./init";
+import { scoreboardApiRoutes } from "./scoreboard-api-routes";
 import { stopwatchReplicantMessages } from "./stopwatch-replicant-messages";
 
 export type ExtensionFunction = (nodecg: NodeCG) => Promise<void>;
@@ -17,4 +18,4 @@ function main(...calls: Array<ExtensionFunction>) {
   };
 }
 
-export default main(init, stopwatchReplicantMessages);
+export default main(init, stopwatchReplicantMessages, scoreboardApiRoutes);
