@@ -104,7 +104,13 @@
     ],
     "graphics": [
       {
-        "file": "layout-1.html",
+        "file": "scoreboard.html",
+        "width": 1920,
+        "height": 1080,
+        "singleInstance": false
+      },
+      {
+        "file": "match.html",
         "width": 1920,
         "height": 1080,
         "singleInstance": false
@@ -121,6 +127,45 @@
           "png",
           "webp",
           "svg"
+        ]
+      },
+      {
+        "name": "banners",
+        "title": "Advertising Banners",
+        "allowedTypes": [
+          "jpg",
+          "jpeg",
+          "gif",
+          "png",
+          "webp",
+          "svg"
+        ]
+      },
+      {
+        "name": "soundboard",
+        "title": "Sounds",
+        "allowedTypes": [
+          "mp3",
+          "wav",
+          "ogg"
+        ]
+      },
+      {
+        "name": "music",
+        "title": "Music",
+        "allowedTypes": [
+          "mp3",
+          "wav",
+          "ogg"
+        ]
+      },
+      {
+        "name": "videos",
+        "title": "Videos",
+        "allowedTypes": [
+          "mp4",
+          "webm",
+          "ogg"
         ]
       }
     ],
