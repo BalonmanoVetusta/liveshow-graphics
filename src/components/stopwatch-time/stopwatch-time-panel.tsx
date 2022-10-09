@@ -3,7 +3,7 @@ import {
   useStopwatchReplicantControl,
   useStopwatchReplicantReader,
 } from "hooks/use-stopwatch-replicant";
-import { ChangeEvent, ReactElement, useEffect, useState } from "react";
+import { ChangeEvent, ReactElement, useEffect, useRef, useState } from "react";
 
 export interface StopwatchTimePanelProps {
   showTime: boolean;
@@ -23,6 +23,7 @@ export function StopwatchTimePanel({
   showTimeControls = true,
   showAddOffset = true,
 }: Partial<StopwatchTimePanelProps>): ReactElement {
+  const loaded = useRef(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
   // const { start, stop, reset, addOffset, setBackwards, setOffset } = useStopwatchReplicantControl();
@@ -107,6 +108,20 @@ export function StopwatchTimePanel({
       stop();
     }
   };
+
+  useEffect(() => {
+    if (!loaded.current && limit > 0 && periodTimeSw > 0) {
+      loaded.current = true;
+      const totalPeriods = Math.floor(limit / periodTimeSw);
+      const periodTimeMinutes = Math.floor(
+        periodTimeSw / TIME_LIMITS_UNIT_VALUE
+      );
+
+      setPeriodsNumber(totalPeriods);
+      setPeriodTime(periodTimeMinutes);
+      return;
+    }
+  }, [periodTimeSw, limit]);
 
   useEffect(() => {
     if (isRunning) {
