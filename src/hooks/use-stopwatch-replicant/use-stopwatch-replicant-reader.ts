@@ -111,8 +111,8 @@ export function useStopwatchReplicantReader({
     if (timer.current === null && (startTime ?? 0) > 0 && !isEnded) {
       timer.current = window.setInterval(() => {
         const props = getStopwatchTimeValues(stopwatch, maxTimeUnit);
-        console.log({ props });
         updateStates();
+
         // TODO: Not sure if isEndOfPeriod can introduce a bug that stopwatch does not work
         if (props.isEnded || stopwatch.startTime === 0 || props.isEndOfPeriod) {
           stop();
