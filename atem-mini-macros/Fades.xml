@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Profile majorVersion="1" minorVersion="5" product="ATEM Mini Pro ISO">
+  <MacroPool>
+
+    <!-- Fade Master from/to 0 -->
+
+
+    <!-- Turn On Mic 1 -->
+    <Macro index="22" name="Mic 1 On" description="">
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic" sourceId="18446744073709486336" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic" sourceId="18446744073709551360" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic" sourceId="18446744073709551361" mixType="On" />
+    </Macro>
+
+    <!-- Turn Off Mic 1 -->
+    <Macro index="23" name="Mic 1 Off" description="">
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic" sourceId="18446744073709551361" mixType="Off" />
+    </Macro>
+
+    <!-- Turn On Mic 2 -->
+    <Macro index="24" name="Mic 2 On" description="">
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic2" sourceId="18446744073709486336" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic2" sourceId="18446744073709551360" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic2" sourceId="18446744073709551361" mixType="On" />
+    </Macro>
+
+    <!-- Turn Off Mic 2 -->
+    <Macro index="25" name="Mic 2 Off" description="">
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic2" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic2" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="ExternalMic2" sourceId="18446744073709551361" mixType="Off" />
+    </Macro>
+
+    <!-- Turn On Camera 1 -->
+    <Macro index="26" name="Cam 1 On" description="Camera 1 Audio On">
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera1" sourceId="18446744073709486336" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera1" sourceId="18446744073709551360" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera1" sourceId="18446744073709551361" mixType="On" />
+    </Macro>
+
+    <!-- Turn Off Camera 1 -->
+    <Macro index="27" name="Cam 1 Off" description="Camera 1 Audio Off">
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera1" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera1" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera1" sourceId="18446744073709551361" mixType="Off" />
+    </Macro>
+
+    <!-- Turn On Camera 4 -->
+    <Macro index="28" name="Cam 4 On" description="Camera 4 Audio On">
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="On" />
+    </Macro>
+
+    <!-- Turn Off Camera 4 -->
+    <Macro index="29" name="Cam 4 Off" description="Camera 4 Off">
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="Off" />
+    </Macro>
+
+
+    <!-- Fade Camera 1 Audio and off from/to -10 -->
+
+
+    <!-- Fade Camera 2 Audio and off from -10 -->
+
+
+    <!-- Fade Camera 3 Audio and off from -10 -->
+
+
+    <!-- Fade Camera 4 Audio and off from -10 -->
+
+
+    <!-- Fade Mic 1 Audio and off from -10 -->
+
+
+    <!-- Fade Mic 2 Audio and off from -10 -->
+
+
+  </MacroPool>
+</Profile>
