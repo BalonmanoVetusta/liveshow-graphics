@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ipaddress", "model"],
+  "properties": {
+    "ipaddress": {
+      "type": "string",
+      "default": "default",
+      "title": "IP Adress or FQDN",
+      "description": "Atem IP Adress or FQDN"
+    },
+    "model": {
+      "type": "string",
+      "title": "Model Name",
+      "description": "Model name of the ATEM Mini to be controlled",
+      "default": "ATEM Mini Pro ISO"
+    },
+    "active": {
+      "type": "boolean",
+      "title": "Control status",
+      "description": "ATEM Enable or disable the control",
+      "default": true
+    },
+    "inputGraphics": {
+      "type": "string",
+      "title": "ATEM Input",
+      "description": "NodeCG Input in the ATEM",
+      "default": "Camera1"
+    },
+    "inputCamera": {
+      "type": "string",
+      "title": "ATEM Input",
+      "description": "Main Camera Input in the ATEM",
+      "default": "Camera1"
+    }
+  }
+}
