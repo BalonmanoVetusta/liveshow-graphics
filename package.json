@@ -13,6 +13,11 @@
     "extension"
   ],
   "scripts": {
+    "prestandalone": "bun run build",
+    "standalone": "pm2 start standalone.config.js",
+    "standalone:start": "include-nodecg start",
+    "standalone:stop": "pm2 stop standalone.config.js",
+    "standalone:restart": "pm2 restart standalone.config.js",
     "dev:start": "bun run dev",
     "prestart": "bun run build",
     "start": "bun run watch",
@@ -213,6 +218,7 @@
     "core-js": "3.25.5",
     "framer-motion": "7.5.2",
     "nodecg": "1.9.0",
+    "pm2": "5.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "5.3.6"
