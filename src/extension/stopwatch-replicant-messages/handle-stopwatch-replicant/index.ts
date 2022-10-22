@@ -59,6 +59,7 @@ export function handleStopwatchReplicant(
   switch (actionType) {
     case StopwatchActions.START:
     case StopwatchActions.RESET:
+      console.log(process.env.NODE_ENV);
       newValue = handleStart(
         nodecg,
         actionType,

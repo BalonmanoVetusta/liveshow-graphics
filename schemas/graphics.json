@@ -2,43 +2,12 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "additionalProperties": false,
-  "required": ["startTime", "offset", "limit", "backwards", "periodTime"],
   "properties": {
-    "currentLayer": {
+    "bgColor": {
       "type": "string",
-      "default": "default",
-      "title": "Layer to be showed",
-      "description": "Graphics layer to be showed currently"
-    },
-    "layerProps": {
-      "type": "object",
-      "title": "Layer properties",
-      "description": "Properties of the graphics layer",
-      "additionalProperties": false,
-      "required": ["default", "selected"],
-      "patternProperties": {
-        ".+": {
-          "type": "object",
-          "title": "CSS layer properties",
-          "description": "Properties of the default graphics layer",
-          "additionalProperties": true,
-          "required": ["background-color", "position"],
-          "properties": {
-            "background-color": {
-              "type": "string",
-              "title": "Background Color",
-              "description": "Background color",
-              "default": "#00FF00"
-            },
-            "position": {
-              "type": "string",
-              "title": "Type of positioning",
-              "description": "CSS Type of positioning",
-              "default": "absolute"
-            }
-          }
-        }
-      }
+      "title": "Background Color",
+      "description": "Background color of the body",
+      "default": "#00ff00"
     },
     "advertising": {
       "type": "boolean",
@@ -63,18 +32,6 @@
       "default": false,
       "title": "Play Spot",
       "description": "If a spot must be played"
-    },
-    "showCamera": {
-      "type": "object",
-      "default": {},
-      "title": "PiP Camera",
-      "description": "If camera must be showed"
-    },
-    "availableCameras": {
-      "type": "array",
-      "default": [],
-      "title": "Available Cameras",
-      "description": "List of available cameras in graphics client. Array of objects with id and name properties or url to use as iframe or video with url to show."
     }
   }
 }

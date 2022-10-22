@@ -3,24 +3,36 @@
   <head>
     <meta charset="utf-8" />
     <title>Handball Match</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      body {
+      * {
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: var(--bg-color, #00ff00);
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        font-family: "Alumni Sans", sans-serif;
       }
 
       div#root {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        width: 100%;
+        height: 100%;
       }
     </style>
     <script type="module" src="./match/index.tsx"></script>
   </head>
   <body>
     <noscript>This page needs javascript enabled</noscript>
-    <div id="root">Loading</div>
+    <div id="root"></div>
   </body>
 </html>
