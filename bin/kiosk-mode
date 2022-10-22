@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-KIOSK_URL="http://localhost:9090/bundles/handball-liveshow-spain/graphics/scoreboard.html"
+KIOSK_URL="${KIOSK_URL:-"http://localhost:9090/bundles/handball-liveshow-spain/graphics/scoreboard.html"}"
 
 is_pi() {
   grep -q "^Raspberry Pi" /proc/device-tree/model
@@ -59,6 +59,13 @@ install_kiosk() {
   sudo apt install -y chromium-browser
 }
 
+unsetup_systemd() {
+  sudo systemctl stop --quiet kiosk-mode || true
+  sudo systemctl disable --quiet kiosk-mode || true
+  sudo rm -f /etc/systemd/system/kiosk-mode.service || true
+  sudo systemctl daemon-reload || true
+}
+
 create_systemd_service() {
   {
     echo "[Unit]"
@@ -69,6 +76,7 @@ create_systemd_service() {
     echo "[Service]"
     echo "Environment=DISPLAY=:0.0"
     echo "Environment=XAUTHORITY=${HOME}/.Xauthority"
+    echo "Environment=KIOSK_URL=${KIOSK_URL}"
     echo "Type=simple"
     echo "ExecStart=/bin/bash ${PROJECT_DIR}/bin/kiosk-mode"
     echo "Restart=always"
@@ -82,6 +90,7 @@ create_systemd_service() {
 }
 
 setup_systemd() {
+  unsetup_systemd
   create_systemd_service
   sudo systemctl enable kiosk.service
   sudo systemctl daemon-reload
@@ -92,7 +101,7 @@ if [[ " ${*} " == *" --help "* ]]; then
   echo "Usage: kiosk-mode.sh [options]"
   echo "Options:"
   echo "  --help      Show this help message"
-  # echo "  --disable   Disable kiosk mode"
+  echo "  --disable   Disable kiosk mode"
   echo "  --enable    Enable kiosk mode (default)"
   echo "  --setup     Setting up kiosk mode and enable it"
   exit 0
@@ -100,12 +109,18 @@ if [[ " ${*} " == *" --help "* ]]; then
   exit 0
 fi
 
-if [[ " ${*} " == *" --setup "* ]]; then
+if [[ " ${*} " == *" --disable "* ]]; then
+  # Sudo Login
+  sudo -v
+
   systemctl stop kiosk.service
   systemctl disable kiosk.service
 fi
 
 if [[ " ${*} " == *" --setup "* ]]; then
+  # Sudo Login
+  sudo -v
+
   echo "Setting up kiosk mode..."
   echo "Cleanning stuff..."
 
