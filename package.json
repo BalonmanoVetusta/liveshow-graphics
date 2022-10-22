@@ -17,6 +17,7 @@
     "ecosystem:stop": "pm2 stop ecosystem.config.js",
     "logs": "pm2 logs",
     "prestart": "bun run build:schemas",
+    "lol": "include-nodecg start",
     "start": "bun run watch",
     "watch": "bun run watch:dashboard && bun run watch:graphics && bun run watch:extension",
     "watch:dashboard": "parcel watch src/dashboard/*.html --dist-dir ./ --target dashboard",

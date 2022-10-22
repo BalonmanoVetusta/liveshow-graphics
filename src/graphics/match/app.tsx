@@ -2,6 +2,7 @@ import { useReplicant } from "hooks/use-replicant";
 import { ReactElement, useEffect } from "react";
 import { SceneInMatch } from "./components/scene-in-match";
 // import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
+import { AnimatePresence } from "framer-motion";
 import { Graphics } from "types/schemas/graphics";
 
 function App(): ReactElement | null {
@@ -20,7 +21,11 @@ function App(): ReactElement | null {
     document.documentElement.style.setProperty("--bg-color", bgColor);
   }, [graphicsConfig]);
 
-  return <SceneInMatch />;
+  return (
+    <AnimatePresence>
+      <SceneInMatch />
+    </AnimatePresence>
+  );
 }
 
 export default App;
