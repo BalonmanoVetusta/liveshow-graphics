@@ -2,6 +2,30 @@
 
 `npm run build:schema` is not compatible for any reason with `bun.sh`
 
+## Executing
+
+If you change anything in `package.json` file you will need a full restart. If you change schemas you will need to build manually and restart.
+
+```bash
+bun run build:schemas
+bun run dev
+```
+
+### Development (re)start
+
+```bash
+bun run dev
+```
+
+#### View logs
+
+```bash
+bun run viewlogs -- handball-liveshow-spain
+bun run viewlogs -- watcher-dashboard
+bun run viewlogs -- watcher-extension
+bun run viewlogs -- watcher-graphics
+```
+
 ## About the copied source code
 
 The hooks:

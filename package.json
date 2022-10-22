@@ -15,6 +15,7 @@
   "scripts": {
     "ecosystem": "pm2 restart ecosystem.config.js",
     "ecosystem:stop": "pm2 stop ecosystem.config.js",
+    "logs": "pm2 logs",
     "prestart": "bun run build:schemas",
     "start": "bun run watch",
     "watch": "bun run watch:dashboard && bun run watch:graphics && bun run watch:extension",
@@ -93,6 +94,16 @@
         "name": "stopwatch",
         "title": "Match Time View & Edit",
         "file": "stopwatch.html",
+        "width": 2,
+        "headerColor": "#525F78",
+        "workspace": "workspace",
+        "fullbleed": false,
+        "dialog": false
+      },
+      {
+        "name": "Shields",
+        "title": "Shields Selector",
+        "file": "shieldsconfig.html",
         "width": 2,
         "headerColor": "#525F78",
         "workspace": "workspace",
