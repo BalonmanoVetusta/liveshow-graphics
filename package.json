@@ -13,13 +13,9 @@
     "extension"
   ],
   "scripts": {
-    "prestandalone": "bun run build",
-    "standalone": "pm2 start standalone.config.js",
-    "standalone:start": "include-nodecg start",
-    "standalone:stop": "pm2 stop standalone.config.js",
-    "standalone:restart": "pm2 restart standalone.config.js",
-    "dev:start": "bun run dev",
-    "prestart": "bun run build",
+    "ecosystem": "pm2 restart ecosystem.config.js",
+    "ecosystem:stop": "pm2 stop ecosystem.config.js",
+    "prestart": "bun run build:schemas",
     "start": "bun run watch",
     "watch": "bun run watch:dashboard && bun run watch:graphics && bun run watch:extension",
     "watch:dashboard": "parcel watch src/dashboard/*.html --dist-dir ./ --target dashboard",
@@ -31,15 +27,12 @@
     "build:dashboard": "parcel build src/dashboard/*.html --dist-dir ./ --target dashboard",
     "build:graphics": "parcel build src/graphics/*.html --dist-dir ./ --target graphics",
     "build:extension": "parcel build --no-content-hash --dist-dir ./ --target extension",
-    "predev": "bun run build",
-    "dev": "include-nodecg start",
+    "dev": "bun run ecosystem -- --env development",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
     "clean": "rm -rf .parcel-cache dashboard extension graphics",
     "prepare": "husky install",
-    "postinstall": "bun ./bin/postinstall.mjs",
-    "test": "ts-node test.ts",
-    "rr": "typescript ./src/hooks/use-stopwatch-replicant/lib/get-stopwatch-time-values.ts"
+    "postinstall": "bun ./bin/postinstall.mjs"
   },
   "targets": {
     "default": {

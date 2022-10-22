@@ -94,13 +94,11 @@ if (!existsSync(NODECG_PROJECT_PATH)) {
 
 // If arguments then it just a bun or node replacement
 if (process.argv.includes("--bun")) {
-  console.log("bun");
   modifyNodeCGPackageJSONForBun(PACKAGE_JSON_FILEPATH);
   process.exit();
 }
 
 if (process.argv.includes("--node")) {
-  console.log("node");
   modifyPackageJsonAfterCallBack(
     PACKAGE_JSON_FILEPATH,
     replaceBunForNodeInPackagJsonObject
