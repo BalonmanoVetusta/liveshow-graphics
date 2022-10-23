@@ -34,7 +34,7 @@
     "lint:fix": "eslint --fix ./src",
     "clean": "rm -rf .parcel-cache dashboard extension graphics",
     "prepare": "husky install",
-    "nodebun": "bun ./bin/nodebun.mjs",
+    "postinstall": "node ./bin/postinstall.mjs",
     "pm2": "pm2"
   },
   "targets": {
