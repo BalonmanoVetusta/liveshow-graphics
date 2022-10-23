@@ -178,12 +178,6 @@
           "ogg"
         ]
       }
-    ],
-    "mount": [
-      {
-        "directory": "assets",
-        "endpoint": "assets"
-      }
     ]
   },
   "license": "MIT",
