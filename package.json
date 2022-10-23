@@ -17,7 +17,7 @@
     "ecosystem:stop": "pm2 stop ecosystem.config.js",
     "logs": "pm2 logs",
     "prestart": "bun run build:schemas",
-    "start": "bun run watch",
+    "start": "bun run build",
     "watch": "bun run watch:dashboard && bun run watch:graphics && bun run watch:extension",
     "watch:dashboard": "parcel watch src/dashboard/*.html --dist-dir ./ --target dashboard",
     "watch:graphics": "parcel watch src/graphics/*.html --dist-dir ./ --target graphics",
@@ -29,6 +29,7 @@
     "build:graphics": "parcel build src/graphics/*.html --dist-dir ./ --target graphics",
     "build:extension": "parcel build --no-content-hash --dist-dir ./ --target extension",
     "dev": "bun run ecosystem -- --env development",
+    "dev:start": "include-nodecg start",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
     "clean": "rm -rf .parcel-cache dashboard extension graphics",
@@ -171,6 +172,12 @@
       }
     ]
   },
+  "mount": [
+    {
+      "directory": "files",
+      "endpoint": "filess"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "@parcel/transformer-svg-react": "2.7.0",

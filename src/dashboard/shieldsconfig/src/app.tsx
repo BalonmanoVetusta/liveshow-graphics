@@ -1,6 +1,6 @@
 import { useReplicant } from "hooks/use-replicant";
 import { ReactElement, useEffect, useId, useState } from "react";
-import { Asset, AssetsReplicant } from "types/Asset";
+import { AssetsReplicant } from "types/Asset";
 
 function App(): ReactElement {
   const id = useId();
@@ -11,9 +11,7 @@ function App(): ReactElement {
       persistent: true,
     }
   );
-  const [currentShield, setCurrentShield] = useState<Asset | undefined>(
-    undefined
-  );
+  const [currentShield, setCurrentShield] = useState<number>(0);
 
   useEffect(() => {
     console.log({ shields });
@@ -31,13 +29,18 @@ function App(): ReactElement {
             onChange={(event) => {
               if (event.target.value && shields.length > 0) {
                 try {
-                  setCurrentShield(shields.at(Number(event.target.value)));
+                  console.log(event.target.value);
+                  // setCurrentShield(shields.at(Number(event.target.value)));
                 } catch (error) {}
               }
             }}
           >
             {shields.map((shield, index) => (
-              <option key={`${id}-${shield.sum}`} value={index}>
+              <option
+                key={`${id}-${shield.sum}`}
+                value={index}
+                selected={index === currentShield}
+              >
                 {shield.name}
               </option>
             ))}
@@ -47,8 +50,8 @@ function App(): ReactElement {
         )}
         {currentShield ? (
           <img
-            src={currentShield.url}
-            alt={currentShield.name}
+            src={shields[currentShield].url}
+            alt={shields[currentShield].name}
             width="100px"
             height="100px"
           />
