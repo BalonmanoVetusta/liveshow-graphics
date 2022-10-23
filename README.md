@@ -7,6 +7,7 @@
 If you change anything in `package.json` file you will need a full restart. If you change schemas you will need to build manually and restart.
 
 ```bash
+npm install
 bun run build:schemas
 bun run dev
 ```
