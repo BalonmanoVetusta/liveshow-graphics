@@ -3,6 +3,7 @@ import { ReactElement, useEffect } from "react";
 import { SceneInMatch } from "./components/scene-in-match";
 // import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
 import { AnimatePresence } from "framer-motion";
+import { ThemeProvider } from "styled-components";
 import { Graphics } from "types/schemas/graphics";
 
 function App(): ReactElement | null {
@@ -23,7 +24,19 @@ function App(): ReactElement | null {
 
   return (
     <AnimatePresence>
-      <SceneInMatch />
+      <ThemeProvider
+        theme={{
+          scoreboardText: {
+            fontSize: "48px",
+            color: "black",
+            fontWeight: "bolder",
+          },
+          scoreboard: {},
+          advertising: {},
+        }}
+      >
+        <SceneInMatch />
+      </ThemeProvider>
     </AnimatePresence>
   );
 }

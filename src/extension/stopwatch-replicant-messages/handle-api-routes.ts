@@ -8,6 +8,10 @@ const STOPWATCH_REPLICANT_NAME = "stopwatch";
 export function handleApiRoutes(nodecg: NodeCG) {
   const router = nodecg.Router();
 
+  router.get("/multer", (req, res) => {
+    res.json(process.env.NODECG_ROOT);
+  });
+
   router.get("/", (req, res) => {
     try {
       const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(

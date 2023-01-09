@@ -1,6 +1,7 @@
 import { useReplicant } from "hooks/use-replicant";
-import { ReactElement, useEffect, useId, useState } from "react";
-import { AssetsReplicant } from "types/Asset";
+import { ReactElement, useId, useRef, useState } from "react";
+import { Asset, AssetsReplicant } from "types/Asset";
+import { Graphics } from "types/schemas/graphics";
 
 function App(): ReactElement {
   const id = useId();
@@ -11,11 +12,34 @@ function App(): ReactElement {
       persistent: true,
     }
   );
-  const [currentShield, setCurrentShield] = useState<number>(0);
+  const selectedShield = useRef<Asset | undefined>(undefined);
+  const [currentShield, setCurrentShield] = useState<Asset | undefined>(
+    undefined
+  );
 
-  useEffect(() => {
-    console.log({ shields });
-  }, [shields]);
+  const [graphics, setGraphics] = useReplicant<Graphics, Graphics>(
+    "graphics",
+    {} as Graphics,
+    {
+      persistent: true,
+    }
+  );
+
+  // const handleShieldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  //   selectedShield.current = event.target.value;
+  //   setGraphics({
+  //     ...graphics,
+  //     shield: selectedShield.current,
+  //   });
+
+  // useEffect(() => {
+  //   selectedShield.current = graphics.shield;
+  //   setCurrentShield(shields.find((shields) => shield.sum === selectedShield.current));
+  // }, [graphics, shields]);
+
+  const handleShieldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log({ event });
+  };
 
   return (
     <>
@@ -26,21 +50,14 @@ function App(): ReactElement {
           <select
             name="asset"
             id="asset"
-            onChange={(event) => {
-              if (event.target.value && shields.length > 0) {
-                try {
-                  console.log(event.target.value);
-                  // setCurrentShield(shields.at(Number(event.target.value)));
-                } catch (error) {}
-              }
-            }}
+            onChange={handleShieldChange}
+            value={selectedShield?.current?.name ?? "DEFAULT"}
           >
-            {shields.map((shield, index) => (
-              <option
-                key={`${id}-${shield.sum}`}
-                value={index}
-                selected={index === currentShield}
-              >
+            <option value="DEFAULT" disabled>
+              Choose a shield
+            </option>
+            {shields.map((shield) => (
+              <option key={`${id}-${shield.sum}`} value={shield.sum}>
                 {shield.name}
               </option>
             ))}
@@ -48,13 +65,14 @@ function App(): ReactElement {
         ) : (
           <p>Upload any shield</p>
         )}
-        {currentShield ? (
-          <img
-            src={shields[currentShield].url}
-            alt={shields[currentShield].name}
-            width="100px"
-            height="100px"
-          />
+        {selectedShield.current ? (
+          // <img
+          //   src={shields[currentShield].url}
+          //   alt={shields[currentShield].name}
+          //   width="100px"
+          //   height="100px"
+          // />
+          <h3>Img</h3>
         ) : null}
       </fieldset>
     </>

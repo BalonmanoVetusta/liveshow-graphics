@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["startTime", "offset", "limit", "backwards", "periodTime"],
+  "properties": {
+    "draggable": {
+      "type": "boolean",
+      "default": false,
+      "title": "Dragable",
+      "description": "If it is draggable to edit postion"
+    },
+    "x": {
+      "type": "number",
+      "default": 0,
+      "title": "X position",
+      "description": "X position in pixels"
+    },
+    "y": {
+      "type": "number",
+      "default": 0,
+      "title": "Y position",
+      "description": "Y position in pixels"
+    },
+    "visible": {
+      "type": "boolean",
+      "default": 0,
+      "title": "Time limit to stop the stopwatch",
+      "description": "Limit of time to stop the stopwatch in miliseconds. If this value is greater than 0 then stopwatch will be stopped when totalTime is equal or greater than this value"
+    },
+    "animation": {
+      "enum": ["FADE", "LEFT", "RIGHT", "TOP", "BOTTOM", "NONE"],
+      "default": "FADE",
+      "title": "Animation when appearing by default",
+      "description": "Animation when this element is appearing alone"
+    }
+  }
+}

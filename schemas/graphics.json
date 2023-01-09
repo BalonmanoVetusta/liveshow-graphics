@@ -32,6 +32,12 @@
       "default": false,
       "title": "Play Spot",
       "description": "If a spot must be played"
+    },
+    "shield": {
+      "type": "string",
+      "default": null,
+      "title": "Shield",
+      "description": "Shield sum"
     }
   }
 }

@@ -1,3 +1,4 @@
+import { Instagram, Twitter } from "components/Icons";
 import { motion, MotionProps } from "framer-motion";
 import { FunctionComponent, ReactElement, useId } from "react";
 import styled from "styled-components";
@@ -78,7 +79,18 @@ export declare interface SocialNetworksProps {
   items: SocialNetworkItemTypeProps[];
 }
 
-export function SocialNetworks({ items }: SocialNetworksProps): ReactElement {
+export function SocialNetworks({
+  items = [
+    {
+      Icon: () => <Twitter title="Twitter Vetusta" />,
+      text: "@BM_Vetusta",
+    },
+    {
+      Icon: () => <Instagram title="Instagram Vetusta" />,
+      text: "@BalonmanoVetusta",
+    },
+  ],
+}: SocialNetworksProps): ReactElement {
   const id = useId();
 
   return (
