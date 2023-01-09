@@ -1,7 +1,6 @@
 import { useReplicant } from "hooks/use-replicant";
-import { ReactElement, useId, useRef, useState } from "react";
+import { ReactElement, useId, useRef } from "react";
 import { Asset, AssetsReplicant } from "types/Asset";
-import { Graphics } from "types/schemas/graphics";
 
 function App(): ReactElement {
   const id = useId();
@@ -13,17 +12,6 @@ function App(): ReactElement {
     }
   );
   const selectedShield = useRef<Asset | undefined>(undefined);
-  const [currentShield, setCurrentShield] = useState<Asset | undefined>(
-    undefined
-  );
-
-  const [graphics, setGraphics] = useReplicant<Graphics, Graphics>(
-    "graphics",
-    {} as Graphics,
-    {
-      persistent: true,
-    }
-  );
 
   // const handleShieldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
   //   selectedShield.current = event.target.value;

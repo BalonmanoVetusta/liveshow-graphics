@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
-import { PropsWithChildren } from "react";
 
-export default function Div(props: PropsWithChildren<object>) {
+export default function Div() {
   return (
     <motion.div
       onDrag={(event, info) => {
