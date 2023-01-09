@@ -1,9 +1,10 @@
+import { NodeCG } from "/.nodecg/types/server";
 import {
   GoalActionType,
+  MatchActionType,
   Team,
   UseMatchActionsAddActionType,
 } from "/src/hooks/use-match-actions/types";
-import { NodeCG } from "/.nodecg/types/server";
 import { MatchAction, MatchActions } from "/src/types/schemas/match-actions";
 import { Stopwatch } from "/src/types/schemas/stopwatch";
 
@@ -15,7 +16,7 @@ export function scoreboardActions(nodecg: NodeCG, uuidGenerator: () => string) {
     MATCH_ACTIONS_REPLICANT_NAME,
     nodecg.bundleName,
     {
-      defaultValue: [],
+      defaultValue: [] as MatchActions,
       persistent: true,
     }
   );
@@ -63,6 +64,8 @@ export function scoreboardActions(nodecg: NodeCG, uuidGenerator: () => string) {
     newAction.id ??= uuidGenerator();
     newAction.matchTime = time;
     newAction.gmtTimestamp = Date.now();
+
+    console.log({ newAction });
     setActions((prev) => [...prev, newAction]);
   };
 
@@ -78,7 +81,7 @@ export function scoreboardActions(nodecg: NodeCG, uuidGenerator: () => string) {
 
   const addGoal = (team: Team, goal: GoalActionType = { quantity: 1 }) => {
     addAction({
-      action: "GOAL",
+      action: MatchActionType.GOAL,
       team,
       payload: goal,
     });
@@ -86,7 +89,7 @@ export function scoreboardActions(nodecg: NodeCG, uuidGenerator: () => string) {
 
   const removeLastGoal = (team: Team) => {
     const goals = actions.value.filter(
-      (action) => action.action === "GOAL" && action.team === team
+      (action) => action.action === MatchActionType.GOAL && action.team === team
     );
 
     if (goals.length > 0) {

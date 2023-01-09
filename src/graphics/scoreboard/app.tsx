@@ -1,5 +1,5 @@
-import { ScoreboardResults } from "components/scoreboard/scoreboard-results";
-import { StopwatchTime } from "components/stopwatch-time/stopwatch-time";
+import { ScoreboardResults } from "graphics/scoreboard/src/components/scoreboard-results";
+import { StopwatchTime } from "graphics/scoreboard/src/components/stopwatch-time";
 import { ReactElement } from "react";
 // import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
 

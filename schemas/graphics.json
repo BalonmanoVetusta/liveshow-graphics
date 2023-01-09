@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "bgColor": {
+      "type": "string",
+      "title": "Background Color",
+      "description": "Background color of the body",
+      "default": "#00ff00"
+    },
+    "advertising": {
+      "type": "boolean",
+      "default": true,
+      "title": "Advertising",
+      "description": "If advertising must be showed"
+    },
+    "advertisingTime": {
+      "type": "number",
+      "default": 5,
+      "title": "Time to change",
+      "description": "Time in seconds that a banner is showed before change it if more than one banner is available"
+    },
+    "music": {
+      "type": "boolean",
+      "default": false,
+      "title": "Music",
+      "description": "If music must be played"
+    },
+    "spot": {
+      "type": "boolean",
+      "default": false,
+      "title": "Play Spot",
+      "description": "If a spot must be played"
+    },
+    "shield": {
+      "type": "string",
+      "default": null,
+      "title": "Shield",
+      "description": "Shield sum"
+    }
+  }
+}

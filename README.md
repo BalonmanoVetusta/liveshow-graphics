@@ -2,6 +2,47 @@
 
 `npm run build:schema` is not compatible for any reason with `bun.sh`
 
+## Executing
+
+If you change anything in `package.json` file you will need a full restart. If you change schemas you will need to build manually and restart.
+
+```bash
+npm install
+bun run build:schemas
+bun run dev
+```
+
+### Development (re)start
+
+```bash
+bun run dev
+```
+
+#### View logs
+
+```bash
+bun run viewlogs -- handball-liveshow-spain
+bun run viewlogs -- watcher-dashboard
+bun run viewlogs -- watcher-extension
+bun run viewlogs -- watcher-graphics
+```
+
+## Kiosk Mode (Untested yet)
+
+Was thinked to be run on Raspberry Pi or any Debian based Linux with chromium.
+
+### Setup
+
+You need to manually activate auto login on Raspberry Pi by using `raspi-config`. You will need to config hdmi resolution and recommended to setup overscan to avoid a black line around the image.
+
+After that you can use:
+
+```bash
+KIOSK_URL="http://localhost:9090/bundles/handball-liveshow-spain/graphics/match.html" ./bin/kiosk-mode --setup
+```
+
+After that if you restart the pi should see the webpage configured in `KIOSK_URL` variable.
+
 ## About the copied source code
 
 The hooks:

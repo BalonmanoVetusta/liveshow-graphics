@@ -5,8 +5,7 @@
   "patternProperties": {
     ".+": {
       "type": "object",
-      "additionalProperties": false,
-      "$ref": "./stopwatch.json"
+      "additionalProperties": true
     }
   }
 }

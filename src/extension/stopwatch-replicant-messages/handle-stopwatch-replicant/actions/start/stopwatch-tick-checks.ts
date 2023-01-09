@@ -8,17 +8,26 @@ export function stopwatchTickChecks(
 ) {
   const { offset = 0, startTime = 0, limit = 0, periodTime = 0 } = sw || {};
 
-  const totalTime = startTime > 0 ? offset + Date.now() - startTime : 0;
+  let totalTime = startTime > 0 ? offset + Date.now() - startTime : 0;
 
-  const isEnded = limit > 0 && limit - totalTime < tickTime;
+  const isEnded = limit > 0 && totalTime >= limit;
 
   const isRunning = startTime > 0;
 
-  const isEndedPeriod = periodTime > 0 && totalTime % periodTime < tickTime;
+  const periodTimeOdd = totalTime % periodTime;
+  const isEndedPeriod =
+    periodTime > 0 && periodTimeOdd > 0 && periodTimeOdd < tickTime;
+  let currentOrNextPeriod = Math.ceil(totalTime / periodTime);
 
   const shouldStop = !isRunning || isEnded || isEndedPeriod;
 
+  if (shouldStop) {
+    currentOrNextPeriod -= 1;
+    totalTime = isEnded ? limit : periodTime * currentOrNextPeriod;
+  }
+
   return {
+    currentPeriod: currentOrNextPeriod,
     totalTime,
     isEnded,
     isRunning,
