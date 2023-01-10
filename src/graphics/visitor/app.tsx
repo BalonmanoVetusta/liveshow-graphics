@@ -3,5 +3,5 @@ import { useMatchActions } from "hooks/use-match-actions";
 export function App() {
   const { goals } = useMatchActions();
 
-  return <h1>{goals.visitor.length}</h1>;
+  return <>{goals.visitor.length}</>;
 }

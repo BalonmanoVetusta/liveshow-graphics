@@ -7,7 +7,7 @@ function App(): ReactElement | null {
   return (
     <div>
       {/* <ScoreboardResults stopwatchContext={SCOREBOARD_MAIN_TIMER} /> */}
-      <StopwatchTime lastMinuteShowMiliseconds={false} />
+      <StopwatchTime />
       <ScoreboardResults />
     </div>
   );
