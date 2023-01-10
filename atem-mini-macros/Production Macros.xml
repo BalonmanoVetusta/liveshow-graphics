@@ -37,7 +37,7 @@
       <!-- (PiP should be activated manually by the operator) -->
       <Op id="KeyOnAir" mixEffectBlockIndex="0" keyIndex="0" onAir="False" />
       <Op id="KeyType" mixEffectBlockIndex="0" keyIndex="0" type="DVE" />
-      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera4" />
+      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera3" />
       <Op id="DVEAndFlyKeyXPosition" mixEffectBlockIndex="0" keyIndex="0" xPosition="0" />
       <Op id="DVEAndFlyKeyYPosition" mixEffectBlockIndex="0" keyIndex="0" yPosition="-1.1" />
       <Op id="DVEAndFlyKeyXSize" mixEffectBlockIndex="0" keyIndex="0" xSize="0.36" />
@@ -49,7 +49,7 @@
       <!-- (PiP should be activated manually by the operator) -->
       <Op id="KeyOnAir" mixEffectBlockIndex="0" keyIndex="0" onAir="False" />
       <Op id="KeyType" mixEffectBlockIndex="0" keyIndex="0" type="DVE" />
-      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera4" />
+      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera3" />
       <Op id="DVEAndFlyKeyXPosition" mixEffectBlockIndex="0" keyIndex="0" xPosition="10.8" />
       <Op id="DVEAndFlyKeyYPosition" mixEffectBlockIndex="0" keyIndex="0" yPosition="5.9" />
       <Op id="DVEAndFlyKeyXSize" mixEffectBlockIndex="0" keyIndex="0" xSize="0.28" />
@@ -61,7 +61,7 @@
       <!-- (PiP should be activated manually by the operator) -->
       <Op id="KeyOnAir" mixEffectBlockIndex="0" keyIndex="0" onAir="False" />
       <Op id="KeyType" mixEffectBlockIndex="0" keyIndex="0" type="DVE" />
-      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera4" />
+      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera3" />
       <Op id="DVEAndFlyKeyXPosition" mixEffectBlockIndex="0" keyIndex="0" xPosition="11" />
       <Op id="DVEAndFlyKeyYPosition" mixEffectBlockIndex="0" keyIndex="0" yPosition="-2.1" />
       <Op id="DVEAndFlyKeyXSize" mixEffectBlockIndex="0" keyIndex="0" xSize="0.27" />
@@ -108,16 +108,16 @@
       <!-- (PiP should be activated manually by the operator) -->
       <Op id="KeyOnAir" mixEffectBlockIndex="0" keyIndex="0" onAir="False" />
       <Op id="KeyType" mixEffectBlockIndex="0" keyIndex="0" type="DVE" />
-      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera4" />
+      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera3" />
       <Op id="DVEAndFlyKeyXPosition" mixEffectBlockIndex="0" keyIndex="0" xPosition="0" />
       <Op id="DVEAndFlyKeyYPosition" mixEffectBlockIndex="0" keyIndex="0" yPosition="-1.1" />
       <Op id="DVEAndFlyKeyXSize" mixEffectBlockIndex="0" keyIndex="0" xSize="0.36" />
       <Op id="DVEAndFlyKeyYSize" mixEffectBlockIndex="0" keyIndex="0" ySize="0.36" />
 
       <!-- Camera 4 Audio Off -->
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551361" mixType="Off" />
 
 
       <!-- Camera 1 On -->
@@ -138,24 +138,24 @@
     <!-- Macro for starting and end of the show -->
     <Macro index="11" name="PC w Audio" description="Camera 1 with Audio &amp; PiP Camera 4 in center preconfigured">
       <!-- Camera 4 Audio Off -->
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551361" mixType="Off" />
 
       <!-- Configure PiP Camera 4 in center under livescore -->
       <!-- (PiP should be activated manually by the operator) -->
       <Op id="KeyOnAir" mixEffectBlockIndex="0" keyIndex="0" onAir="False" />
       <Op id="KeyType" mixEffectBlockIndex="0" keyIndex="0" type="DVE" />
-      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera4" />
+      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera3" />
       <Op id="DVEAndFlyKeyXPosition" mixEffectBlockIndex="0" keyIndex="0" xPosition="0" />
       <Op id="DVEAndFlyKeyYPosition" mixEffectBlockIndex="0" keyIndex="0" yPosition="-1.1" />
       <Op id="DVEAndFlyKeyXSize" mixEffectBlockIndex="0" keyIndex="0" xSize="0.36" />
       <Op id="DVEAndFlyKeyYSize" mixEffectBlockIndex="0" keyIndex="0" ySize="0.36" />
 
       <!-- Camera 4 Audio Off -->
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551361" mixType="Off" />
 
 
       <!-- Camera 1 On -->
@@ -175,15 +175,15 @@
       <Op id="FairlightAudioMixerInputSourceMixType" input="Camera1" sourceId="18446744073709551361" mixType="On" />
 
       <!-- Camera 4 Audio On Mono and Stereo -->
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="On" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="On" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709486336" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551360" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551361" mixType="On" />
 
       <!-- Configure PiP Camera 4 in top right to view while show replays in timeouts -->
       <!-- (PiP should be activated manually by the operator) -->
       <Op id="KeyOnAir" mixEffectBlockIndex="0" keyIndex="0" onAir="False" />
       <Op id="KeyType" mixEffectBlockIndex="0" keyIndex="0" type="DVE" />
-      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera4" />
+      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera3" />
       <Op id="DVEAndFlyKeyXPosition" mixEffectBlockIndex="0" keyIndex="0" xPosition="10.8" />
       <Op id="DVEAndFlyKeyYPosition" mixEffectBlockIndex="0" keyIndex="0" yPosition="5.9" />
       <Op id="DVEAndFlyKeyXSize" mixEffectBlockIndex="0" keyIndex="0" xSize="0.28" />
@@ -197,7 +197,7 @@
       <!-- <Op id="KeyOnAir" mixEffectBlockIndex="0" keyIndex="0" onAir="True" /> -->
 
       <!-- Camera 4 to preview -->
-      <Op id="PreviewInput" mixEffectBlockIndex="0" input="Camera4" />
+      <Op id="PreviewInput" mixEffectBlockIndex="0" input="Camera3" />
 
       <!-- Transition Mixing 2s at 25 fps -->
       <Op id="TransitionStyle" mixEffectBlockIndex="0" style="Mix" />
@@ -230,7 +230,7 @@
       <!-- <Op id="KeyOnAir" mixEffectBlockIndex="0" keyIndex="0" onAir="True" /> -->
 
       <!-- Camera 4 to preview -->
-      <Op id="PreviewInput" mixEffectBlockIndex="0" input="Camera4" />
+      <Op id="PreviewInput" mixEffectBlockIndex="0" input="Camera3" />
 
       <!-- Wait 5 seconds at 25 fps (6*25) -->
       <Op id="MacroSleep" frames="150" />
@@ -253,24 +253,24 @@
     <!-- Macro for Timeouts with replays -->
     <Macro index="14" name="Timeouts - R" description="Timeout with replays and show the court in PiP in top right">
       <!-- Camera 4 Audio Off -->
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551361" mixType="Off" />
 
       <!-- Configure PiP Camera 4 in center under livescore -->
       <!-- (PiP should be activated manually by the operator) -->
       <Op id="KeyOnAir" mixEffectBlockIndex="0" keyIndex="0" onAir="False" />
       <Op id="KeyType" mixEffectBlockIndex="0" keyIndex="0" type="DVE" />
-      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera4" />
+      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera3" />
       <Op id="DVEAndFlyKeyXPosition" mixEffectBlockIndex="0" keyIndex="0" xPosition="10.8" />
       <Op id="DVEAndFlyKeyYPosition" mixEffectBlockIndex="0" keyIndex="0" yPosition="5.9" />
       <Op id="DVEAndFlyKeyXSize" mixEffectBlockIndex="0" keyIndex="0" xSize="0.28" />
       <Op id="DVEAndFlyKeyYSize" mixEffectBlockIndex="0" keyIndex="0" ySize="0.28" />
 
       <!-- Camera 4 Audio Off -->
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551361" mixType="Off" />
 
 
       <!-- Camera 1 On -->
@@ -285,24 +285,24 @@
     <!-- Macro for starting and end of the show -->
     <Macro index="15" name="Half-Time R" description="Half Time with repetitions and PiP in the right center">
       <!-- Camera 4 Audio Off -->
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551361" mixType="Off" />
 
       <!-- Configure PiP Camera 4 in center under livescore -->
       <!-- (PiP should be activated manually by the operator) -->
       <Op id="KeyOnAir" mixEffectBlockIndex="0" keyIndex="0" onAir="False" />
       <Op id="KeyType" mixEffectBlockIndex="0" keyIndex="0" type="DVE" />
-      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera4" />
+      <Op id="KeyFillInput" mixEffectBlockIndex="0" keyIndex="0" input="Camera3" />
       <Op id="DVEAndFlyKeyXPosition" mixEffectBlockIndex="0" keyIndex="0" xPosition="11" />
       <Op id="DVEAndFlyKeyYPosition" mixEffectBlockIndex="0" keyIndex="0" yPosition="-2.1" />
       <Op id="DVEAndFlyKeyXSize" mixEffectBlockIndex="0" keyIndex="0" xSize="0.27" />
       <Op id="DVEAndFlyKeyYSize" mixEffectBlockIndex="0" keyIndex="0" ySize="0.27" />
 
       <!-- Camera 4 Audio Off -->
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551361" mixType="Off" />
 
 
       <!-- Camera 1 On -->
@@ -369,16 +369,16 @@
 
     <!-- Turn On Camera 4 -->
     <Macro index="28" name="Cam 4 On" description="Camera 4 Audio On">
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="On" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="On" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709486336" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551360" mixType="On" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551361" mixType="On" />
     </Macro>
 
     <!-- Turn Off Camera 4 -->
     <Macro index="29" name="Cam 4 Off" description="Camera 4 Off">
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709486336" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551360" mixType="Off" />
-      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera4" sourceId="18446744073709551361" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709486336" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551360" mixType="Off" />
+      <Op id="FairlightAudioMixerInputSourceMixType" input="Camera3" sourceId="18446744073709551361" mixType="Off" />
     </Macro>
   </MacroPool>
 </Profile>
