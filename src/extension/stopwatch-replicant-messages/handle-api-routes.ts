@@ -10,7 +10,6 @@ function getCurrentTimeResponse(stopwatchCurrentValue: Stopwatch): string {
     offset = 0,
     startTime = 0,
     limit = 0,
-    total = 0,
     backwards = false,
   } = stopwatchCurrentValue;
 
