@@ -24,7 +24,7 @@ function getTeamGoals(nodecg: NodeCG, team: Team) {
       currentTeam === team && action === MatchActionType.GOAL
   );
 
-  return { total: teamGoals.length, teamGoals };
+  return teamGoals.length;
 }
 
 export function handleApiRoutes(nodecg: NodeCG) {
@@ -39,9 +39,7 @@ export function handleApiRoutes(nodecg: NodeCG) {
       return res.status(400).json({ error: "team is required" });
     }
 
-    return res.json({
-      payload: getTeamGoals(nodecg, team),
-    });
+    return res.json(getTeamGoals(nodecg, team));
   });
 
   router.get("/:team/add", (req, res) => {
@@ -54,9 +52,7 @@ export function handleApiRoutes(nodecg: NodeCG) {
 
       addGoal(team);
 
-      return res.json({
-        payload: getTeamGoals(nodecg, team),
-      });
+      return res.json(getTeamGoals(nodecg, team));
     } catch (e) {
       console.error(e);
     }
@@ -73,9 +69,7 @@ export function handleApiRoutes(nodecg: NodeCG) {
 
       removeLastGoal(team);
 
-      return res.json({
-        payload: getTeamGoals(nodecg, team),
-      });
+      return res.json(getTeamGoals(nodecg, team));
     } catch (e) {
       console.error(e);
     }

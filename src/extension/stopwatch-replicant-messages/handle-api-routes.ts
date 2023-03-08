@@ -5,24 +5,48 @@ import { StopwatchActions } from "./types";
 
 const STOPWATCH_REPLICANT_NAME = "stopwatch";
 
+function getCurrentTimeResponse(stopwatchCurrentValue: Stopwatch): string {
+  const {
+    offset = 0,
+    total = 0,
+    limit = 0,
+    backwards = false,
+  } = stopwatchCurrentValue;
+
+  let totalTime = total || offset;
+  if (backwards && totalTime < limit) {
+    totalTime = limit - totalTime;
+  } else if (backwards) {
+    totalTime = 0;
+  }
+
+  const minutes = Math.floor(totalTime / 60000)
+    .toString()
+    .padStart(2, "0");
+  const seconds = ((totalTime % 60000) / 1000)
+    .toFixed(0)
+    .toString()
+    .padStart(2, "0");
+
+  return `${minutes}:${seconds}`;
+}
+
 export function handleApiRoutes(nodecg: NodeCG) {
   const router = nodecg.Router();
 
-  router.get("/multer", (req, res) => {
-    res.json(process.env.NODECG_ROOT);
-  });
-
-  router.get("/", (req, res) => {
+  router.get("/get", (req, res) => {
     try {
       const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
         STOPWATCH_REPLICANT_NAME,
         nodecg.bundleName
       );
 
-      return res.status(200).json(stopwatchCurrentValue);
+      return res
+        .status(200)
+        .json(getCurrentTimeResponse(stopwatchCurrentValue));
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ ok: false, error });
+      return res.status(500).json("00:00");
     }
   });
 
