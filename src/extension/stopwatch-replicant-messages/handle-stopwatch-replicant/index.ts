@@ -128,12 +128,16 @@ export function handleStopwatchReplicant(
       break;
 
     case StopwatchActions.ADD_OFFSET:
-      if (currentValue.offset + ((payload as number) ?? 0) < 0) {
+      const newOffsetValue = Number(payload) || 0;
+      const currentOffset = currentValue?.offset || 0;
+      const calculatedOffset = currentOffset + newOffsetValue;
+      if (calculatedOffset < 0) {
         throw new Error(
           "You can not set an offset that makes the stopwatch restart or have negative values, use backwards instead"
         );
       }
-      newValue.offset += (payload as number) ?? 0;
+
+      newValue.offset = calculatedOffset;
       break;
 
     case StopwatchActions.SET_TIME_LIMIT:

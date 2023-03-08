@@ -208,7 +208,7 @@ export function StopwatchTimePanel({
                 name="enable-reset"
                 id="enable-reset"
                 key={enableReset.toString()}
-                value={enableReset.toString()}
+                value={enableReset ? 1 : 0}
                 onChange={(event) => {
                   if (isRunning) {
                     alert(
@@ -239,7 +239,7 @@ export function StopwatchTimePanel({
             <button
               onClick={(event) => {
                 event.preventDefault();
-                const offset = parseInt(offsetSecondsInput, 10);
+                const offset = parseInt(offsetSecondsInput, 10) * 1000;
                 if (isNaN(offset)) {
                   setError("Invalid offset");
                   return;

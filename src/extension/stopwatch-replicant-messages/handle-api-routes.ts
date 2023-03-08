@@ -8,12 +8,18 @@ const STOPWATCH_REPLICANT_NAME = "stopwatch";
 function getCurrentTimeResponse(stopwatchCurrentValue: Stopwatch): string {
   const {
     offset = 0,
-    total = 0,
+    startTime = 0,
     limit = 0,
+    total = 0,
     backwards = false,
   } = stopwatchCurrentValue;
 
-  let totalTime = total || offset;
+  let totalTime = offset;
+  if (startTime > 0) {
+    totalTime = Date.now() - startTime;
+    totalTime += offset;
+  }
+
   if (backwards && totalTime < limit) {
     totalTime = limit - totalTime;
   } else if (backwards) {
@@ -23,8 +29,7 @@ function getCurrentTimeResponse(stopwatchCurrentValue: Stopwatch): string {
   const minutes = Math.floor(totalTime / 60000)
     .toString()
     .padStart(2, "0");
-  const seconds = ((totalTime % 60000) / 1000)
-    .toFixed(0)
+  const seconds = Math.floor((totalTime % 60000) / 1000)
     .toString()
     .padStart(2, "0");
 
@@ -48,6 +53,23 @@ export function handleApiRoutes(nodecg: NodeCG) {
       console.error(error);
       return res.status(500).json("00:00");
     }
+  });
+
+  router.get("/addOffset", (req, res) => {
+    try {
+      const { offset = 0 } = req.query;
+      const offsetFormattedValue = parseInt(offset, 10) || 0;
+
+      handleStopwatchReplicant(nodecg, {
+        type: StopwatchActions.ADD_OFFSET,
+        payload: offsetFormattedValue,
+      });
+
+      return res.sendStatus(200);
+    } catch (error) {
+      console.error(error);
+    }
+    return res.sendStatus(500);
   });
 
   router.get("/start", (req, res) => {
