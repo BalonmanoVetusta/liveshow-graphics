@@ -48,21 +48,23 @@
       :root {
         --size-scale-factor: 1; /* Not used yet */
 
-        --space-margin: 5px;
+        --space-margin: 10px;
         --space-magin-score-left: 5px 15px 5px 10px;
         --space-margin-score-right: 5px 10px 5px 15px;
         --score-border-radius-right: 0 20px 20px 0;
         --score-border-radius-left: 20px 0 0 20px;
-        --font-size: 22px;
+        --font-size: 38px;
         --font-color: black;
         --font-score-size: 32px;
-        --shield-size: 35px;
+        --shield-size: 50px;
         --shield-div-scale: 1.5;
         --image-scale: 1.2;
-        --font-size-info: 12px;
+        --font-size-info: 18px;
         --font-size-time: 32px;
         --font-color-info: red;
 
+        --stopwatch-padding: var(--shield-border-size, 5px);
+        --stopwatch-border-radius: 10px;
         --stopwatch-background-color: rgb(246, 222, 11);
         --stopwatch-background-time-color: black;
         --stopwatch-font-time-color: white;
@@ -73,7 +75,7 @@
         --result-background-color-visitor: var(--stopwatch-background-color);
         --result-font-color-visitor: var(--font-color);
 
-        --shield-div-border-radius: 50px 40px;
+        --shield-div-border-radius: 50px 50px;
         --shield-border-size: 5px;
         --shield-border-style: solid;
         --shield-border-color-local: var(--stopwatch-background-color);
@@ -231,8 +233,8 @@
 
       .stopwatch {
         background: var(--stopwatch-background-color, transparent);
-        padding: var(--space-margin, 10px) var(--space-margin, 10px);
-        border-radius: 10px;
+        padding: var(--stopwatch-padding, 5px 5px);
+        border-radius: var(--stopwatch-border-radius, 10px);
       }
 
       .stopwatch > div {
@@ -265,6 +267,7 @@
         position: absolute;
       }
 
+      /*
       .suspensions[data-side="left"] {
         right: 55%;
         top: 110px;
@@ -273,6 +276,26 @@
       .suspensions[data-side="right"] {
         left: 55%;
         top: 100px;
+      }
+      */
+      .suspensions.local-team[data-local-team-side="left"] {
+        right: 55%;
+        top: 110px;
+      }
+
+      .suspensions.visitor-team[data-local-team-side="left"] {
+        left: 55%;
+        top: 110px;
+      }
+
+      .suspensions.local-team[data-local-team-side="right"] {
+        left: 55%;
+        top: 110px;
+      }
+
+      .suspensions.visitor-team[data-local-team-side="right"] {
+        right: 55%;
+        top: 110px;
       }
     </style>
     <script type="module" src="./scoreboard/index.tsx"></script>
