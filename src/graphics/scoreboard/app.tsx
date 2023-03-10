@@ -1,12 +1,12 @@
+import { useMatchActions } from "hooks/use-match-actions";
+import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement } from "react";
-import { useMatchActions } from "../../hooks/use-match-actions";
-import { TeamSideOptions, useTeamSide } from "../../hooks/use-team-side";
 import { StopwatchTime } from "./src/components/stopwatch-time";
 // import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
 
 function App(): ReactElement | null {
   const { goals } = useMatchActions();
-  const { localTeamSide = TeamSideOptions.LEFT } = useTeamSide();
+  const { localTeamSide = "LEFT" } = useTeamSide();
   return (
     <>
       {/* <div className="suspensions local-team" data-side="left">
@@ -27,9 +27,7 @@ function App(): ReactElement | null {
         <div className="scoreboard">
           <div
             className="local-team team"
-            data-side={
-              localTeamSide === TeamSideOptions.LEFT ? "left" : "right"
-            }
+            data-side={localTeamSide === "LEFT" ? "left" : "right"}
           >
             <div className="score">
               <p>{goals.local.length.toString().padStart(2, "0")}</p>
@@ -48,9 +46,7 @@ function App(): ReactElement | null {
           </div>
           <div
             className="visitor-team team"
-            data-side={
-              localTeamSide === TeamSideOptions.LEFT ? "right" : "left"
-            }
+            data-side={localTeamSide === "LEFT" ? "right" : "left"}
           >
             <div className="score">
               <p>{goals.visitor.length.toString().padStart(2, "0")}</p>

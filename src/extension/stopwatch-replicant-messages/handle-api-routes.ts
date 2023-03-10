@@ -11,7 +11,7 @@ function getCurrentTimeResponse(stopwatchCurrentValue: Stopwatch): string {
     startTime = 0,
     limit = 0,
     backwards = false,
-  } = stopwatchCurrentValue;
+  } = stopwatchCurrentValue || {};
 
   let totalTime = offset;
   if (startTime > 0) {
@@ -56,8 +56,8 @@ export function handleApiRoutes(nodecg: NodeCG) {
 
   router.get("/addOffset", (req, res) => {
     try {
-      const { offset = 0 } = req.query;
-      const offsetFormattedValue = parseInt(offset.toString(), 10) || 0;
+      const { offset = "0" } = req.query || {};
+      const offsetFormattedValue = parseInt(offset as string, 10) || 0;
 
       handleStopwatchReplicant(nodecg, {
         type: StopwatchActions.ADD_OFFSET,

@@ -1,7 +1,7 @@
 import { TeamSide } from "types/schemas/team-side";
 import { useReplicant } from "./use-replicant";
 
-export declare enum TeamSideOptions {
+export enum TeamSideOptions {
   LEFT = "LEFT",
   RIGHT = "RIGHT",
 }

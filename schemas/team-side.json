@@ -5,7 +5,8 @@
   "required": ["localTeamSide"],
   "properties": {
     "localTeamSide": {
-      "enum": ["LEFT", "RIGHT"]
+      "enum": ["LEFT", "RIGHT"],
+      "default": "LEFT"
     }
   }
 }
