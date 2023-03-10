@@ -57,7 +57,7 @@ export function handleApiRoutes(nodecg: NodeCG) {
   router.get("/addOffset", (req, res) => {
     try {
       const { offset = 0 } = req.query;
-      const offsetFormattedValue = parseInt(offset, 10) || 0;
+      const offsetFormattedValue = parseInt(offset.toString(), 10) || 0;
 
       handleStopwatchReplicant(nodecg, {
         type: StopwatchActions.ADD_OFFSET,

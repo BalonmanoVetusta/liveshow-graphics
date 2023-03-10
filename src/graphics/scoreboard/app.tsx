@@ -1,6 +1,6 @@
+import { ReactElement } from "react";
 import { useMatchActions } from "../../hooks/use-match-actions";
 import { TeamSideOptions, useTeamSide } from "../../hooks/use-team-side";
-import { ReactElement } from "react";
 import { StopwatchTime } from "./src/components/stopwatch-time";
 // import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
 
