@@ -5,24 +5,33 @@ import {
 import { ReactElement } from "react";
 
 interface StopwatchTimeProps {
-  // periodText: string | null;
-  // periodMinutes: number; // Must be equal or greater than 1 to be showed
-  // lastMinuteShowMiliseconds: boolean;
+  // showPeriod: boolean;
+  lastMinuteShowMiliseconds: boolean;
   padZeroes: number;
 }
 
 export function StopwatchTime({
-  // periodText = null,
-  padZeroes = 2,
-}: Partial<StopwatchTimeProps> = {}): ReactElement {
-  const { minutes = 0, seconds = 0 } = useStopwatchReplicantReader({
+  // showPeriod = false,
+  padZeroes = 0,
+}: // lastMinuteShowMiliseconds = false,
+Partial<StopwatchTimeProps> = {}): ReactElement {
+  const {
+    minutes = 0,
+    seconds = 0,
+    // milliseconds = 0,
+    // periodTime = 0,
+  } = useStopwatchReplicantReader({
     maxTimeUnit: MaxTimeUnit.MINUTES,
   });
 
   return (
     <>
-      {minutes.toString().padStart(padZeroes, "0")}:
-      {seconds.toString().padStart(padZeroes, "0")}
+      <div className="time">
+        <p>
+          {minutes.toString().padStart(padZeroes, "0")}:
+          {seconds.toString().padStart(padZeroes, "0")}
+        </p>
+      </div>
     </>
   );
 }

@@ -121,12 +121,6 @@
         "singleInstance": false
       },
       {
-        "file": "match.html",
-        "width": 1920,
-        "height": 1080,
-        "singleInstance": false
-      },
-      {
         "file": "local.html",
         "width": 1920,
         "height": 1080,

@@ -5,41 +5,274 @@
     <title>Handball Liveshow</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@400;600;700;900&display=swap"
       rel="stylesheet"
     />
     <style>
-      body {
-        background-color: #999;
-        color: #151111;
-        font-family: "Monospace";
-        font-size: 450px;
-        font-weight: 700;
-        font-variant-numeric: tabular-nums;
-        margin: 0;
+      @import url("https://fonts.cdnfonts.com/css/cursed-timer-ulil");
+
+      ul {
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        gap: var(--suspensions-gap, 5px);
+        margin: var(--suspension-margin, 0 5px);
         padding: 0;
       }
-      div#root {
-        display: flex;
-        flex-direction: column;
+
+      ul li {
+        opacity: 0;
+        content: "00 00:00";
+      }
+
+      ul li[data-time] {
+        opacity: 1;
+        background: var(--suspension-color, tomato);
+        color: var(--suspension-font-color, white);
+        border-radius: var(--suspension-border-radius, 8px);
+        margin: 0;
+        padding: 2px 2px;
+      }
+
+      ul li::before {
+        content: attr(data-number) "\00a0";
+        color: var(--suspension-number-font-color, #ccc);
+      }
+
+      ul li::after {
+        content: attr(data-time);
+      }
+
+      :root {
+        --size-scale-factor: 1; /* Not used yet */
+
+        --space-margin: 5px;
+        --space-magin-score-left: 5px 15px 5px 10px;
+        --space-margin-score-right: 5px 10px 5px 15px;
+        --score-border-radius-right: 0 20px 20px 0;
+        --score-border-radius-left: 20px 0 0 20px;
+        --font-size: 22px;
+        --font-color: black;
+        --font-score-size: 32px;
+        --shield-size: 35px;
+        --shield-div-scale: 1.5;
+        --image-scale: 1.2;
+        --font-size-info: 12px;
+        --font-size-time: 32px;
+        --font-color-info: red;
+
+        --stopwatch-background-color: rgb(246, 222, 11);
+        --stopwatch-background-time-color: black;
+        --stopwatch-font-time-color: white;
+        --empty-goal-fill-color: red;
+
+        --result-background-color-local: var(--stopwatch-background-color);
+        --result-font-color-local: var(--font-color);
+        --result-background-color-visitor: var(--stopwatch-background-color);
+        --result-font-color-visitor: var(--font-color);
+
+        --shield-div-border-radius: 50px 40px;
+        --shield-border-size: 5px;
+        --shield-border-style: solid;
+        --shield-border-color-local: var(--stopwatch-background-color);
+        --shield-border-color-visitor: var(--stopwatch-background-color);
+      }
+
+      body {
+        font: bolder var(--font-size, 22px) Cursed Timer ULiL, monospace,
+          sans-serif;
+        color: var(--font-color, black);
+      }
+
+      p {
+        padding: 0;
+        margin: 0;
+        height: fit-content;
+      }
+
+      .scoreboard-container {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+
+      .column {
+        display: inline-flex;
+        flex-flow: column nowrap;
+        gap: 5px;
         align-items: center;
+        justify-content: flex-start;
+        width: fit-content;
       }
-      div#root > div {
-        display: flex;
-        flex-direction: column;
+
+      .scoreboard {
+        display: inline-flex;
+        flex-flow: row nowrap;
+        justify-content: center;
         align-items: center;
+        gap: var(--space-margin, 10px);
       }
-      div.scoreboard-time {
-        font-size: 250px;
+
+      .team {
+        display: inline-flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        height: fit-content;
       }
-      div.score-separator {
-        font-size: 450px;
-        margin: 0 50px;
+
+      .team[data-side="left"] {
+        flex-direction: row;
+        justify-content: flex-end;
       }
-      div.local-score-value,
-      div.visitor-score-value {
-        font-size: 450px;
+
+      .team[data-side="left"] > .suspensions {
+        display: block;
+      }
+
+      .team[data-side="left"] > .suspensions > ul {
+        display: flex;
+        flex-direction: row-reverse;
+      }
+
+      .team[data-side="left"] .score {
+        padding: var(--space-margin-score-left, 5px 15px 5px 10px);
+        border-radius: var(--score-border-radius-left, 20px 0 0 20px);
+      }
+
+      .team[data-side="left"] .score p {
+        text-align: right;
+      }
+
+      .team[data-side="right"] {
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+      }
+
+      .team[data-side="right"] > .suspensions {
+        left: 100%;
+      }
+
+      .team[data-side="right"] .score {
+        padding: var(--space-margin-score-right, 5px 10px 5px 15px);
+        border-radius: var(--score-border-radius-right, 0 20px 20px 0);
+      }
+
+      .team[data-side="right"] .score p {
+        text-align: left;
+      }
+
+      .local-team .score {
+        background: var(--result-background-color-local, transparent);
+        color: var(--result-font-color-local, inherit);
+      }
+
+      .visitor-team .score {
+        background: var(--result-background-color-visitor, transparent);
+        color: var(--result-font-color-visitor, inherit);
+      }
+
+      .score {
+        font-size: var(--font-score-size, 28px);
+      }
+
+      .local-team .shield {
+        border-color: var(--shield-border-color-local, transpartent);
+      }
+
+      .visitor-team .shield {
+        border-color: var(--shield-border-color-visitor, transpartent);
+      }
+
+      .shield {
+        border-radius: var(--shield-div-border-radius, 50px 25px);
+        overflow: hidden;
+        rotate: -45deg;
+        width: var(--shield-size, 30px);
+        height: var(--shield-size, 30px);
+        border: var(--shield-border-size, 0) var(--shield-border-style, none);
+        transform: scale(var(--shield-div-scale, 1.2));
+      }
+
+      .team[data-active-info="true"] > .shield {
+        border-color: var(--active-info-border-color, red);
+      }
+
+      .team > .shield > .yellow-card {
+        visibility: hidden;
+        display: block;
+        position: absolute;
+      }
+
+      .team[data-yellow-cards] > .shield > .yellow-card {
+        background: green;
+        display: block;
+        position: absolute;
+        bottom: 2.5px;
+        left: 2.5px;
+        rotate: 45deg;
+        min-width: 5px;
+        width: fit-content;
+        min-height: 5px;
+        height: fit-content;
+        padding: 2px 0;
+        z-index: 1;
+        font-size: var(--font-size-card, 10px);
+      }
+
+      .shield img {
+        display: flex;
+        width: var(--shield-size, 30px);
+        rotate: 45deg;
+        transform: scale(var(--image-scale, 1.2));
+      }
+
+      .stopwatch {
+        background: var(--stopwatch-background-color, transparent);
+        padding: var(--space-margin, 10px) var(--space-margin, 10px);
+        border-radius: 10px;
+      }
+
+      .stopwatch > div {
+        display: inline-flex;
+        height: fit-content;
+        width: fit-content;
+      }
+
+      .stopwatch > div.time {
+        background: var(--stopwatch-background-time-color, transparent);
+        color: var(--stopwatch-font-time-color, black);
+        padding: 5px 5px;
+        border-radius: 5px 5px;
+        font: bolder var(--font-size-time, var(--font-size, 15px));
+      }
+
+      .stopwatch > .info {
+        text-align: center;
+        font-size: var(--font-size-info, 10px);
+        color: var(--font-color-info, red);
+      }
+
+      .stopwatch > .info > svg {
+        height: var(--emty-goal-size, 25px);
+        object-fit: cover;
+        fill: var(--empty-goal-fill-color, black);
+      }
+
+      .suspensions {
+        position: absolute;
+      }
+
+      .suspensions[data-side="left"] {
+        right: 55%;
+        top: 110px;
+      }
+
+      .suspensions[data-side="right"] {
+        left: 55%;
+        top: 100px;
       }
     </style>
     <script type="module" src="./scoreboard/index.tsx"></script>
