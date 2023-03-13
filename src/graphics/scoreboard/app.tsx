@@ -1,12 +1,15 @@
 import { useMatchActions } from "hooks/use-match-actions";
+import { useReplicant } from "hooks/use-replicant";
 import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement } from "react";
+import { Graphics } from "types/schemas/graphics";
 import { StopwatchTime } from "./src/components/stopwatch-time";
 // import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
 
 function App(): ReactElement | null {
   const { goals } = useMatchActions();
   const { localTeamSide = "LEFT" } = useTeamSide();
+  const [graphics] = useReplicant<Graphics, Graphics>("graphics", {});
   const showTeamName = false;
   const localName = "VET";
   const visitorName = "VISITOR";
@@ -25,7 +28,10 @@ function App(): ReactElement | null {
                   ?.getAttribute("data-yellow-cards") || ""}
               </div>
               <img
-                src="https://balonmano.isquad.es/images/afiliacion_clubs/2898/square_35723432687275366a39.jpg"
+                src={
+                  graphics.localShield ||
+                  "https://balonmano.isquad.es/images/afiliacion_clubs/2898/square_35723432687275366a39.jpg"
+                }
                 alt="Local Team Image"
               />
             </div>
@@ -54,7 +60,10 @@ function App(): ReactElement | null {
                   ?.getAttribute("data-yellow-cards") || ""}
               </div>
               <img
-                src="http://balonmano.isquad.es/images/afiliacion_clubs/69/square_6d6b7235397562793961.jpg"
+                src={
+                  graphics.visitorShield ||
+                  "https://balonmano.isquad.es/images/afiliacion_clubs/2898/square_35723432687275366a39.jpg"
+                }
                 alt="Visitor Team"
               />
             </div>
