@@ -7,57 +7,68 @@ import { StopwatchTime } from "./src/components/stopwatch-time";
 function App(): ReactElement | null {
   const { goals } = useMatchActions();
   const { localTeamSide = "LEFT" } = useTeamSide();
+  const showTeamName = false;
+  const localName = "VET";
+  const visitorName = "VISITOR";
   return (
     <>
-      {/* <div className="suspensions local-team" data-side="left">
-        <ul>
-          <li data-number="07" data-time="01:53"></li>
-          <li data-number="18" data-time="03:53"></li>
-        </ul>
-      </div>
-
-      <div className="suspensions visitor-team" data-side="right">
-        <ul>
-          <li data-number="16" data-time="00:53"></li>
-          <li data-number="TE" data-time="01:53"></li>
-        </ul>
-      </div> */}
-
-      <div className="scoreboard-container">
-        <div className="scoreboard">
-          <div
-            className="local-team team"
-            data-side={localTeamSide === "LEFT" ? "left" : "right"}
-          >
-            <div className="score">
-              <p>{goals.local.length.toString().padStart(2, "0")}</p>
-            </div>
+      <div data-position="top center">
+        <div
+          className="scoreboard"
+          data-local-team-side={localTeamSide === "LEFT" ? "left" : "right"}
+        >
+          <div className="local-team team">
             <div className="shield shield-local column">
-              <div className="yellow-card"></div>
+              <div className="yellow-card">
+                {document
+                  .querySelector(".local-team")
+                  ?.getAttribute("data-yellow-cards") || ""}
+              </div>
               <img
                 src="https://balonmano.isquad.es/images/afiliacion_clubs/2898/square_35723432687275366a39.jpg"
                 alt="Local Team Image"
               />
             </div>
+
+            {showTeamName ? (
+              <div className="team-name">
+                <p>{localName}</p>
+              </div>
+            ) : null}
+
+            <div className="score">
+              <p>{goals.local.length.toString().padStart(2, "0")}</p>
+            </div>
+
+            <div className="suspensions"></div>
           </div>
           <div className="stopwatch column">
             <StopwatchTime padZeroes={2} />
             <div className="info column"></div>
           </div>
-          <div
-            className="visitor-team team"
-            data-side={localTeamSide === "LEFT" ? "right" : "left"}
-          >
-            <div className="score">
-              <p>{goals.visitor.length.toString().padStart(2, "0")}</p>
-            </div>
+          <div className="visitor-team team">
             <div className="shield shield-visitor column">
-              <div className="yellow-card"></div>
+              <div className="yellow-card">
+                {document
+                  .querySelector(".visitor-team")
+                  ?.getAttribute("data-yellow-cards") || ""}
+              </div>
               <img
-                src="http://balonmano.isquad.es/images/afiliacion_clubs/488/square_32383967706436617972.jpg"
+                src="http://balonmano.isquad.es/images/afiliacion_clubs/69/square_6d6b7235397562793961.jpg"
                 alt="Visitor Team"
               />
             </div>
+
+            {showTeamName ? (
+              <div className="team-name">
+                <p>{visitorName}</p>
+              </div>
+            ) : null}
+
+            <div className="score">
+              <p>{goals.local.length.toString().padStart(2, "0")}</p>
+            </div>
+            <div className="suspensions"></div>
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@
     },
     "advertisingTime": {
       "type": "number",
-      "default": 5,
+      "default": 10,
       "title": "Time to change",
       "description": "Time in seconds that a banner is showed before change it if more than one banner is available"
     },
@@ -33,11 +33,17 @@
       "title": "Play Spot",
       "description": "If a spot must be played"
     },
-    "shield": {
+    "localShield": {
       "type": "string",
       "default": null,
-      "title": "Shield",
-      "description": "Shield sum"
+      "title": "Local Team Shield",
+      "description": "Local Team shield. Must be a full URL or a path relative to the app folder"
+    },
+    "visitorShield": {
+      "type": "string",
+      "default": null,
+      "title": "Visitor Team Shield",
+      "description": "Visitor Team shield. Must be a full URL or a path relative to the app folder"
     }
   }
 }

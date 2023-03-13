@@ -1,9 +1,12 @@
 import { useReplicant } from "hooks/use-replicant";
-import { ReactElement, useId, useRef } from "react";
+import { ReactElement, useId, useRef, useState } from "react";
 import { Asset, AssetsReplicant } from "types/Asset";
 
 function App(): ReactElement {
   const id = useId();
+  const [currentShield, setCurrentShield] = useState<any | undefined>(
+    undefined
+  );
   const [shields] = useReplicant<AssetsReplicant, AssetsReplicant>(
     "assets:shields",
     [] as AssetsReplicant,
@@ -26,7 +29,10 @@ function App(): ReactElement {
   // }, [graphics, shields]);
 
   const handleShieldChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log({ event });
+    console.log({ event }, shields);
+    setCurrentShield(
+      shields.find((shield) => shield.sum === event.target.value)
+    );
   };
 
   return (
@@ -39,7 +45,7 @@ function App(): ReactElement {
             name="asset"
             id="asset"
             onChange={handleShieldChange}
-            value={selectedShield?.current?.name ?? "DEFAULT"}
+            value={currentShield || "DEFAULT"}
           >
             <option value="DEFAULT" disabled>
               Choose a shield
