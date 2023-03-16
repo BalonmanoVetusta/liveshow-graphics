@@ -45,14 +45,6 @@ function App(): ReactElement | null {
         action === END_SEVEN_PLAYERS && team === Team.VISITOR
     );
 
-    console.log(
-      "isVisitorTeamSevenPlayers",
-      startActions,
-      endActions,
-      startActions.length !== endActions.length &&
-        (startActions.length > 0 || endActions.length > 0)
-    );
-
     return (
       startActions.length !== endActions.length &&
       (startActions.length > 0 || endActions.length > 0)
