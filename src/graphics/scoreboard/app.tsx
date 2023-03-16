@@ -49,6 +49,13 @@ function App(): ReactElement | null {
             <div className="suspensions"></div>
           </div>
           <div className="stopwatch column">
+            <div className="competition-banner">
+              <img
+                src="https://www.rfebm.com/competiciones/images/logo.png"
+                alt=""
+                width={16}
+              />
+            </div>
             <StopwatchTime padZeroes={2} />
             <div className="info column"></div>
           </div>
