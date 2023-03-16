@@ -79,6 +79,16 @@
     ],
     "dashboardPanels": [
       {
+        "name": "Match Actions",
+        "title": "Match Actions adder & remover",
+        "file": "match-actions.html",
+        "width": 4,
+        "headerColor": "#525F78",
+        "workspace": "workspace",
+        "fullbleed": false,
+        "dialog": false
+      },
+      {
         "name": "Match Configuration ",
         "title": "Match Configuration & Time Control",
         "file": "matchconfig.html",

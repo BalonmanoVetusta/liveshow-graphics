@@ -133,6 +133,7 @@
         justify-content: center;
         align-items: center;
         gap: var(--space-margin, 10px);
+        height: max-content;
       }
 
       .scoreboard[data-local-team-side="left"] {
@@ -209,8 +210,19 @@
         transform: scale(var(--shield-div-scale, 1.2));
       }
 
-      .team[data-active-info="true"] > .shield {
+      .scoreboard:has([data-active-info="true"]) > .stopwatch > .info {
+        opacity: 1;
+      }
+      .info {
+        opacity: 0;
+      }
+
+      [data-active-info="true"] > .shield {
         border-color: var(--active-info-border-color, red);
+      }
+
+      .info > svg {
+        fill: var(--active-info-border-color, red);
       }
 
       .team > .shield > .yellow-card {

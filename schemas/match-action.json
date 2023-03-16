@@ -24,6 +24,8 @@
         "WARNING",
         "MATCH_START",
         "MATCH_END",
+        "START_SEVEN_PLAYERS",
+        "END_SEVEN_PLAYERS",
         "OTHER"
       ]
     },

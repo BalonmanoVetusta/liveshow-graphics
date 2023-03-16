@@ -3,7 +3,7 @@ import { Team } from "hooks/use-match-actions/types";
 import { ReactElement } from "react";
 
 export function ScoreboardPanel(): ReactElement {
-  const { addGoal, reset, removeLastGoal, goals } = useMatchActions();
+  const { addGoal, removeLastGoal, goals } = useMatchActions();
 
   const local = goals.local.length.toString().padStart(2, "0");
   const visitor = goals.visitor.length.toString().padStart(2, "0");
@@ -33,15 +33,6 @@ export function ScoreboardPanel(): ReactElement {
           +1
         </button>
         <button onClick={() => removeLastGoal(Team.VISITOR)}>-1</button>
-      </fieldset>
-      <fieldset>
-        <button
-          onClick={() => {
-            reset();
-          }}
-        >
-          Reset
-        </button>
       </fieldset>
     </div>
   );

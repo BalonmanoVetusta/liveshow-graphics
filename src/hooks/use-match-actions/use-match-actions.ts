@@ -80,6 +80,20 @@ export function useMatchActions(
     });
   };
 
+  const startSevenPlayers = (team: Team) => {
+    addAction({
+      action: "START_SEVEN_PLAYERS",
+      team,
+    });
+  };
+
+  const stopSevenPlayers = (team: Team) => {
+    addAction({
+      action: "END_SEVEN_PLAYERS",
+      team,
+    });
+  };
+
   const reset = () => {
     setActions([]);
   };
@@ -109,6 +123,8 @@ export function useMatchActions(
     addGoal,
     removeLastGoal,
     addWarning,
+    startSevenPlayers,
+    stopSevenPlayers,
     reset,
   };
 }
