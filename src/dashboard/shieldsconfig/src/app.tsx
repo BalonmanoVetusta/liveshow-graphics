@@ -43,7 +43,7 @@ function App(): ReactElement {
   return (
     <>
       <ShieldSelector
-        key={currentLocalShield}
+        key={`local-${currentLocalShield}`}
         label="Local Team Shield"
         acceptManuallyInputUrl={true}
         initialValue={currentLocalShield}
@@ -51,7 +51,7 @@ function App(): ReactElement {
       />
 
       <ShieldSelector
-        key={currentVisitorShield}
+        key={`visitor-${currentVisitorShield}`}
         label="Visitor Team Shield"
         acceptManuallyInputUrl={true}
         initialValue={currentVisitorShield}
