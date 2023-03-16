@@ -1,3 +1,5 @@
+DISCLAIMER: This project is intendeed to run in local. The API is exposed publicly without security so run this in a public server will make it available publicly by any others who knows the url make it possible to modify your expected behaviour.
+
 ## Stuff no compatible with bun
 
 `npm run build:schema` is not compatible for any reason with `bun.sh`
@@ -11,6 +13,8 @@ npm install
 bun run build:schemas
 bun run dev
 ```
+
+If you want to use assets and mounts and you are using include-nodecg with version 1.9.0 you should patch with this fix [#607](https://github.com/nodecg/nodecg/pull/607) manually.
 
 ### Development (re)start
 
