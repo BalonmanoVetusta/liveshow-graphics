@@ -147,6 +147,7 @@ export function StopwatchTimePanel({
                 name="match-period-time"
                 id="match-period-time"
                 min={1}
+                step={1}
                 value={periodTime}
                 placeholder={`Period duration in ${TIME_LIMITS_UNIT_VALUE_TEXT}`}
                 onChange={(event) => {
@@ -208,18 +209,12 @@ export function StopwatchTimePanel({
                 name="enable-reset"
                 id="enable-reset"
                 key={enableReset.toString()}
-                value={enableReset ? 1 : 0}
                 onChange={(event) => {
-                  if (isRunning) {
-                    alert(
-                      "You can not reset the stopwatch while running, stop it first"
-                    );
-                    event.preventDefault();
-                    event.target.checked = false;
-                    return;
-                  }
+                  event.preventDefault();
                   setEnableReset((prev) => !prev);
                 }}
+                disabled={isRunning}
+                checked={enableReset}
               />
             </div>
           </fieldset>
@@ -268,6 +263,7 @@ export function StopwatchTimePanel({
                   ? minutesInput
                   : formatStopwatchNumber(minutes ?? 0)
               }
+              disabled={isRunning}
               readOnly={isReadOnlyTime()}
               onFocus={handleFocus}
               onBlur={handleBlur(minutesInput, minutes, 60000)}
@@ -283,6 +279,7 @@ export function StopwatchTimePanel({
                   ? secondsInput
                   : formatStopwatchNumber(seconds ?? 0)
               }
+              disabled={isRunning}
               readOnly={isReadOnlyTime()}
               onFocus={handleFocus}
               onBlur={handleBlur(secondsInput, seconds, 1000)}
@@ -302,6 +299,7 @@ export function StopwatchTimePanel({
                   onChange={(event) => {
                     setCanEditTime(event.target.checked);
                   }}
+                  checked={canEditTime}
                 />
               </fieldset>
             </div>

@@ -2,7 +2,7 @@ import { useMatchActions } from "hooks/use-match-actions";
 import { Team } from "hooks/use-match-actions/types";
 import { useReplicant } from "hooks/use-replicant";
 import { useTeamSide } from "hooks/use-team-side";
-import { ReactElement, useEffect, useMemo } from "react";
+import { ReactElement, useLayoutEffect, useMemo } from "react";
 import { Graphics } from "types/schemas/graphics";
 import { StopwatchTime } from "./src/components/stopwatch-time";
 // import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
@@ -55,7 +55,7 @@ function App(): ReactElement | null {
     return isLocalTeamSevenPlayers || isVisitorTeamSevenPlayers;
   }, [isLocalTeamSevenPlayers, isVisitorTeamSevenPlayers]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document
       .querySelector(".visitor-team")
       ?.setAttribute("data-active-info", isVisitorTeamSevenPlayers.toString());

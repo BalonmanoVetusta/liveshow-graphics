@@ -94,7 +94,7 @@ export function useMatchActions(
     });
   };
 
-  const reset = () => {
+  const resetAllActions = () => {
     setActions([]);
   };
 
@@ -125,6 +125,6 @@ export function useMatchActions(
     addWarning,
     startSevenPlayers,
     stopSevenPlayers,
-    reset,
+    reset: resetAllActions,
   };
 }

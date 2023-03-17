@@ -30,43 +30,41 @@ export function ShieldSelector({
 
   return (
     <>
-      <fieldset>
-        <label htmlFor={`${id}-shield`}>{label}</label>
-        <select
-          name={`${id}-shield`}
-          id={`${id}-shield`}
-          onChange={(event) => {
-            event.preventDefault();
-            const newShield = shields.find((s) => s.sum === event.target.value);
-            setSelectedShield(newShield?.sum || DEFAULT_OPTION_VALUE);
-            setShieldUrl(newShield?.url || "");
-            onChange(newShield?.url || DEFAULT_OPTION_VALUE);
-          }}
-          value={searchShieldAsset(selectedShield)?.sum ?? DEFAULT_OPTION_VALUE}
-        >
-          <option value={DEFAULT_OPTION_VALUE}>Choose from the list</option>
-          {shields.map((shield: Asset) => (
-            <option key={shield.sum} value={shield.sum}>
-              {shield.name}
-            </option>
-          ))}
-        </select>
-        {!searchShieldAsset(selectedShield) && acceptManuallyInputUrl ? (
-          <>
-            <input
-              type="url"
-              name="url"
-              id="url"
-              onChange={(event) => {
-                event.preventDefault();
-                setShieldUrl(event.target.value);
-                onChange(event.target.value);
-              }}
-              value={shieldUrl}
-            />
-          </>
-        ) : null}
-      </fieldset>
+      <label htmlFor={`${id}-shield`}>{label}</label>
+      <select
+        name={`${id}-shield`}
+        id={`${id}-shield`}
+        onChange={(event) => {
+          event.preventDefault();
+          const newShield = shields.find((s) => s.sum === event.target.value);
+          setSelectedShield(newShield?.sum || DEFAULT_OPTION_VALUE);
+          setShieldUrl(newShield?.url || "");
+          onChange(newShield?.url || DEFAULT_OPTION_VALUE);
+        }}
+        value={searchShieldAsset(selectedShield)?.sum ?? DEFAULT_OPTION_VALUE}
+      >
+        <option value={DEFAULT_OPTION_VALUE}>Choose from the list</option>
+        {shields.map((shield: Asset) => (
+          <option key={shield.sum} value={shield.sum}>
+            {shield.name}
+          </option>
+        ))}
+      </select>
+      {!searchShieldAsset(selectedShield) && acceptManuallyInputUrl ? (
+        <>
+          <input
+            type="url"
+            name="url"
+            id="url"
+            onChange={(event) => {
+              event.preventDefault();
+              setShieldUrl(event.target.value);
+              onChange(event.target.value);
+            }}
+            value={shieldUrl}
+          />
+        </>
+      ) : null}
     </>
   );
 }
