@@ -2,6 +2,7 @@ import { useMatchActions } from "hooks/use-match-actions";
 import { Team } from "hooks/use-match-actions/types";
 import { ReactElement, useMemo, useState } from "react";
 import { MatchAction } from "types/schemas/match-action";
+import { AddSuspensionForm } from "./components/add-suspension-form";
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
 const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
@@ -70,6 +71,12 @@ function App(): ReactElement {
         >
           {isSevenPlayersLocal ? "Goalkeeper is back" : "No Goalkeeper"}
         </button>
+        <div>
+          <fieldset>
+            <legend>Suspensions</legend>
+            <AddSuspensionForm team={Team.LOCAL} />
+          </fieldset>
+        </div>
       </fieldset>
       <fieldset>
         <legend>Visitor</legend>
@@ -93,32 +100,10 @@ function App(): ReactElement {
           </button>
         </div>
         <div>
-          <input
-            type="number"
-            name="suspensionVisitor"
-            id="suspension-visitor"
-            value={suspensionNumber}
-            onChange={(event) => {
-              event.preventDefault();
-              const value = Number(event.target.value);
-              setSuspensionNumber(value);
-            }}
-          />
-          <button
-            onClick={(event) => {
-              event.preventDefault();
-              // TODO: Add the time where suspension started
-              // TODO: Delete suspension
-              // TODO: Double suspensions
-              addAction({
-                action: SUSPENSION,
-                team: Team.VISITOR,
-                payload: { number: suspensionNumber, team: Team.VISITOR },
-              });
-            }}
-          >
-            Add Suspension
-          </button>
+          <fieldset>
+            <legend>Suspensions</legend>
+            <AddSuspensionForm team={Team.VISITOR} />
+          </fieldset>
         </div>
       </fieldset>
 
@@ -130,17 +115,17 @@ function App(): ReactElement {
             resetActions();
           }}
         >
-          Delete All actions (keep goals)
+          Delete All actions & goals (full reset except time)
         </button>
         <button
           onClick={(event) => {
             event.preventDefault();
             setActions(
-              actions.filter(({ action }: MatchAction) => action !== GOAL)
+              actions.filter(({ action }: MatchAction) => action === GOAL)
             );
           }}
         >
-          Delete All actions & goals
+          Delete All actions (keep goals)
         </button>
       </fieldset>
     </>

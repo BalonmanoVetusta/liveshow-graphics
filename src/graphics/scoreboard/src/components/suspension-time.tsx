@@ -26,8 +26,10 @@ export function SuspensionTime({
 
   const { minutes = 0, seconds = 0 } = useMemo(() => {
     const { matchTime } = action;
+    const oddTime = matchTime % 1000;
+    const exactMatchTime = matchTime - oddTime;
     const calculatedCurrentSuspensionTime =
-      suspensionTimeMilliseconds - (time - matchTime);
+      suspensionTimeMilliseconds - (time - exactMatchTime);
     const minutes = Math.floor(calculatedCurrentSuspensionTime / 60000);
     const seconds = Math.floor(
       (calculatedCurrentSuspensionTime % 60000) / 1000

@@ -11,7 +11,7 @@ import { SuspensionTime } from "./src/components/suspension-time";
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
 const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
-const WARNING = "WARNING";
+// const WARNING = "WARNING";
 const SUSPENSION = "SUSPENSION";
 const DISQUALIFICATION = "DISQUALIFICATION";
 // const GOAL = "GOAL";
