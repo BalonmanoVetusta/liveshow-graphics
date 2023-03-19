@@ -72,7 +72,9 @@ function App(): ReactElement | null {
       <div data-position="top center">
         <div
           className="scoreboard"
-          data-local-team-side={localTeamSide === "LEFT" ? "left" : "right"}
+          data-local-team-side={
+            localTeamSide?.toLowerCase() === "left" ? "left" : "right"
+          }
         >
           <div className="local-team team">
             <div className="shield shield-local column">

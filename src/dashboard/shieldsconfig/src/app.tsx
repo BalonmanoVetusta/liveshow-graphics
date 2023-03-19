@@ -14,7 +14,7 @@ const ShieldsComponent = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: ${(props: { localTeamSide: string }) =>
-    props?.localTeamSide !== "LEFT" ? "row-reverse" : "row"};
+    props?.localTeamSide?.toLowerCase() !== "left" ? "row-reverse" : "row"};
   margin: 20px 0;
 `;
 
