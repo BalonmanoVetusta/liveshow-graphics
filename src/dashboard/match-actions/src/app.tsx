@@ -1,16 +1,18 @@
 import { useMatchActions } from "hooks/use-match-actions";
 import { Team } from "hooks/use-match-actions/types";
-import { ReactElement, useMemo } from "react";
+import { ReactElement, useMemo, useState } from "react";
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
 const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
 
 function App(): ReactElement {
+  const [suspensionNumber = 0, setSuspensionNumber] = useState<number>(0);
   const {
     actions,
     startSevenPlayers,
     stopSevenPlayers,
     reset: resetActions,
+    addAction,
   } = useMatchActions();
   const isSevenPlayersLocal = useMemo(() => {
     const startActions = actions.filter(
@@ -67,23 +69,50 @@ function App(): ReactElement {
       </fieldset>
       <fieldset>
         <legend>Visitor</legend>
-        <button
-          type="button"
-          onClick={(event) => {
-            event.preventDefault();
-            if (!isSevenPlayersVisitor) {
-              startSevenPlayers(Team.VISITOR);
-              return;
-            }
+        <div>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.preventDefault();
+              if (!isSevenPlayersVisitor) {
+                startSevenPlayers(Team.VISITOR);
+                return;
+              }
 
-            if (isSevenPlayersVisitor) {
-              stopSevenPlayers(Team.VISITOR);
-              return;
-            }
-          }}
-        >
-          {isSevenPlayersVisitor ? "Goalkeeper is back" : "No Goalkeeper"}
-        </button>
+              if (isSevenPlayersVisitor) {
+                stopSevenPlayers(Team.VISITOR);
+                return;
+              }
+            }}
+          >
+            {isSevenPlayersVisitor ? "Goalkeeper is back" : "No Goalkeeper"}
+          </button>
+        </div>
+        <div>
+          <input
+            type="number"
+            name="suspensionVisitor"
+            id="suspension-visitor"
+            value={suspensionNumber}
+            onChange={(event) => {
+              event.preventDefault();
+              const value = Number(event.target.value);
+              setSuspensionNumber(value);
+            }}
+          />
+          <button
+            onClick={(event) => {
+              event.preventDefault();
+              addAction({
+                action: "SUSPENSION",
+                team: Team.VISITOR,
+                payload: { number: suspensionNumber, team: Team.VISITOR },
+              });
+            }}
+          >
+            Add Suspension
+          </button>
+        </div>
       </fieldset>
 
       <fieldset>

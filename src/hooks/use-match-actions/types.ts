@@ -2,6 +2,17 @@ import { ReplicantOptions } from "nodecg/types/server";
 import { MatchAction } from "types/schemas/match-action";
 import { MatchActions } from "types/schemas/match-actions";
 
+export declare interface PlayerInfoPayload {
+  id?: number;
+  name?: string;
+  position?: AttackPosition;
+  number?: number;
+  avatarUrl?: string;
+  team: Team;
+  teamId?: number | string;
+  teamName?: string;
+}
+
 export enum MatchActionType {
   GOAL = "GOAL",
   TIMEOUT = "TIMEOUT",

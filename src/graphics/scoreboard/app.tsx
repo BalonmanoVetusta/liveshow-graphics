@@ -4,11 +4,18 @@ import { useReplicant } from "hooks/use-replicant";
 import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement, useLayoutEffect, useMemo } from "react";
 import { Graphics } from "types/schemas/graphics";
+import { MatchActions } from "types/schemas/match-actions";
 import { StopwatchTime } from "./src/components/stopwatch-time";
+import { SuspensionTime } from "./src/components/suspension-time";
 // import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
 const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
+const WARNING = "WARNING";
+const SUSPENSION = "SUSPENSION";
+const DISQUALIFICATION = "DISQUALIFICATION";
+// const GOAL = "GOAL";
+// const TIMEOUT = "TIMEOUT";
 
 function App(): ReactElement | null {
   const { goals, actions } = useMatchActions();
@@ -54,6 +61,34 @@ function App(): ReactElement | null {
   const isAnyTeamSevenPlayers = useMemo<boolean>(() => {
     return isLocalTeamSevenPlayers || isVisitorTeamSevenPlayers;
   }, [isLocalTeamSevenPlayers, isVisitorTeamSevenPlayers]);
+
+  const localTeamYellowCards = useMemo<number>(() => {
+    return actions.filter(
+      ({ action, team }) => action === WARNING && team === Team.LOCAL
+    ).length;
+  }, [actions]);
+
+  const visitorTeamYellowCards = useMemo<number>(() => {
+    return actions.filter(
+      ({ action, team }) => action === WARNING && team === Team.VISITOR
+    ).length;
+  }, [actions]);
+
+  const localTeamSuspensions = useMemo<MatchActions | undefined>(() => {
+    return actions.filter(
+      ({ action, team }) =>
+        (action === SUSPENSION || action === DISQUALIFICATION) &&
+        team === Team.LOCAL
+    );
+  }, [actions]);
+
+  const visitorTeamSuspensions = useMemo<MatchActions | undefined>(() => {
+    return actions.filter(
+      ({ action, team }) =>
+        (action === SUSPENSION || action === DISQUALIFICATION) &&
+        team === Team.VISITOR
+    );
+  }, [actions]);
 
   useLayoutEffect(() => {
     document
@@ -102,7 +137,15 @@ function App(): ReactElement | null {
               <p>{goals.local.length.toString().padStart(2, "0")}</p>
             </div>
 
-            <div className="suspensions"></div>
+            <div className="suspensions">
+              {localTeamSuspensions ? (
+                <ul>
+                  {localTeamSuspensions.map((action, index) => (
+                    <SuspensionTime action={action} key={index} />
+                  ))}
+                </ul>
+              ) : null}
+            </div>
           </div>
           <div className="stopwatch column">
             <div className="competition-banner">
@@ -148,7 +191,15 @@ function App(): ReactElement | null {
             <div className="score">
               <p>{goals.visitor.length.toString().padStart(2, "0")}</p>
             </div>
-            <div className="suspensions"></div>
+            <div className="suspensions">
+              {visitorTeamSuspensions ? (
+                <ul>
+                  {visitorTeamSuspensions.map((action, index) => (
+                    <SuspensionTime action={action} key={index} />
+                  ))}
+                </ul>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>

@@ -22,6 +22,8 @@
         "GOAL",
         "TIMEOUT",
         "WARNING",
+        "SUSPENSION",
+        "DISQUALIFICATION",
         "MATCH_START",
         "MATCH_END",
         "START_SEVEN_PLAYERS",
