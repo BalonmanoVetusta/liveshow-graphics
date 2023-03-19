@@ -1,14 +1,18 @@
 import { useMatchActions } from "hooks/use-match-actions";
 import { Team } from "hooks/use-match-actions/types";
 import { ReactElement, useMemo, useState } from "react";
+import { MatchAction } from "types/schemas/match-action";
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
 const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
+const GOAL = "GOAL";
+const SUSPENSION = "SUSPENSION";
 
 function App(): ReactElement {
   const [suspensionNumber = 0, setSuspensionNumber] = useState<number>(0);
   const {
     actions,
+    setActions,
     startSevenPlayers,
     stopSevenPlayers,
     reset: resetActions,
@@ -103,8 +107,11 @@ function App(): ReactElement {
           <button
             onClick={(event) => {
               event.preventDefault();
+              // TODO: Add the time where suspension started
+              // TODO: Delete suspension
+              // TODO: Double suspensions
               addAction({
-                action: "SUSPENSION",
+                action: SUSPENSION,
                 team: Team.VISITOR,
                 payload: { number: suspensionNumber, team: Team.VISITOR },
               });
@@ -121,6 +128,16 @@ function App(): ReactElement {
           onClick={(event) => {
             event.preventDefault();
             resetActions();
+          }}
+        >
+          Delete All actions (keep goals)
+        </button>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            setActions(
+              actions.filter(({ action }: MatchAction) => action !== GOAL)
+            );
           }}
         >
           Delete All actions & goals

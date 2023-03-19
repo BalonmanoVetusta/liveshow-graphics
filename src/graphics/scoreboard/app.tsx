@@ -17,6 +17,8 @@ const DISQUALIFICATION = "DISQUALIFICATION";
 // const GOAL = "GOAL";
 // const TIMEOUT = "TIMEOUT";
 
+// TODO: Suspensions must recognise the case where a player has a double suspension
+
 function App(): ReactElement | null {
   const { goals, actions } = useMatchActions();
   const { localTeamSide = "LEFT" } = useTeamSide();
@@ -62,17 +64,17 @@ function App(): ReactElement | null {
     return isLocalTeamSevenPlayers || isVisitorTeamSevenPlayers;
   }, [isLocalTeamSevenPlayers, isVisitorTeamSevenPlayers]);
 
-  const localTeamYellowCards = useMemo<number>(() => {
-    return actions.filter(
-      ({ action, team }) => action === WARNING && team === Team.LOCAL
-    ).length;
-  }, [actions]);
+  // const localTeamYellowCards = useMemo<number>(() => {
+  //   return actions.filter(
+  //     ({ action, team }) => action === WARNING && team === Team.LOCAL
+  //   ).length;
+  // }, [actions]);
 
-  const visitorTeamYellowCards = useMemo<number>(() => {
-    return actions.filter(
-      ({ action, team }) => action === WARNING && team === Team.VISITOR
-    ).length;
-  }, [actions]);
+  // const visitorTeamYellowCards = useMemo<number>(() => {
+  //   return actions.filter(
+  //     ({ action, team }) => action === WARNING && team === Team.VISITOR
+  //   ).length;
+  // }, [actions]);
 
   const localTeamSuspensions = useMemo<MatchActions | undefined>(() => {
     return actions.filter(

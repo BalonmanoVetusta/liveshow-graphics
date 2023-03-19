@@ -40,6 +40,8 @@ export function SuspensionTime({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);
 
+  if (minutes < 0 || seconds < 0) return <></>;
+
   return (
     <>
       <li data-number={payload.number?.toString() ?? ""}>{`${minutes
