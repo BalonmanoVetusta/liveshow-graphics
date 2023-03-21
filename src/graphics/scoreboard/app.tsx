@@ -1,5 +1,5 @@
 import { useMatchActions } from "hooks/use-match-actions";
-import { Team } from "hooks/use-match-actions/types";
+// import { PlayerInfoPayload, Team } from "hooks/use-match-actions/types";
 import { useReplicant } from "hooks/use-replicant";
 import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement, useLayoutEffect, useMemo } from "react";
@@ -17,10 +17,13 @@ const DISQUALIFICATION = "DISQUALIFICATION";
 // const GOAL = "GOAL";
 // const TIMEOUT = "TIMEOUT";
 
+const SUSPENSION_TIME = 120_000;
+
 // TODO: Suspensions must recognise the case where a player has a double suspension
 
 function App(): ReactElement | null {
   const { goals, actions } = useMatchActions();
+  // const { goals, actions, getSuspensions } = useMatchActions();
   const { localTeamSide = "LEFT" } = useTeamSide();
   const [graphics] = useReplicant<Graphics, Graphics>("graphics", {});
   const showTeamName = false;
@@ -91,6 +94,16 @@ function App(): ReactElement | null {
         team === Team.VISITOR
     );
   }, [actions]);
+
+  // const localTeamSuspensions = useMemo<MatchActions | undefined>(() => {
+  //   return getSuspensions(Team.LOCAL) as MatchActions;
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [actions]);
+
+  // const visitorTeamSuspensions = useMemo<MatchActions | undefined>(() => {
+  //   return getSuspensions(Team.VISITOR) as MatchActions;
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [actions]);
 
   useLayoutEffect(() => {
     document
@@ -196,9 +209,42 @@ function App(): ReactElement | null {
             <div className="suspensions">
               {visitorTeamSuspensions ? (
                 <ul>
-                  {visitorTeamSuspensions.map((action, index) => (
-                    <SuspensionTime action={action} key={index} />
-                  ))}
+                  {visitorTeamSuspensions
+                    // .reduce(
+                    //   (
+                    //     acc: any,
+                    //     current: MatchAction & {
+                    //       length: number;
+                    //       payload: PlayerInfoPayload;
+                    //     }
+                    //   ) => {
+                    //     current.length ??= 1;
+                    //     const previous = acc.filter(
+                    //       (
+                    //         item: MatchAction & { payload: PlayerInfoPayload }
+                    //       ) => item.payload.number === current.payload.number
+                    //     );
+                    //     if (length === 0) {
+                    //       return acc.push(current);
+                    //     }
+                    //     current.length += previous.length;
+
+                    //     return acc
+                    //       .filter(
+                    //         (item) =>
+                    //           item.payload.number !== current.payload.number
+                    //       )
+                    //       .push(current);
+                    //   },
+                    //   []
+                    // )
+                    .map((action, index) => (
+                      <SuspensionTime
+                        action={action}
+                        key={index}
+                        suspensionTimeMilliseconds={SUSPENSION_TIME}
+                      />
+                    ))}
                 </ul>
               ) : null}
             </div>

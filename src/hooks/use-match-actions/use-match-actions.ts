@@ -6,12 +6,14 @@ import {
   GoalActionType,
   MatchActionsReplicantOptions,
   MatchActionType,
+  MatchSuspensionActionType,
+  PlayerInfoSuspensionPayload,
   Team,
   UseMatchActionsAddActionType,
   WarningActionType,
 } from "./types";
 
-const MATCH_ACTIONS_REPLICANT_NAME = "match-actions";
+export const MATCH_ACTIONS_REPLICANT_NAME = "match-actions";
 
 export function useMatchActions(
   initialActions: MatchActions = [],
@@ -25,7 +27,12 @@ export function useMatchActions(
     options
   );
 
-  const addAction = (action: UseMatchActionsAddActionType) => {
+  const addAction = (
+    action:
+      | UseMatchActionsAddActionType
+      | MatchAction
+      | MatchSuspensionActionType
+  ) => {
     if (action.team === undefined || action.team === null) {
       throw new Error("team is required");
     }
@@ -37,8 +44,8 @@ export function useMatchActions(
     const newAction = structuredClone(action) as MatchAction;
 
     newAction.id ??= crypto.randomUUID();
-    newAction.matchTime = time;
-    newAction.gmtTimestamp = Date.now();
+    newAction.matchTime ??= time;
+    newAction.gmtTimestamp ??= Date.now();
     actions.push(newAction);
 
     setActions(actions);
@@ -56,7 +63,7 @@ export function useMatchActions(
 
   const addGoal = (team: Team, goal: GoalActionType = { quantity: 1 }) => {
     addAction({
-      action: "GOAL",
+      action: MatchActionType.GOAL,
       team,
       payload: goal,
     });
@@ -64,7 +71,7 @@ export function useMatchActions(
 
   const removeLastGoal = (team: Team) => {
     const goals = actions.filter(
-      (action) => action.action === "GOAL" && action.team === team
+      (action) => action.action === MatchActionType.GOAL && action.team === team
     );
 
     if (goals.length > 0) {
@@ -74,7 +81,7 @@ export function useMatchActions(
 
   const addWarning = (team: Team, warning: WarningActionType) => {
     addAction({
-      action: "WARNING",
+      action: MatchActionType.WARNING,
       team,
       payload: warning,
     });
@@ -82,20 +89,107 @@ export function useMatchActions(
 
   const startSevenPlayers = (team: Team) => {
     addAction({
-      action: "START_SEVEN_PLAYERS",
+      action: MatchActionType.START_SEVEN_PLAYERS,
       team,
     });
   };
 
   const stopSevenPlayers = (team: Team) => {
     addAction({
-      action: "END_SEVEN_PLAYERS",
+      action: MatchActionType.END_SEVEN_PLAYERS,
       team,
     });
   };
 
+  const addSuspension = (
+    team: Team,
+    suspensionInfo: Partial<PlayerInfoSuspensionPayload> = {}
+  ) => {
+    suspensionInfo.length ??= 1;
+    suspensionInfo.number ??= 0;
+
+    addAction({
+      action: MatchActionType.SUSPENSION,
+      team,
+      payload: suspensionInfo,
+    });
+  };
+
+  const removeLastAction = (team: Team, action: MatchActionType) => {
+    const teamActions = getTeamActions(team, action);
+
+    if (teamActions.length > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      removeActionById(teamActions.at(-1)!.id);
+    }
+
+    return teamActions;
+  };
+
+  const getTeamActions = (team: Team, action: MatchActionType) => {
+    return actions.filter(
+      ({ action: currentAction, team: currentTeam }) =>
+        currentAction === action && currentTeam === team
+    );
+  };
+
   const resetAllActions = () => {
     setActions([]);
+  };
+
+  const getSuspensions = (team: Team, suspensionTime = 120_000) => {
+    const suspensions = getTeamActions(team, MatchActionType.SUSPENSION);
+    const allPlayersNumbers = suspensions
+      .filter(
+        (suspension) =>
+          ((suspension.payload as PlayerInfoSuspensionPayload).number || 0) > 0
+      )
+      .map(
+        (suspension) =>
+          (suspension.payload as PlayerInfoSuspensionPayload).number ?? 0
+      );
+    const playersNumber = new Set<number>(allPlayersNumbers);
+
+    const playersGroupedSuspensions = Array.from(playersNumber).map(
+      (number) => {
+        const currentPlayerSuspensions = suspensions
+          .filter(
+            (suspension) =>
+              (suspension.payload as PlayerInfoSuspensionPayload).number ===
+              number
+          )
+          .sort((a, b) => a.matchTime - b.matchTime);
+
+        return currentPlayerSuspensions.reduce((acc, current, index) => {
+          const previous = acc.at(-1);
+
+          if (!previous) {
+            return acc.push(current);
+          }
+
+          const { matchTime: currentMatchTime } = current;
+          const { matchTime: previousMatchTime } = previous;
+
+          const previousEndTime = previousMatchTime + suspensionTime;
+          const isPreviousEndingBeforeCurrentSuspension =
+            currentMatchTime > previousEndTime;
+
+          if (isPreviousEndingBeforeCurrentSuspension) {
+            (
+              acc[index - 1].payload as PlayerInfoSuspensionPayload
+            ).length ??= 1;
+            (acc[index - 1].payload as PlayerInfoSuspensionPayload).length += 1;
+            return acc;
+          }
+
+          return acc.push(current);
+        }, [] as MatchActions);
+      }
+    );
+
+    return playersGroupedSuspensions
+      .flat()
+      .sort((a: MatchAction, b: MatchAction) => a.matchTime - b.matchTime);
   };
 
   return {
@@ -125,6 +219,10 @@ export function useMatchActions(
     addWarning,
     startSevenPlayers,
     stopSevenPlayers,
-    reset: resetAllActions,
+    addSuspension,
+    getSuspensions,
+    getTeamActions,
+    removeLastAction,
+    resetAllActions,
   };
 }

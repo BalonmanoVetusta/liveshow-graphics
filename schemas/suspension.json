@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "number"],
+  "properties": {
+    "id": {
+      "type": ["string", "number"],
+      "title": "Player Id",
+      "description": "PlayerId"
+    },
+    "number": {
+      "type": "number",
+      "title": "Player Number",
+      "description": "Player number in the T-Shirt"
+    },
+    "name": {
+      "type": "string",
+      "title": "Player Name",
+      "description": "Player First Name"
+    },
+    "lastName": {
+      "type": "string",
+      "title": "Player Last Name",
+      "description": "Player parents names"
+    },
+    "avatarUrl": {
+      "type": "string",
+      "title": "Player image",
+      "description": "Player image url"
+    },
+    "teamId": {
+      "type": ["string", "number"],
+      "title": "Team Id",
+      "description": "Player Team Id"
+    },
+    "teamName": {
+      "type": "string",
+      "title": "Team Name",
+      "description": "Player Team Name"
+    }
+  }
+}

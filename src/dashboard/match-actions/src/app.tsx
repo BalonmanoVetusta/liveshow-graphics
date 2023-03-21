@@ -1,23 +1,21 @@
 import { useMatchActions } from "hooks/use-match-actions";
 import { Team } from "hooks/use-match-actions/types";
-import { ReactElement, useMemo, useState } from "react";
+import { ReactElement, useMemo } from "react";
 import { MatchAction } from "types/schemas/match-action";
 import { AddSuspensionForm } from "./components/add-suspension-form";
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
 const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
 const GOAL = "GOAL";
-const SUSPENSION = "SUSPENSION";
+// const SUSPENSION = "SUSPENSION";
 
 function App(): ReactElement {
-  const [suspensionNumber = 0, setSuspensionNumber] = useState<number>(0);
   const {
     actions,
     setActions,
     startSevenPlayers,
     stopSevenPlayers,
-    reset: resetActions,
-    addAction,
+    resetAllActions,
   } = useMatchActions();
   const isSevenPlayersLocal = useMemo(() => {
     const startActions = actions.filter(
@@ -112,7 +110,7 @@ function App(): ReactElement {
         <button
           onClick={(event) => {
             event.preventDefault();
-            resetActions();
+            resetAllActions();
           }}
         >
           Delete All actions & goals (full reset except time)

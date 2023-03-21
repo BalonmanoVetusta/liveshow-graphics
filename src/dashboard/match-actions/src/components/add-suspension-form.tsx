@@ -1,17 +1,10 @@
 import { useMatchActions } from "hooks/use-match-actions";
 import {
   MatchActionType,
-  PlayerInfoPayload,
+  MatchSuspensionActionType,
   Team,
 } from "hooks/use-match-actions/types";
 import { useId, useState } from "react";
-
-interface MatchSuspensionActionType {
-  action: MatchActionType;
-  team: Team;
-  matchTime?: number;
-  payload: PlayerInfoPayload;
-}
 
 interface AddSuspensionFormProps {
   team: Team;

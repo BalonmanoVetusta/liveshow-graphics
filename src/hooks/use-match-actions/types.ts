@@ -6,11 +6,22 @@ export declare interface PlayerInfoPayload {
   id?: number;
   name?: string;
   position?: AttackPosition;
-  number?: number;
+  number: number;
   avatarUrl?: string;
   team: Team;
   teamId?: number | string;
   teamName?: string;
+}
+
+export declare interface PlayerInfoSuspensionPayload extends PlayerInfoPayload {
+  length: number;
+}
+
+export declare interface MatchSuspensionActionType {
+  action: MatchActionType.SUSPENSION;
+  team: Team;
+  matchTime?: number;
+  payload: PlayerInfoPayload;
 }
 
 export enum MatchActionType {
@@ -21,7 +32,10 @@ export enum MatchActionType {
   DISQUALIFICATION = "DISQUALIFICATION",
   MATCH_START = "MATCH_START",
   MATCH_END = "MATCH_END",
+  START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS",
+  END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS",
   OTHER = "OTHER",
+  UNKNOWN = "UNKNOWN",
 }
 
 export enum Team {
