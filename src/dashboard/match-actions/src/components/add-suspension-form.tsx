@@ -16,7 +16,7 @@ export function AddSuspensionForm({ team }: AddSuspensionFormProps) {
   const [playerNumber, setPlayerNumber] = useState<number>(0);
   const [customMinutes, setCustomMinutes] = useState<number>(0);
   const [customSeconds, setCustomSeconds] = useState<number>(0);
-  const [isCustomTime, setIsCustomTime] = useState<boolean>(true);
+  const [isCustomTime, setIsCustomTime] = useState<boolean>(false);
   const { addAction } = useMatchActions();
   return (
     <>
@@ -41,6 +41,7 @@ export function AddSuspensionForm({ team }: AddSuspensionFormProps) {
         type="checkbox"
         name={`current-time-checkbox-${team.toLowerCase()}-${id}`}
         id={`current-time-checkbox-${team.toLowerCase()}-${id}`}
+        key={`current-time-checkbox-${team.toLowerCase()}-${id}-${isCustomTime.toString()}`}
         checked={isCustomTime}
         onChange={(event) => {
           event.preventDefault();
@@ -81,7 +82,10 @@ export function AddSuspensionForm({ team }: AddSuspensionFormProps) {
         type="checkbox"
         name="doubleSuspension"
         id={`double-suspension-${team.toLowerCase}-${id}`}
-        checked={!!isDoubleSuspension}
+        key={`double-suspension-${
+          team.toLowerCase
+        }-${id}-${isDoubleSuspension.toString()}`}
+        checked={isDoubleSuspension}
         onChange={(event) => {
           event.preventDefault();
           setIsDoubleSuspension(!!event.target.checked);

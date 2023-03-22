@@ -84,7 +84,7 @@
         --shield-div-scale: 1.5;
         --image-scale: 1.2;
         --font-size-info: 12px;
-        --font-size-time: 32px;
+        --font-size-time: 48px;
         --font-color-info: red;
 
         --stopwatch-padding: 5px 5px;
@@ -138,10 +138,12 @@
 
       .scoreboard[data-local-team-side="left"] {
         flex-flow: row nowrap;
+        align-items: center;
       }
 
       .scoreboard:not([data-local-team-side="left"]) {
         flex-flow: row-reverse nowrap;
+        align-items: center;
       }
 
       [data-local-team-side="left"] > .local-team,
@@ -149,6 +151,7 @@
         display: inline-flex;
         flex-flow: row-reverse nowrap;
         justify-content: flex-start;
+        align-items: center;
       }
 
       :not([data-local-team-side="left"]) > .local-team,
@@ -156,6 +159,7 @@
         display: inline-flex;
         flex-flow: row nowrap;
         justify-content: flex-end;
+        align-items: center;
       }
 
       [data-local-team-side="left"] > .local-team > .score,
@@ -169,6 +173,7 @@
       :not([data-local-team-side="left"]) > .local-team {
         flex-direction: row;
         justify-content: flex-start;
+        align-items: center;
       }
 
       [data-local-team-side="left"] > .visitor-team > .score,
