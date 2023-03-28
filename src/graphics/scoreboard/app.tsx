@@ -1,5 +1,6 @@
 import { useMatchActions } from "hooks/use-match-actions";
 // import { PlayerInfoPayload, Team } from "hooks/use-match-actions/types";
+import { Banners } from "components/banners";
 import { Team } from "hooks/use-match-actions/types";
 import { useReplicant } from "hooks/use-replicant";
 import { useTeamSide } from "hooks/use-team-side";
@@ -243,6 +244,9 @@ function App(): ReactElement | null {
             </div>
           </div>
         </div>
+      </div>
+      <div data-position="bottom center" className="banners">
+        <Banners />
       </div>
     </>
   );

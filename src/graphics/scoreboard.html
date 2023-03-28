@@ -24,10 +24,7 @@
       }
 
       [data-position~="bottom"] {
-        bottom: max(
-          var(--offset-bottom, var(--offset, 0)),
-          env(safe-area-inset-bottom, 0)
-        );
+        bottom: var(--offset-bottom, var(--offset, 0));
       }
 
       [data-position~="right"] {
@@ -70,6 +67,7 @@
         --visitor-shield-background-color: white;
 
         --offset-top: 30px;
+        --offset-bottom: 0;
         --size-scale-factor: 1; /* Not used yet */
 
         --space-margin: 5px;
@@ -104,6 +102,8 @@
         --shield-border-style: solid;
         --shield-border-color-local: var(--stopwatch-background-color);
         --shield-border-color-visitor: var(--stopwatch-background-color);
+
+        --banners-max-height: 120px;
       }
 
       body {
@@ -370,6 +370,29 @@
       .visitor-team .team-name {
         background: var(--result-background-color-visitor, transparent);
         color: var(--result-font-color-visitor, inherit);
+      }
+
+      /* Advertising styles */
+
+      .banners {
+        opacity: var(--view-banners-opacity, 1);
+        height: var(--banners-max-height, 120px);
+        min-width: 100%;
+        background-color: var(--vetusta-yellow-color, #f9d700);
+        border-top: #151111 10px solid;
+        display: inline-flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        padding: 0 0 10px 0;
+        margin: 0;
+      }
+
+      .banners > img {
+        display: flex;
+        max-height: var(--banners-max-height, 120px);
+        max-width: 100%;
+        object-fit: cover;
+        margin: 0 auto;
       }
     </style>
     <script type="module" src="./scoreboard/index.tsx"></script>
