@@ -1,4 +1,4 @@
-import { StopwatchTimePanel } from "components/stopwatch-time";
+import { StopwatchDashboard } from "components/stopwatch";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -8,6 +8,6 @@ const root = createRoot(container!);
 
 root.render(
   <StrictMode>
-    <StopwatchTimePanel showTimeControls={false} />
+    <StopwatchDashboard showTimeControls={false} />
   </StrictMode>
 );

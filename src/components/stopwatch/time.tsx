@@ -6,7 +6,7 @@ import { ReactElement } from "react";
 
 interface StopwatchTimeProps {
   // showPeriod: boolean;
-  lastMinuteShowMiliseconds: boolean;
+  // lastMinuteShowMiliseconds: boolean;
   padZeroes: number;
 }
 

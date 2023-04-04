@@ -7,8 +7,8 @@ import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement, useLayoutEffect, useMemo } from "react";
 import { Graphics } from "types/schemas/graphics";
 import { MatchActions } from "types/schemas/match-actions";
-import { StopwatchTime } from "./src/components/stopwatch-time";
-import { SuspensionTime } from "./src/components/suspension-time";
+import { SuspensionTime } from "components/suspension/time";
+import { StopwatchTime } from "components/stopwatch";
 // import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
@@ -27,7 +27,10 @@ function App(): ReactElement | null {
   const { goals, actions } = useMatchActions();
   // const { goals, actions, getSuspensions } = useMatchActions();
   const { localTeamSide = "LEFT" } = useTeamSide();
-  const [graphics] = useReplicant<Graphics, Graphics>("graphics", {});
+  const [graphics] = useReplicant<Graphics, Graphics>("graphics", {
+    advertising: true,
+    advertisingTime: 10,
+  });
   const showTeamName = false;
   const localName = "VET";
   const visitorName = "VISITOR";
@@ -245,9 +248,11 @@ function App(): ReactElement | null {
           </div>
         </div>
       </div>
-      <div data-position="bottom center" className="banners">
-        <Banners />
-      </div>
+      {graphics.advertising ? (
+        <div data-position="bottom center" className="banners">
+          <Banners duration={graphics?.advertisingTime ?? 10000} />
+        </div>
+      ) : null}
     </>
   );
 }

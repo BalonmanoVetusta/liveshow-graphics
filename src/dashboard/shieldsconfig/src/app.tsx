@@ -132,6 +132,34 @@ function App(): ReactElement {
           Toggle Sides
         </button>
       </fieldset>
+
+      <fieldset>
+        <legend>Advertising</legend>
+        <input
+          type="number"
+          min={0}
+          max={60}
+          onChange={(event) => {
+            event.preventDefault();
+            let value: number;
+            try {
+              value = parseInt(event.target.value, 10) * 1000;
+            } catch (error) {
+              value = 0;
+            }
+            setGraphics({ ...graphics, advertisingTime: value });
+          }}
+          value={(graphics.advertisingTime ?? 0) / 1000}
+        />
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            setGraphics({ ...graphics, advertising: !graphics.advertising });
+          }}
+        >
+          Toggle
+        </button>
+      </fieldset>
     </>
   );
 }

@@ -10,7 +10,7 @@ export declare interface BannersProps {
 
 const ANIMATION_DURATION = 1;
 
-export function Banners({ duration = 10000 }: BannersProps) {
+export function Banners({ duration = 10_000 }: BannersProps) {
   const [banners] = useReplicant<Asset[], Asset[]>("assets:banners", []);
   const { value, isVisible } = useRotationValue(
     duration,
@@ -55,7 +55,7 @@ export function Banners({ duration = 10000 }: BannersProps) {
 
   return (
     <AnimatePresence initial={true}>
-      {isVisible && <Item index={value % banners.length} />}
+      {isVisible ? <Item index={value % banners.length} /> : null}
     </AnimatePresence>
   );
 }

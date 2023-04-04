@@ -1,5 +1,3 @@
-"use client";
-
 import {
   MaxTimeUnit,
   useStopwatchReplicantControl,
@@ -7,7 +5,7 @@ import {
 } from "hooks/use-stopwatch-replicant";
 import { ChangeEvent, ReactElement, useEffect, useRef, useState } from "react";
 
-export interface StopwatchTimePanelProps {
+export interface StopwatchDashboardProps {
   showTime: boolean;
   showTimeControls: boolean;
   showAddOffset: boolean;
@@ -20,11 +18,11 @@ function formatStopwatchNumber(value: number): string {
 const TIME_LIMITS_UNIT_VALUE = 60_000; // Minutes
 const TIME_LIMITS_UNIT_VALUE_TEXT = "minutes";
 
-export function StopwatchTimePanel({
+export function StopwatchDashboard({
   showTime = true,
   showTimeControls = true,
   showAddOffset = true,
-}: Partial<StopwatchTimePanelProps>): ReactElement {
+}: Partial<StopwatchDashboardProps>): ReactElement {
   const loaded = useRef(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);

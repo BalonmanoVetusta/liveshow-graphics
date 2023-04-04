@@ -39,7 +39,7 @@ export function useRotationValue(
     }
     return;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [duration, auto]);
 
   return { value: rotationValue, isVisible, forward, backward };
 }

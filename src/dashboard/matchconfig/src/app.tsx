@@ -1,10 +1,10 @@
-import { StopwatchTimePanel } from "components/stopwatch-time";
+import { StopwatchDashboard } from "components/stopwatch";
 import { ReactElement } from "react";
 
 function App(): ReactElement {
   return (
     <>
-      <StopwatchTimePanel showTime={false} showAddOffset={false} />
+      <StopwatchDashboard showTime={false} showAddOffset={false} />
     </>
   );
 }
