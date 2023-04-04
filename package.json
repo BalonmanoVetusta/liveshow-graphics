@@ -89,16 +89,6 @@
         "dialog": false
       },
       {
-        "name": "Match Configuration ",
-        "title": "Match Configuration & Time Control",
-        "file": "matchconfig.html",
-        "width": 4,
-        "headerColor": "#525F78",
-        "workspace": "1. workspace",
-        "fullbleed": false,
-        "dialog": false
-      },
-      {
         "name": "scoreboard",
         "title": "Score Controls",
         "file": "scoreboard.html",
@@ -110,9 +100,9 @@
       },
       {
         "name": "stopwatch",
-        "title": "Match Time View & Edit",
+        "title": "Match Configuration & Time Control",
         "file": "stopwatch.html",
-        "width": 2,
+        "width": 4,
         "headerColor": "#525F78",
         "workspace": "1. workspace",
         "fullbleed": false,

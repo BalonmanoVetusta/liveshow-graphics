@@ -8,6 +8,6 @@ const root = createRoot(container!);
 
 root.render(
   <StrictMode>
-    <StopwatchDashboard showTimeControls={false} />
+    <StopwatchDashboard />
   </StrictMode>
 );
