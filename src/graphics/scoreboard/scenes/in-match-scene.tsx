@@ -11,12 +11,12 @@ import Suspensions from "../src/components/suspensions/suspensions";
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
 const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
 // const WARNING = "WARNING";
-const SUSPENSION = "SUSPENSION";
-const DISQUALIFICATION = "DISQUALIFICATION";
+// const SUSPENSION = "SUSPENSION";
+// const DISQUALIFICATION = "DISQUALIFICATION";
 // const GOAL = "GOAL";
 // const TIMEOUT = "TIMEOUT";
 
-const SUSPENSION_TIME = 120_000;
+// const SUSPENSION_TIME = 120_000;
 
 // TODO: Suspensions must recognise the case where a player has a double suspension
 
@@ -80,22 +80,6 @@ export default function Scene(): ReactElement | null {
   //     ({ action, team }) => action === WARNING && team === Team.VISITOR
   //   ).length;
   // }, [actions]);
-
-  const localTeamSuspensions = useMemo<MatchActions | undefined>(() => {
-    return actions.filter(
-      ({ action, team }) =>
-        (action === SUSPENSION || action === DISQUALIFICATION) &&
-        team === Team.LOCAL
-    );
-  }, [actions]);
-
-  const visitorTeamSuspensions = useMemo<MatchActions | undefined>(() => {
-    return actions.filter(
-      ({ action, team }) =>
-        (action === SUSPENSION || action === DISQUALIFICATION) &&
-        team === Team.VISITOR
-    );
-  }, [actions]);
 
   useLayoutEffect(() => {
     document
