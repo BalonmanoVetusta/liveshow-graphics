@@ -5,7 +5,6 @@ import { useReplicant } from "hooks/use-replicant";
 import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement, useLayoutEffect, useMemo } from "react";
 import { Graphics } from "types/schemas/graphics";
-import { MatchActions } from "types/schemas/match-actions";
 import Suspensions from "../src/components/suspensions/suspensions";
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
