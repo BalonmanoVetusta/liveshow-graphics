@@ -41,7 +41,7 @@ export default function Suspensions({ team }: SuspensionsProps) {
   if (teamSuspensionsActions.length === 0) return <></>;
 
   return (
-    <StyledSuspensionsContainer>
+    <StyledSuspensionsContainer className="suspensions">
       <StyledSuspensionsList>
         {teamSuspensionsActions.map((action) => (
           <SuspensionItem key={action.id} action={action} />

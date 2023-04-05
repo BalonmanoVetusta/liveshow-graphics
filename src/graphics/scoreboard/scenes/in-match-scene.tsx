@@ -28,7 +28,7 @@ export default function Scene(): ReactElement | null {
     advertisingTime: 10,
   });
   const showTeamName = false;
-  const localName = "VET";
+  const localName = "VETUSTA";
   const visitorName = "VISITOR";
 
   const isLocalTeamSevenPlayers = useMemo<boolean>(() => {
