@@ -1,5 +1,5 @@
 import { NodeCG } from "nodecg/types/server";
-import { init } from "./init";
+import handleGraphicsRoutes from "./graphics";
 import { scoreboardApiRoutes } from "./scoreboard-api-routes";
 import { stopwatchReplicantMessages } from "./stopwatch-replicant-messages";
 
@@ -19,4 +19,8 @@ function main(...calls: Array<ExtensionFunction>) {
   };
 }
 
-export default main(init, stopwatchReplicantMessages, scoreboardApiRoutes);
+export default main(
+  stopwatchReplicantMessages,
+  scoreboardApiRoutes,
+  handleGraphicsRoutes
+);
