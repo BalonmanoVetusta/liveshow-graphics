@@ -2,6 +2,7 @@ import { Graphics } from "types/schemas/graphics";
 import { NodeCG, Replicant } from "/.nodecg/types/server";
 
 const GRAPHICS_REPLICANT_NAME = "graphics";
+const DEFAULT_ROTATION_TIME = 15;
 
 let graphics: Replicant<Graphics> | undefined = undefined;
 
@@ -27,7 +28,11 @@ export default async function handleGraphicsRoutes(
     const graphics = graphicsReplicant(nodecg);
 
     if (req.query?.advertisingTime) {
-      graphics.value.advertisingTime = Number(req.query?.advertisingTime);
+      const advertisingTime =
+        Number(req.query.advertisingTime) || DEFAULT_ROTATION_TIME;
+      const advertisingTimeInSeconds = advertisingTime * 1000;
+      console.log({ advertisingTimeInSeconds });
+      graphics.value.advertisingTime = advertisingTimeInSeconds;
     }
 
     if (formatedAction === "toggle") {
@@ -42,7 +47,7 @@ export default async function handleGraphicsRoutes(
       graphics.value.advertising = false;
     }
 
-    res.json({
+    return res.json({
       ok: true,
       advertising: graphics.value.advertising,
       advertisingTime: graphics.value.advertisingTime,

@@ -1,8 +1,11 @@
+import {
+  MatchActionSuspensionTime,
+  groupSuspensionsByTimeAndPlayerNumber,
+} from "graphics/scoreboard/src/components/suspensions/group-suspensions-by-time-and-player-number";
 import { useMatchActions } from "hooks/use-match-actions";
-import { MatchActionType, Team } from "hooks/use-match-actions/types";
+import { Team } from "hooks/use-match-actions/types";
 import { useMemo } from "react";
 import styled from "styled-components";
-import { MatchActions } from "types/schemas/match-actions";
 import SuspensionItem from "./suspension-item";
 
 const StyledSuspensionsContainer = styled.div`
@@ -23,18 +26,19 @@ const StyledSuspensionsList = styled.ul`
 
 export declare interface SuspensionsProps {
   team: Team;
+  suspensionTimeMilliseconds?: number;
 }
 
-export default function Suspensions({ team }: SuspensionsProps) {
+export default function Suspensions({
+  team,
+  suspensionTimeMilliseconds = 120_000,
+}: SuspensionsProps) {
   const { actions } = useMatchActions();
 
-  const teamSuspensionsActions = useMemo<MatchActions>(() => {
-    return actions.filter(
-      ({ action, team: actionTeam }) =>
-        (action === MatchActionType.SUSPENSION ||
-          action === MatchActionType.DISQUALIFICATION) &&
-        actionTeam === team
-    );
+  const teamSuspensionsActions = useMemo<
+    Array<MatchActionSuspensionTime>
+  >(() => {
+    return groupSuspensionsByTimeAndPlayerNumber(actions, team);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actions]);
 
@@ -43,9 +47,19 @@ export default function Suspensions({ team }: SuspensionsProps) {
   return (
     <StyledSuspensionsContainer className="suspensions">
       <StyledSuspensionsList>
-        {teamSuspensionsActions.map((action) => (
-          <SuspensionItem key={action.id} action={action} />
-        ))}
+        {teamSuspensionsActions.map((action) => {
+          const suspensionLength = action.payload?.suspensionLength ?? 1;
+          const suspensionTimeInMilliseconds =
+            suspensionLength * suspensionTimeMilliseconds;
+
+          return (
+            <SuspensionItem
+              key={action.id}
+              action={action}
+              suspensionTimeMilliseconds={suspensionTimeInMilliseconds}
+            />
+          );
+        })}
       </StyledSuspensionsList>
     </StyledSuspensionsContainer>
   );

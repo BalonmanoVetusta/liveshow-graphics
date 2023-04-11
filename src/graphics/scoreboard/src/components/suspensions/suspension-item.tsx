@@ -5,7 +5,7 @@ import {
 } from "hooks/use-stopwatch-replicant";
 import { PropsWithoutRef, useMemo } from "react";
 import styled from "styled-components";
-import { MatchAction } from "types/schemas/match-action";
+import { MatchActionSuspensionTime } from "./group-suspensions-by-time-and-player-number";
 
 const StyledSuspensionItem = styled.li`
   background: var(--suspension-color, red);
@@ -23,7 +23,7 @@ const StyledSuspensionItem = styled.li`
 `;
 
 export declare interface SuspensionItemProps {
-  action: MatchAction;
+  action: MatchActionSuspensionTime;
   suspensionTimeMilliseconds?: number;
 }
 export default function SuspensionItem({
