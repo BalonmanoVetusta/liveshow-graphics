@@ -79,7 +79,7 @@
     ],
     "dashboardPanels": [
       {
-        "name": "Match Actions",
+        "name": "match-actions",
         "title": "Match Actions adder & remover",
         "file": "match-actions.html",
         "width": 4,
@@ -109,12 +109,22 @@
         "dialog": false
       },
       {
-        "name": "Shields",
+        "name": "shields",
         "title": "Shields Selector",
         "file": "shieldsconfig.html",
         "width": 2,
         "headerColor": "#525F78",
         "workspace": "2. Scoreboard: Graphics",
+        "fullbleed": false,
+        "dialog": false
+      },
+      {
+        "name": "atem",
+        "title": "Atem Mini Configuration",
+        "file": "atem.html",
+        "width": 2,
+        "headerColor": "#525F78",
+        "workspace": "9. Settings",
         "fullbleed": false,
         "dialog": false
       }
@@ -201,6 +211,7 @@
     "@types/styled-components": "5.1.26",
     "@typescript-eslint/eslint-plugin": "5.39.0",
     "@typescript-eslint/parser": "5.39.0",
+    "buffer": "6.0.3",
     "eslint": "8.24.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-import-resolver-typescript": "3.5.1",
@@ -213,17 +224,20 @@
     "husky": "8.0.1",
     "include-nodecg": "0.0.3",
     "json-schema-to-typescript": "11.0.2",
+    "os-browserify": "0.3.0",
     "parcel": "2.7.0",
     "parcel-resolver-ts-base-url": "1.2.0",
     "parcel-resolver-tspaths": "0.0.9",
     "prettier": "2.7.1",
     "process": "0.11.10",
     "typescript": "4.8.3",
+    "util": "0.12.5",
     "uuidv4": "6.2.13"
   },
   "dependencies": {
     "@mdi/js": "7.0.96",
     "@mdi/react": "1.6.1",
+    "bonjour": "3.5.0",
     "core-js": "3.25.5",
     "framer-motion": "7.5.2",
     "nodecg": "1.9.0",
