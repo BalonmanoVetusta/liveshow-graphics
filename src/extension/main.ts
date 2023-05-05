@@ -1,8 +1,9 @@
 import { NodeCG } from "nodecg/types/server";
+import { handleAtemAutodiscover } from "./atem-autodiscover";
 import handleGraphicsRoutes from "./graphics";
 import { scoreboardApiRoutes } from "./scoreboard-api-routes";
+import shutdownApi from "./shutdown";
 import { stopwatchReplicantMessages } from "./stopwatch-replicant-messages";
-import { handleAtemAutodiscover } from "./atem-autodiscover";
 
 export type ExtensionFunction = (nodecg: NodeCG) => Promise<void>;
 
@@ -24,5 +25,6 @@ export default main(
   stopwatchReplicantMessages,
   scoreboardApiRoutes,
   handleGraphicsRoutes,
-  handleAtemAutodiscover
+  handleAtemAutodiscover,
+  shutdownApi
 );
