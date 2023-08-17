@@ -1,4 +1,4 @@
-import { NodeCG } from "nodecg/types/server";
+import type NodeCG from "@nodecg/types";
 import { Stopwatch } from "types/schemas/stopwatch";
 import { handleStopwatchReplicant } from "./handle-stopwatch-replicant";
 import { StopwatchActions } from "./types";
@@ -35,7 +35,7 @@ function getCurrentTimeResponse(stopwatchCurrentValue: Stopwatch): string {
   return `${minutes}:${seconds}`;
 }
 
-export function handleApiRoutes(nodecg: NodeCG) {
+export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
   const router = nodecg.Router();
 
   router.get("/get", (req, res) => {
@@ -45,11 +45,13 @@ export function handleApiRoutes(nodecg: NodeCG) {
         nodecg.bundleName
       );
 
+      if (!stopwatchCurrentValue) return res.status(204).send();
+
       return res
         .status(200)
         .json(getCurrentTimeResponse(stopwatchCurrentValue));
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       return res.status(500).json("00:00");
     }
   });
@@ -66,7 +68,7 @@ export function handleApiRoutes(nodecg: NodeCG) {
 
       return res.sendStatus(200);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
     return res.sendStatus(500);
   });
@@ -78,6 +80,8 @@ export function handleApiRoutes(nodecg: NodeCG) {
         nodecg.bundleName
       );
 
+      if (!stopwatchCurrentValue) return res.status(204).send();
+
       if (stopwatchCurrentValue.startTime === 0) {
         handleStopwatchReplicant(nodecg, {
           type: StopwatchActions.START,
@@ -87,7 +91,7 @@ export function handleApiRoutes(nodecg: NodeCG) {
 
       return res.sendStatus(200);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
     return res.sendStatus(500);
   });
@@ -99,6 +103,8 @@ export function handleApiRoutes(nodecg: NodeCG) {
         nodecg.bundleName
       );
 
+      if (!stopwatchCurrentValue) return res.status(204).send();
+
       if (stopwatchCurrentValue.startTime > 0) {
         handleStopwatchReplicant(nodecg, {
           type: StopwatchActions.STOP,
@@ -108,7 +114,7 @@ export function handleApiRoutes(nodecg: NodeCG) {
 
       return res.sendStatus(200);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
     return res.sendStatus(500);
   });
@@ -121,7 +127,7 @@ export function handleApiRoutes(nodecg: NodeCG) {
       });
       return res.sendStatus(200);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
     return res.sendStatus(500);
   });
@@ -132,6 +138,9 @@ export function handleApiRoutes(nodecg: NodeCG) {
         STOPWATCH_REPLICANT_NAME,
         nodecg.bundleName
       );
+
+
+      if (!stopwatchCurrentValue) return res.status(204).send();
 
       let type = StopwatchActions.STOP;
 
@@ -145,7 +154,7 @@ export function handleApiRoutes(nodecg: NodeCG) {
       });
       return res.sendStatus(200);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
 
     return res.sendStatus(500);

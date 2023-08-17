@@ -1,9 +1,9 @@
+import type NodeCG from "@nodecg/types";
 import {
   ATEM_MDNS_TXT_CLASS,
   AtemInfo,
   blackmagicMDNSDetector,
 } from "./lib/atem-mdns";
-import { NodeCG } from "/.nodecg/types/server";
 
 export enum AtemAutodiscoverEvents {
   START = "atem:autodiscover:start",
@@ -14,7 +14,7 @@ export enum AtemAutodiscoverEvents {
   GET_DEVICES = "atem:autodiscover:get-devices",
 }
 
-export async function handleAtemAutodiscover(nodecg: NodeCG) {
+export async function handleAtemAutodiscover(nodecg: NodeCG.ServerAPI) {
   nodecg.log.info("Atem autodiscover extension loaded");
 
   let browser: ReturnType<typeof blackmagicMDNSDetector> | undefined =
@@ -55,8 +55,10 @@ export async function handleAtemAutodiscover(nodecg: NodeCG) {
     nodecg.sendMessage(AtemAutodiscoverEvents.DEVICES, devices);
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const atemConfig = (nodecg.bundleConfig?.atem ?? {}) as unknown as any;
   // If config autodiscover continuosly, start autodiscover
-  if (nodecg.bundleConfig?.atem?.autodiscover) {
+  if (atemConfig.autodiscover) {
     nodecg.sendMessage(AtemAutodiscoverEvents.START);
   }
 }

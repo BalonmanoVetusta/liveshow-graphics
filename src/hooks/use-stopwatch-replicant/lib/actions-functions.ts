@@ -21,7 +21,6 @@ function sendStopwatchMessage(
     | StopwatchActionPayloadType
     | Partial<StartActionType["payload"]> = undefined
 ): void | Promise<StopActionType> {
-  const { nodecg = undefined } = window || globalThis;
   if (typeof nodecg === typeof undefined) {
     throw new Error("No nodecg found");
   }

@@ -1,12 +1,12 @@
 import { randomUUID } from "crypto";
 import { MatchActions } from "types/schemas/match-actions";
 import { scoreboardActions } from "./scoreboard-actions";
-import { NodeCG } from "/.nodecg/types/server";
+import type NodeCG  from "@nodecg/types";
 import { MatchActionType, Team } from "/src/hooks/use-match-actions/types";
 
 const MATCH_ACTIONS_REPLICANT_NAME = "match-actions";
 
-function getActions(nodecg: NodeCG) {
+function getActions(nodecg: NodeCG.ServerAPI) {
   const actions =
     nodecg.readReplicant<MatchActions>(
       MATCH_ACTIONS_REPLICANT_NAME,
@@ -16,7 +16,7 @@ function getActions(nodecg: NodeCG) {
   return { actions };
 }
 
-function getTeamGoals(nodecg: NodeCG, team: Team) {
+function getTeamGoals(nodecg: NodeCG.ServerAPI, team: Team) {
   const { actions } = getActions(nodecg);
 
   const teamGoals = actions.filter(
@@ -27,7 +27,7 @@ function getTeamGoals(nodecg: NodeCG, team: Team) {
   return teamGoals.length;
 }
 
-export function handleApiRoutes(nodecg: NodeCG) {
+export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
   const router = nodecg.Router();
 
   const { removeLastGoal, addGoal } = scoreboardActions(nodecg, randomUUID);

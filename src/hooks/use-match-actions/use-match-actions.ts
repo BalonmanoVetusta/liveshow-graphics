@@ -21,7 +21,7 @@ export function useMatchActions(
 ) {
   const { time } = useStopwatchReplicantReader();
 
-  const [actions, setActions] = useReplicant<MatchActions, MatchActions>(
+  const [actions, setActions] = useReplicant<MatchActions>(
     MATCH_ACTIONS_REPLICANT_NAME,
     initialActions,
     options

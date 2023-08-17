@@ -16,10 +16,7 @@ export function ShieldSelector({
   acceptManuallyInputUrl: boolean | undefined;
 }) {
   const id = useId();
-  const [shields] = useReplicant<AssetsReplicant, AssetsReplicant>(
-    "assets:shields",
-    []
-  );
+  const [shields] = useReplicant<AssetsReplicant>("assets:shields", []);
   const [selectedShield, setSelectedShield] = useState<string>(initialValue);
   const [shieldUrl, setShieldUrl] = useState<string>(
     initialValue !== DEFAULT_OPTION_VALUE ? initialValue : ""

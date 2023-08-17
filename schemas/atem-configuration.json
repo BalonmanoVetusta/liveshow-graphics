@@ -2,7 +2,10 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "additionalProperties": false,
-  "required": ["ipaddress", "model"],
+  "required": [
+    "ipaddress",
+    "model"
+  ],
   "properties": {
     "ipaddress": {
       "type": "string",

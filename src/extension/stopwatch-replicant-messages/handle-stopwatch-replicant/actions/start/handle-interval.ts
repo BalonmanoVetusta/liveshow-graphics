@@ -1,4 +1,4 @@
-import { NodeCG } from "nodecg/types/server";
+import type NodeCG from "@nodecg/types";
 import { Stopwatch } from "types/schemas/stopwatch";
 import defaultStopwatchValues from "../../../default-stopwatch-values";
 import { stopwatchTickChecks } from "./stopwatch-tick-checks";
@@ -7,7 +7,7 @@ import { stopwatchTickChecks } from "./stopwatch-tick-checks";
 let timer: NodeJS.Timeout | undefined;
 
 export function setHandleInterval(
-  nodecg: NodeCG,
+  nodecg: NodeCG.ServerAPI,
   replicantName: string,
   tickTime: number
 ): NodeJS.Timeout | null {

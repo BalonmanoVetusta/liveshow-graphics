@@ -1,7 +1,7 @@
+import type NodeCG from "@nodecg/types";
 import { handleApiRoutes } from "./handle-api-routes";
-import { NodeCG } from "/.nodecg/types/server";
 
-export async function scoreboardApiRoutes(nodecg: NodeCG): Promise<void> {
+export async function scoreboardApiRoutes(nodecg: NodeCG.ServerAPI): Promise<void> {
   nodecg.log.info("Initializing scoreboard-api-routes");
   handleApiRoutes(nodecg);
   nodecg.log.info("scoreboard-api-routes initialized");

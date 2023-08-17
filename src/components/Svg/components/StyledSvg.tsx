@@ -6,8 +6,8 @@ export interface StyledSvgProps {
   $shadowValue?: string;
 }
 
-export const StyledSvg = styled.svg`
-  ${(props: StyledSvgProps) => {
+export const StyledSvg = styled.svg<StyledSvgProps>`
+  ${(props) => {
     props.$fillValue ??= "--svg-color";
     return `
       ${props.$fillValue ? `fill: ${props.$fillValue};` : ""}

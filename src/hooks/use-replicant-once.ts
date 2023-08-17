@@ -9,10 +9,10 @@ export const useReplicantOnce = <T>(
   replicantName: string,
   initialValue: T,
   options?: UseReplicantOnceOptions
-): T => {
-  const state = useRef<T>(initialValue);
+): T | undefined => {
+  const state = useRef<T | undefined>(initialValue);
   if (options && options.namespace) {
-    nodecg.readReplicant<T>(replicantName, options.namespace, (value) => {
+    nodecg.readReplicant<T | undefined>(replicantName, options.namespace, (value) => {
       state.current = value;
     });
   } else {

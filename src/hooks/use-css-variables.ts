@@ -16,7 +16,7 @@ export function useCSSVariables({
   cssVariablesToSet,
   rootElement = "body",
 }: UseCSSVariablesOptions = {}): UseCSSVariables {
-  const [cssVariables, setCssVariables] = useReplicant<CssVars, CssVars>(
+  const [cssVariables, setCssVariables] = useReplicant<CssVars>(
     "css-vars",
     {},
     { persistent: true }

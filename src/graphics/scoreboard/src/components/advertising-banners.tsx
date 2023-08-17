@@ -5,7 +5,7 @@ import { Graphics } from "types/schemas/graphics";
 const GRAPHICS_REPLICANT_NAME = "graphics";
 
 export function AdvertisingBanners() {
-  const [graphics] = useReplicant<Graphics, Graphics>(GRAPHICS_REPLICANT_NAME, {
+  const [graphics] = useReplicant<Graphics>(GRAPHICS_REPLICANT_NAME, {
     advertising: true,
     advertisingTime: 10,
   });

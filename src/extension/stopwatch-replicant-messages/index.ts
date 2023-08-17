@@ -1,5 +1,4 @@
-/* eslint-disable compat/compat */
-import { NodeCG } from "nodecg/types/server";
+/* eslint-disable compat/compat */import type NodeCG from '@nodecg/types';
 import { handleApiRoutes } from "./handle-api-routes";
 import { handleListener } from "./handle-listener";
 
@@ -7,7 +6,7 @@ import { handleListener } from "./handle-listener";
 const STOPWATCH_MESSAGES_NAME = "stopwatchMessages";
 
 export async function stopwatchReplicantMessages(
-  nodecg: NodeCG
+  nodecg: NodeCG.ServerAPI
 ): Promise<void> {
   handleApiRoutes(nodecg);
 
