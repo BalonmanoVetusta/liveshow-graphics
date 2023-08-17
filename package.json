@@ -70,7 +70,7 @@
     "nodecg-bundle"
   ],
   "nodecg": {
-    "compatibleRange": "2.1.0",
+    "compatibleRange": ">=2.0.0",
     "mount": [
       {
         "directory": "images",
