@@ -1,0 +1,3 @@
+This is an experimental branch where I test some things like atem connection, read remote webcams and some other stuff...
+
+This is not a production ready branch. If you want to use this project please use the `main` branch.
