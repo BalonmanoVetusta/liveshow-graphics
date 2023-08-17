@@ -55,8 +55,10 @@ export async function handleAtemAutodiscover(nodecg: NodeCG.ServerAPI) {
     nodecg.sendMessage(AtemAutodiscoverEvents.DEVICES, devices);
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const atemConfig = (nodecg.bundleConfig?.atem ?? {}) as unknown as any;
   // If config autodiscover continuosly, start autodiscover
-  if (nodecg.bundleConfig?.atem?.autodiscover) {
+  if (atemConfig.autodiscover) {
     nodecg.sendMessage(AtemAutodiscoverEvents.START);
   }
 }

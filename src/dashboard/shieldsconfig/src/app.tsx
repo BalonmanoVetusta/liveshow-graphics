@@ -9,7 +9,7 @@ const Shield = styled.img`
   width: 80px;
 `;
 
-const ShieldsComponent = styled.div`
+const ShieldsComponent = styled.div<{ localTeamSide: string }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,10 +29,7 @@ function App(): ReactElement {
     string | undefined
   >();
 
-  const [graphics, setGraphics] = useReplicant<Graphics, Graphics>(
-    "graphics",
-    {}
-  );
+  const [graphics, setGraphics] = useReplicant<Graphics>("graphics", {});
 
   useEffect(() => {
     setCurrentLocalShield(graphics.localShield);

@@ -7,7 +7,7 @@ export enum TeamSideOptions {
 }
 
 export function useTeamSide() {
-  const [{ localTeamSide }, setTeamSide] = useReplicant<TeamSide, TeamSide>(
+  const [{ localTeamSide }, setTeamSide] = useReplicant<TeamSide>(
     "team-side",
     {
       localTeamSide: TeamSideOptions.LEFT,

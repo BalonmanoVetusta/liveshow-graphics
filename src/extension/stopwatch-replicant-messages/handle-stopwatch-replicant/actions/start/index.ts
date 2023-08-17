@@ -1,4 +1,4 @@
-import { NodeCG } from "nodecg/types/server";
+import type NodeCG  from "@nodecg/types";
 import { Stopwatch } from "types/schemas/stopwatch";
 import { setHandleInterval } from "./handle-interval";
 import {
@@ -7,7 +7,7 @@ import {
 } from "/src/extension/stopwatch-replicant-messages/types";
 
 export default function handleStart(
-  nodecg: NodeCG,
+  nodecg: NodeCG.ServerAPI,
   actionType: StopwatchActions,
   currentValue: Stopwatch,
   replicantName: string,

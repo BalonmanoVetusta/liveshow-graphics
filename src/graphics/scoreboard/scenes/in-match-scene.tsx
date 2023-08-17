@@ -23,7 +23,7 @@ export default function Scene(): ReactElement | null {
   const { goals, actions } = useMatchActions();
   // const { goals, actions, getSuspensions } = useMatchActions();
   const { localTeamSide = "LEFT" } = useTeamSide();
-  const [graphics] = useReplicant<Graphics, Graphics>("graphics", {
+  const [graphics] = useReplicant<Graphics>("graphics", {
     advertising: true,
     advertisingTime: 10,
   });

@@ -6,8 +6,6 @@ export function useAtemDiscover() {
   const [devices, setDevices] = useState<AtemInfo[]>([]);
 
   function startListening() {
-    const { nodecg } = window || globalThis;
-
     nodecg.sendMessage(AtemAutodiscoverEvents.START);
 
     nodecg.listenFor(
@@ -19,14 +17,10 @@ export function useAtemDiscover() {
   }
 
   function stopListening() {
-    const { nodecg } = window || globalThis;
-
     nodecg.sendMessage(AtemAutodiscoverEvents.STOP);
   }
 
   function updateDevices() {
-    const { nodecg } = window || globalThis;
-
     nodecg.sendMessage(AtemAutodiscoverEvents.GET_DEVICES);
   }
 
