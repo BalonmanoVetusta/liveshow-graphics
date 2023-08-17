@@ -24,6 +24,7 @@
     "watch:extension": "parcel watch --dist-dir ./ --target extension",
     "prebuild": "bun run build:schemas",
     "build": "bun run build:dashboard && bun run build:graphics && bun run build:extension",
+    "build:clean": "rm -rf .parcel-cache dashboard extension graphics",
     "build:schemas": "rm -rf ./types/schemas/*.d.ts && cd schemas && json2ts -i '*.json' -o ../src/types/schemas/ && cd ..",
     "build:dashboard": "parcel build src/dashboard/*.html --dist-dir ./ --target dashboard",
     "build:graphics": "parcel build src/graphics/*.html --dist-dir ./ --target graphics",
@@ -83,6 +84,7 @@
         "title": "Match Actions adder & remover",
         "file": "match-actions.html",
         "width": 4,
+        "height": "auto",
         "headerColor": "#525F78",
         "workspace": "1. workspace",
         "fullbleed": false,
@@ -93,6 +95,7 @@
         "title": "Score Controls",
         "file": "scoreboard.html",
         "width": 2,
+        "height": "auto",
         "headerColor": "#525F78",
         "workspace": "1. workspace",
         "fullbleed": false,
@@ -113,18 +116,9 @@
         "title": "Shields Selector",
         "file": "shieldsconfig.html",
         "width": 2,
+        "height": "auto",
         "headerColor": "#525F78",
         "workspace": "2. Scoreboard: Graphics",
-        "fullbleed": false,
-        "dialog": false
-      },
-      {
-        "name": "atem",
-        "title": "Atem Mini Configuration",
-        "file": "atem.html",
-        "width": 2,
-        "headerColor": "#525F78",
-        "workspace": "9. Settings",
         "fullbleed": false,
         "dialog": false
       }
@@ -132,24 +126,6 @@
     "graphics": [
       {
         "file": "scoreboard.html",
-        "width": 1920,
-        "height": 1080,
-        "singleInstance": false
-      },
-      {
-        "file": "local.html",
-        "width": 1920,
-        "height": 1080,
-        "singleInstance": false
-      },
-      {
-        "file": "visitor.html",
-        "width": 1920,
-        "height": 1080,
-        "singleInstance": false
-      },
-      {
-        "file": "time.html",
         "width": 1920,
         "height": 1080,
         "singleInstance": false
