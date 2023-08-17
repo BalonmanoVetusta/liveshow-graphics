@@ -24,7 +24,7 @@ module.exports = {
     //   args: "build:schemas",
     //   instances: 1,
     //   autorestart: true,
-    //   watch: ["./schemas"],
+    //   watch: ["schemas"],
     //   watch_delay: 1000,
     // },
     {
@@ -39,7 +39,7 @@ module.exports = {
       // ignore_watch: ["node_modules", "dashboard", "extension", "graphics"],
       watch_delay: 10000,
       max_memory_restart: "500M",
-      interpreter: "node",
+      interpreter: "node@v18.17.1",
       env: {
         NODE_ENV: "production",
       },

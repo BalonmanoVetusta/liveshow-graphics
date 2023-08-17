@@ -1,4 +1,4 @@
-import { useReplicant } from "hooks/use-replicant";
+import { useReplicant } from "../../../../../hooks/use-replicant";
 import { useId, useState } from "react";
 import { Asset, AssetsReplicant } from "types/Asset";
 
