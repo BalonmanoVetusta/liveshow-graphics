@@ -1,9 +1,9 @@
 import { spawn } from "node:child_process";
-import { NodeCG } from "/.nodecg/types/server";
+import type NodeCG  from "@nodecg/types";
 
 const SHUTDOWN_PASSWORD = process.env?.SHUTDOWN_PASSWORD; // Must be provided to perform shutdown
 
-export function handleApiRoutes(nodecg: NodeCG) {
+export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
   const router = nodecg.Router();
   router.get("/", (req, res) => {
     // const { password } = req.body;

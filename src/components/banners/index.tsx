@@ -11,7 +11,7 @@ export declare interface BannersProps {
 const ANIMATION_DURATION = 1;
 
 export function Banners({ duration = 10_000 }: BannersProps) {
-  const [banners] = useReplicant<Asset[], Asset[]>("assets:banners", []);
+  const [banners] = useReplicant<Asset[]>("assets:banners", []);
   const { value, isVisible } = useRotationValue(
     duration,
     ANIMATION_DURATION * 1_000,

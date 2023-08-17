@@ -1,6 +1,4 @@
 import { useEffect } from "react";
-import { SendMessageReturnType } from "/.nodecg/types/lib/nodecg-static";
-import { Platform } from "/.nodecg/types/lib/platform";
 
 export type ListenForFunction<T> = (message: T) => void;
 
@@ -21,8 +19,7 @@ export default function useMessage<T>({
   bundleName = "CURR_BNDL",
   listenFor = undefined,
 }: UseMessageProps<T>): UseMessageReturn<T> {
-  function sendMessage<T>(data: T): SendMessageReturnType<Platform> {
-    const { nodecg = undefined } = window || globalThis;
+  function sendMessage<T>(data: T) {
     if (typeof nodecg === typeof undefined) {
       throw new Error("No nodecg found");
     }
@@ -35,7 +32,6 @@ export default function useMessage<T>({
       return;
     }
 
-    const { nodecg = undefined } = window || globalThis;
     if (typeof nodecg === typeof undefined) {
       throw new Error("No nodecg found");
     }

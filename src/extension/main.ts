@@ -1,14 +1,14 @@
-import { NodeCG } from "nodecg/types/server";
+import type NodeCG from '@nodecg/types';
 import { handleAtemAutodiscover } from "./atem-autodiscover";
 import handleGraphicsRoutes from "./graphics";
 import { scoreboardApiRoutes } from "./scoreboard-api-routes";
 import shutdownApi from "./shutdown";
 import { stopwatchReplicantMessages } from "./stopwatch-replicant-messages";
 
-export type ExtensionFunction = (nodecg: NodeCG) => Promise<void>;
+export type ExtensionFunction = (nodecg: NodeCG.ServerAPI) => Promise<void>;
 
 function main(...calls: Array<ExtensionFunction>) {
-  return (nodecg: NodeCG) => {
+  return (nodecg: NodeCG.ServerAPI) => {
     calls.forEach(async (fn: ExtensionFunction) => {
       nodecg.log.info(`Calling ${fn.name}`);
       try {

@@ -1,18 +1,18 @@
 import { useReplicant } from "hooks/use-replicant";
 import { Stopwatch } from "types/schemas/stopwatch";
 
+import type NodeCG from "@nodecg/types";
 import { MaxTimeUnit } from "hooks/use-stopwatch-replicant/lib/get-time-from-miliseconds";
 import { useEffect, useRef, useState } from "react";
 import { STOPWATCH_REPLICANT_NAME } from "services/stopwatch-replicant-name";
 import {
-  getStopwatchTimeValues,
   StopwatchPropsReturn,
+  getStopwatchTimeValues,
 } from "./lib/get-stopwatch-time-values";
 import { useStopwatchReplicantControl } from "./use-stopwatch-replicant-control";
-import { ReplicantOptions } from "/.nodecg/types/server";
 
 export interface UseStopwatchReplicantReaderProps {
-  replicantOptions: ReplicantOptions<Stopwatch>;
+  replicantOptions: NodeCG.Replicant.Options<Stopwatch>;
   maxTimeUnit: MaxTimeUnit;
   tickTime: number;
 }
@@ -29,7 +29,7 @@ export function useStopwatchReplicantReader({
   tickTime = 10,
 }: Partial<UseStopwatchReplicantReaderProps> = {}): StopwatchPropsReturn {
   const { stop } = useStopwatchReplicantControl();
-  const [stopwatch] = useReplicant<Stopwatch, Stopwatch>(
+  const [stopwatch] = useReplicant<Stopwatch>(
     STOPWATCH_REPLICANT_NAME,
     {
       startTime: 0,

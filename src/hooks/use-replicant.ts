@@ -1,7 +1,7 @@
 // Copied from https://github.com/Hoishin/use-nodecg/blob/master/src/use-replicant.ts
-import { ReplicantOptions } from "nodecg/types/server";
+import type NodeCG from "@nodecg/types";
+import structuredClone from "core-js/actual/structured-clone";
 import { useEffect, useState } from "react";
-import structuredClone from "core-js-pure/actual/structured-clone";
 
 /**
  * Subscribe to a replicant, returns tuple of the replicant value and `setValue` function.
@@ -11,18 +11,20 @@ import structuredClone from "core-js-pure/actual/structured-clone";
  * @param initialValue Initial value to pass to `useState` function
  * @param options Options object.  Currently supports the optional `namespace` option
  */
-export const useReplicant = <T, U>(
+export const useReplicant = <T>(
   replicantName: string,
-  initialValue: U,
-  options?: ReplicantOptions<T> & { namespace?: string }
-): [T | U, (newValue: T) => void] => {
-  const [value, setValue] = useState<T | U>(initialValue);
+  initialValue: T,
+  options?: NodeCG.Replicant.Options<T> & { namespace?: string }
+): [T, (newValue: T) => void] => {
+  const [value, setValue] = useState<T>(initialValue);
 
-  const replicantOptions = options && {
-    defaultValue: options.defaultValue,
-    persistent: options.persistent,
-    schemaPath: options.schemaPath,
-  };
+  const replicantOptions =
+    options &&
+    ({
+      persistent: options.persistent,
+      schemaPath: options.schemaPath,
+    } satisfies typeof options);
+
   const replicant =
     options && options.namespace
       ? nodecg.Replicant(replicantName, options.namespace, replicantOptions)

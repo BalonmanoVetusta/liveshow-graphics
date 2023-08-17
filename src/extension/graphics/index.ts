@@ -1,12 +1,12 @@
+import type NodeCG from "@nodecg/types";
 import { Graphics } from "types/schemas/graphics";
-import { NodeCG, Replicant } from "/.nodecg/types/server";
 
 const GRAPHICS_REPLICANT_NAME = "graphics";
 const DEFAULT_ROTATION_TIME = 15;
 
-let graphics: Replicant<Graphics> | undefined = undefined;
+let graphics: NodeCG.ServerReplicant<Graphics> | undefined = undefined;
 
-function graphicsReplicant(nodecg: NodeCG) {
+function graphicsReplicant(nodecg: NodeCG.ServerAPI) {
   if (graphics) {
     return graphics;
   }
@@ -17,7 +17,7 @@ function graphicsReplicant(nodecg: NodeCG) {
 }
 
 export default async function handleGraphicsRoutes(
-  nodecg: NodeCG
+  nodecg: NodeCG.ServerAPI
 ): Promise<void> {
   const router = nodecg.Router();
 
@@ -26,12 +26,12 @@ export default async function handleGraphicsRoutes(
     const formatedAction = action.toLowerCase();
 
     const graphics = graphicsReplicant(nodecg);
+    graphics.value ??= {}
 
     if (req.query?.advertisingTime) {
       const advertisingTime =
         Number(req.query.advertisingTime) || DEFAULT_ROTATION_TIME;
       const advertisingTimeInSeconds = advertisingTime * 1000;
-      console.log({ advertisingTimeInSeconds });
       graphics.value.advertisingTime = advertisingTimeInSeconds;
     }
 

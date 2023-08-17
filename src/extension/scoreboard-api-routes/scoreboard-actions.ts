@@ -1,4 +1,4 @@
-import { NodeCG } from "/.nodecg/types/server";
+import type NodeCG from "@nodecg/types";
 import {
   GoalActionType,
   MatchActionType,
@@ -11,7 +11,7 @@ import { Stopwatch } from "/src/types/schemas/stopwatch";
 const MATCH_ACTIONS_REPLICANT_NAME = "match-actions";
 const STOPWATCH_REPLICANT_NAME = "stopwatch";
 
-export function scoreboardActions(nodecg: NodeCG, uuidGenerator: () => string) {
+export function scoreboardActions(nodecg: NodeCG.ServerAPI, uuidGenerator: () => string) {
   const actions = nodecg.Replicant<MatchActions>(
     MATCH_ACTIONS_REPLICANT_NAME,
     nodecg.bundleName,
@@ -53,7 +53,7 @@ export function scoreboardActions(nodecg: NodeCG, uuidGenerator: () => string) {
     } = nodecg.readReplicant<Stopwatch>(
       STOPWATCH_REPLICANT_NAME,
       nodecg.bundleName
-    );
+    ) ?? {};
     const absoluteTime = total || offset;
     let time = absoluteTime;
 

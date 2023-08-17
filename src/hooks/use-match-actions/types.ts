@@ -1,4 +1,4 @@
-import { ReplicantOptions } from "nodecg/types/server";
+import type NodeCG from "@nodecg/types";
 import { MatchAction } from "types/schemas/match-action";
 import { MatchActions } from "types/schemas/match-actions";
 
@@ -77,7 +77,7 @@ export interface WarningActionType {
   type: WarningType;
 }
 
-export type MatchActionsReplicantOptions = ReplicantOptions<MatchActions> & {
+export type MatchActionsReplicantOptions = NodeCG.Replicant.Options<MatchActions> & {
   namespace?: string;
 };
 

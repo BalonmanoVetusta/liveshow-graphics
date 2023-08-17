@@ -1,4 +1,4 @@
-import { NodeCG } from "nodecg/types/server";
+import type NodeCG from "@nodecg/types";
 import { Stopwatch } from "types/schemas/stopwatch";
 import defaultStopwatchValues from "../default-stopwatch-values";
 import {
@@ -28,7 +28,7 @@ export type HandleStopwatchReplicantParams = StopwatchAction & {
 };
 
 export function handleStopwatchReplicant(
-  nodecg: NodeCG,
+  nodecg: NodeCG.ServerAPI,
   { type: actionType, payload = undefined }: HandleStopwatchReplicantParams
 ) {
   // TODO: Good idea is to define in message if the replicant must be persistent or not

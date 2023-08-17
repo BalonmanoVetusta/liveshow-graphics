@@ -1,9 +1,9 @@
+import type NodeCG from "@nodecg/types";
 import {
   ATEM_MDNS_TXT_CLASS,
   AtemInfo,
   blackmagicMDNSDetector,
 } from "./lib/atem-mdns";
-import { NodeCG } from "/.nodecg/types/server";
 
 export enum AtemAutodiscoverEvents {
   START = "atem:autodiscover:start",
@@ -14,7 +14,7 @@ export enum AtemAutodiscoverEvents {
   GET_DEVICES = "atem:autodiscover:get-devices",
 }
 
-export async function handleAtemAutodiscover(nodecg: NodeCG) {
+export async function handleAtemAutodiscover(nodecg: NodeCG.ServerAPI) {
   nodecg.log.info("Atem autodiscover extension loaded");
 
   let browser: ReturnType<typeof blackmagicMDNSDetector> | undefined =
