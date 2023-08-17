@@ -1,5 +1,4 @@
 import type NodeCG from '@nodecg/types';
-import { handleAtemAutodiscover } from "./atem-autodiscover";
 import handleGraphicsRoutes from "./graphics";
 import { scoreboardApiRoutes } from "./scoreboard-api-routes";
 import shutdownApi from "./shutdown";
@@ -25,6 +24,5 @@ export default main(
   stopwatchReplicantMessages,
   scoreboardApiRoutes,
   handleGraphicsRoutes,
-  handleAtemAutodiscover,
   shutdownApi
 );
