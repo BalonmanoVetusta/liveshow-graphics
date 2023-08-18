@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+if [ " ${*} " = " --help " ] || [ " ${*} " = " -h " ]; then
+  echo "Usage: $0 [name] [local_port]"
+  echo "  name:        name of the container"
+  echo "  local_port:  port to expose the container on the host"
+  echo
+  exit 0
+fi
+
+CONTAINER_NAME="${1:-${CONTAINER_NAME:-handball-liveshow-spain}}"
+PORT="${PORT:-9090}"
+NODE_ENV="${NODE_ENV:-development}"
+LOCAL_PORT="${2:-${LOCAL_PORT:-9090}}"
+
+podman stop -t 0 "${CONTAINER_NAME}" || true
+podman rm -vf "${CONTAINER_NAME}" || true
+
+exit 0

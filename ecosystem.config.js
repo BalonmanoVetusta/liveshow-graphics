@@ -33,6 +33,7 @@ module.exports = {
       args: "start",
       instances: 1,
       autorestart: true,
+      dependency: ["watcher-dashboard", "watcher-graphics", "watcher-extension"],
       watch: ["dashboard", "extension", "graphics"],
       ignore_watch: ["node_modules", "src"],
       // watch: ["src"],
