@@ -45,15 +45,9 @@
       "*": [
         "*"
       ],
-      "nodecg/server": [
-        "types/nodecgServer"
+      "types/*": [
+        "types/*"
       ],
-      "nodecg/browser": [
-        "types/nodecgBrowser"
-      ],
-      "nodecg/*": [
-        "../.nodecg/*"
-      ]
     }
   },
   "files": [

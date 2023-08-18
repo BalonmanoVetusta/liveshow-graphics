@@ -4,8 +4,15 @@ import { exec } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
+const env = process.env.NODE_ENV || process.env.ENV || "development";
+
+if(!env.startsWith("dev")) {
+  console.log("Not in development mode, skipping postinstall");
+  process.exit();
+}
+
 if (
-  !process?.env?.npm_config_local_prefix ||
+  !process.env?.npm_config_local_prefix ||
   !existsSync(process.env.npm_config_local_prefix)
 )
   throw new Error("This script must be run with npm when use `npm install`");
