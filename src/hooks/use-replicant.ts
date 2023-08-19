@@ -3,6 +3,8 @@ import type NodeCG from "@nodecg/types";
 import structuredClone from "core-js/actual/structured-clone";
 import { useEffect, useState } from "react";
 
+type Setter<T = any> = (newValue: T | ((prev: T) => T)) => void;
+
 /**
  * Subscribe to a replicant, returns tuple of the replicant value and `setValue` function.
  * The component using this function gets re-rendered when the value is updated.
@@ -15,7 +17,7 @@ export const useReplicant = <T>(
   replicantName: string,
   initialValue: T,
   options?: NodeCG.Replicant.Options<T> & { namespace?: string }
-): [T, (newValue: T) => void] => {
+): [T, Setter<T>] => {
   const [value, setValue] = useState<T>(initialValue);
 
   const replicantOptions =
@@ -31,7 +33,7 @@ export const useReplicant = <T>(
       : nodecg.Replicant(replicantName, replicantOptions);
 
   const changeHandler = (newValue: T): void => {
-    setValue((oldValue) => {
+    setValue((oldValue: T) => {
       if (newValue !== oldValue) {
         return newValue;
       }
@@ -57,7 +59,7 @@ export const useReplicant = <T>(
     value,
     (newValue) => {
       replicant.value =
-        typeof newValue === "function" ? newValue(replicant.value) : newValue;
+        newValue instanceof Function ? newValue(value) : newValue;
     },
   ];
 };

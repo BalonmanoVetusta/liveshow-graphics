@@ -4,6 +4,7 @@ import { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Graphics } from "types/schemas/graphics";
 import { ShieldSelector } from "./components/shield-selector";
+import { SceneSelector } from "components/scenes/scene-selector";
 
 const Shield = styled.img`
   width: 80px;
@@ -39,6 +40,7 @@ function App(): ReactElement {
 
   return (
     <>
+     <SceneSelector />
       <fieldset>
         <legend>Local</legend>
         <div>
