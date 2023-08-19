@@ -3,6 +3,8 @@ FROM ghcr.io/nodecg/nodecg:2
 LABEL org.opencontainers.image.source=https://github.com/BalonmanoVetusta/handball-liveshow-spain
 
 ARG NODECG_BUNDLE_NAME=handball-liveshow-spain
+ARG NODECG_PORT=9090
+ARG NODECG_HOST=0.0.0.0
 WORKDIR /opt/nodecg
 USER nodecg
 
