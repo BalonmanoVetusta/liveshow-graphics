@@ -1,3 +1,5 @@
-export { Instagram } from "./components/Instagram";
-export { Twitter } from "./components/Twitter";
-export { UnknownShield } from "./components/UnknownShield";
+export { Goal } from "./components/goal";
+export { GoalWithGoalkeeper } from "./components/goal-with-goalkeeper";
+export { Instagram } from "./components/instagram";
+export { Twitter } from "./components/twitter";
+export { UnknownShield } from "./components/unknown-shield";

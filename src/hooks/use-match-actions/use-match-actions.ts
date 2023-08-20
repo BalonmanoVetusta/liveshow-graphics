@@ -192,24 +192,26 @@ export function useMatchActions(
       .sort((a: MatchAction, b: MatchAction) => a.matchTime - b.matchTime);
   };
 
+
   return {
     goals: {
       local: Array.isArray(actions)
         ? actions.filter(
-            (action) =>
-              action.action === MatchActionType.GOAL &&
-              action.team === Team.LOCAL
-          )
+          (action) =>
+            action.action === MatchActionType.GOAL &&
+            action.team === Team.LOCAL
+        )
         : [],
       visitor: Array.isArray(actions)
         ? actions.filter(
-            (action) =>
-              action.action === MatchActionType.GOAL &&
-              action.team === Team.VISITOR
-          )
+          (action) =>
+            action.action === MatchActionType.GOAL &&
+            action.team === Team.VISITOR
+        )
         : [],
     },
     actions,
+    getTeamActions,
     setActions,
     addAction,
     removeActionById,
@@ -221,7 +223,6 @@ export function useMatchActions(
     stopSevenPlayers,
     addSuspension,
     getSuspensions,
-    getTeamActions,
     removeLastAction,
     resetAllActions,
   };
