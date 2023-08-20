@@ -1,3 +1,6 @@
+// Downloaded from: https://www.svgrepo.com/svg/322437/goal-keeper
+// Used svgr to adapt it to react: https://react-svgr.com/playground/
+
 export function Goal({
   width = 128,
   height = 128,
