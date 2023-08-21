@@ -5,7 +5,10 @@ import { useReplicant } from "hooks/use-replicant";
 import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement, useLayoutEffect, useMemo } from "react";
 import { Graphics } from "types/schemas/graphics";
-import Suspensions from "../../../components/scoreboard/graphics/suspensions/suspensions";
+import { ScoreboardScore } from "./scoreboard-score";
+import { ScoreboardShield } from "./scoreboard-shield";
+import { ScoreboardTeamName } from "./scoreboard-team-name";
+import Suspensions from "./suspensions/suspensions";
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
 const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
@@ -19,7 +22,7 @@ const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
 
 // TODO: Suspensions must recognise the case where a player has a double suspension
 
-export default function InMatchScene(): ReactElement | null {
+export default function Scoreboard(): ReactElement | null {
   const { goals, actions } = useMatchActions();
   // const { goals, actions, getSuspensions } = useMatchActions();
   const { localTeamSide = "LEFT" } = useTeamSide();
@@ -101,73 +104,36 @@ export default function InMatchScene(): ReactElement | null {
             localTeamSide?.toLowerCase() === "left" ? "left" : "right"
           }
         >
-          <div className="local-team team">
-            <div className="shield shield-local column">
-              <div className="yellow-card">
-                {document
-                  .querySelector(".local-team")
-                  ?.getAttribute("data-yellow-cards") || ""}
-              </div>
-              {graphics.localShield ? (
-                <img src={graphics.localShield} alt="Local Team Image" />
-              ) : null}
-            </div>
-
-            {showTeamName ? (
-              <div className="team-name">
-                <p>{localName}</p>
-              </div>
-            ) : null}
-
-            <div className="score">
-              <p>{goals.local.length.toString().padStart(2, "0")}</p>
-            </div>
-
-            <Suspensions team={Team.LOCAL} />
+          <ScoreboardShield team={Team.LOCAL} src={graphics.localShield} />
+          <ScoreboardTeamName name={localName} show={showTeamName} />
+          <ScoreboardScore score={goals.local.length} />
+          <Suspensions team={Team.LOCAL} />
+        </div>
+        <div className="stopwatch column">
+          <div className="competition-banner">
+            <img
+              src="https://www.rfebm.com/competiciones/images/logo.png"
+              alt=""
+              width={16}
+            />
           </div>
-          <div className="stopwatch column">
-            <div className="competition-banner">
-              <img
-                src="https://www.rfebm.com/competiciones/images/logo.png"
-                alt=""
-                width={16}
-              />
-            </div>
-            <StopwatchTime padZeroes={2} />
-            <div className="info column">
-              {/* <svg
+          <StopwatchTime padZeroes={2} />
+          <div className="info column">
+            {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xmlSpace="preserve"
                 viewBox="0 0 485 485"
               >
                 <path d="M0 70v345h30V121.213l40 40V371h30v-43.5h48.75V371h30v-43.5h48.75V371h30v-43.5h48.75V371h30v-43.5H385V371h30V161.213l40-40V415h30V70H0zm100 100h48.75v48.75H100V170zm285 0v48.75h-48.75V170H385zm-78.75 48.75H257.5V170h48.75v48.75zm-78.75 0h-48.75V170h48.75v48.75zM100 297.5v-48.75h48.75v48.75H100zm78.75 0v-48.75h48.75v48.75h-48.75zm78.75 0v-48.75h48.75v48.75H257.5zm78.75 0v-48.75H385v48.75h-48.75zM393.787 140H91.213l-40-40h382.574l-40 40z" />
               </svg> */}
-            </div>
           </div>
-          <div className="visitor-team team">
-            <div className="shield shield-visitor column">
-              <div className="yellow-card">
-                {document
-                  .querySelector(".visitor-team")
-                  ?.getAttribute("data-yellow-cards") || ""}
-              </div>
-              {graphics.visitorShield ? (
-                <img src={graphics.visitorShield} alt="Visitor Team Image" />
-              ) : null}
-            </div>
+        </div>
+        <div className="visitor-team team">
+          <ScoreboardShield team={Team.VISITOR} src={graphics.visitorShield} />
+          <ScoreboardTeamName name={visitorName} show={showTeamName} />
+          <ScoreboardScore score={goals.visitor.length} />
 
-            {showTeamName ? (
-              <div className="team-name">
-                <p>{visitorName}</p>
-              </div>
-            ) : null}
-
-            <div className="score">
-              <p>{goals.visitor.length.toString().padStart(2, "0")}</p>
-            </div>
-
-            <Suspensions team={Team.VISITOR} />
-          </div>
+          <Suspensions team={Team.VISITOR} />
         </div>
       </div>
     </>
