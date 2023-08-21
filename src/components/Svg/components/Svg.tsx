@@ -26,7 +26,9 @@ export function Svg({
   titleId = undefined,
   descriptionId = undefined,
   ...props
-}: SvgProps): ReactElement {
+}: PropsWithChildren<
+  { props: React.SVGProps<SVGSVGElement> } & SvgProps
+>): ReactElement {
   // fillValue = "transparent",
   // strokeValue = undefined,
   // shadowValue = undefined,

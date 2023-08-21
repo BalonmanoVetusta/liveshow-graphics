@@ -34,8 +34,8 @@ export function GoalsTeamControls({
     <fieldset>
       <h3>{teamLabel}</h3>
       <h3>{score}</h3>
-      <button onClick={handleAddGoal(team)}>+1</button>
-      <button onClick={handleSubstractGoal(team)}>-1</button>
+      <button onClick={handleAddGoal(team)}>{teamLabel} +1</button>
+      <button onClick={handleSubstractGoal(team)}>{teamLabel} -1</button>
     </fieldset>
   );
 }

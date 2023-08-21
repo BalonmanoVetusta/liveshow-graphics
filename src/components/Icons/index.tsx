@@ -1,3 +1,4 @@
+export { Ball } from "./components/ball";
 export { Goal } from "./components/goal";
 export { GoalWithGoalkeeper } from "./components/goal-with-goalkeeper";
 export { Instagram } from "./components/instagram";
