@@ -1,12 +1,16 @@
 // Downloaded from: https://www.svgrepo.com/svg/115227/soccer-ball
 // Used svgr to adapt it to react: https://react-svgr.com/playground/
 
-export function Ball(props: React.SVGProps<SVGSVGElement>) {
+export function Ball({
+  width = 128,
+  height = 128,
+  ...props
+}: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={800}
-      height={800}
+      width={width}
+      height={height}
       viewBox="0 0 463 463"
       {...props}
     >
