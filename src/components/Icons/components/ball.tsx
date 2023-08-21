@@ -1,3 +1,6 @@
+// Downloaded from: https://www.svgrepo.com/svg/115227/soccer-ball
+// Used svgr to adapt it to react: https://react-svgr.com/playground/
+
 export function Ball(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
