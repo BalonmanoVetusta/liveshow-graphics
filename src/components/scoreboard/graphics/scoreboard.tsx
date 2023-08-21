@@ -106,7 +106,7 @@ export default function Scoreboard(): ReactElement | null {
         >
           <ScoreboardShield team={Team.LOCAL} src={graphics.localShield} />
           <ScoreboardTeamName name={localName} show={showTeamName} />
-          <ScoreboardScore score={goals.local.length} />
+          <ScoreboardScore team={Team.LOCAL} />
           <Suspensions team={Team.LOCAL} />
         </div>
         <div className="stopwatch column">
@@ -131,8 +131,7 @@ export default function Scoreboard(): ReactElement | null {
         <div className="visitor-team team">
           <ScoreboardShield team={Team.VISITOR} src={graphics.visitorShield} />
           <ScoreboardTeamName name={visitorName} show={showTeamName} />
-          <ScoreboardScore score={goals.visitor.length} />
-
+          <ScoreboardScore team={Team.VISITOR} />
           <Suspensions team={Team.VISITOR} />
         </div>
       </div>
