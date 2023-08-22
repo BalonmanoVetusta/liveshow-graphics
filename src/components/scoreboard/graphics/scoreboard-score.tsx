@@ -16,6 +16,7 @@ export function ScoreboardScore({
 
   useEffect(() => {
     setScore(getTeamActions(team, MatchActionType.GOAL).length);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actions]);
 
   return (

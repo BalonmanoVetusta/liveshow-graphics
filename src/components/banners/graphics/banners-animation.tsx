@@ -1,19 +1,18 @@
 import { AnimatePresence, motion, usePresence } from "framer-motion";
-import { useReplicant } from "hooks/use-replicant";
 import { useRotationValue } from "hooks/use-rotation-value";
 import { PropsWithoutRef, useEffect } from "react";
 import { Asset } from "types/Asset";
 
 export declare interface BannersProps {
   duration?: number;
+  banners: Asset[];
 }
 
 const ANIMATION_DURATION = 1;
 
-export function Banners({ duration = 10_000 }: BannersProps) {
-  const [banners] = useReplicant<Asset[]>("assets:banners", []);
+export function BannersAnimation({ duration = 10, banners }: BannersProps) {
   const { value, isVisible } = useRotationValue(
-    duration,
+    duration * 1_000,
     ANIMATION_DURATION * 1_000,
     true
   );

@@ -1,6 +1,4 @@
-export { Ball } from "./components/ball";
-export { Goal } from "./components/goal";
-export { GoalWithGoalkeeper } from "./components/goal-with-goalkeeper";
-export { Instagram } from "./components/instagram";
-export { Twitter } from "./components/twitter";
-export { UnknownShield } from "./components/unknown-shield";
+export { BallIcon } from "./components/ball";
+export { GoalIcon } from "./components/goal";
+export { GoalWithGoalkeeperIcon } from "./components/goal-with-goalkeeper";
+export { UnknownShieldIcon } from "./components/unknown-shield";

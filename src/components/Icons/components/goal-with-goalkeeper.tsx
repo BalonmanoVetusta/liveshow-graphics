@@ -1,13 +1,12 @@
 // Downloaded from: https://www.svgrepo.com/svg/322437/goal-keeper
 // Used svgr to adapt it to react: https://react-svgr.com/playground/
 
-export function GoalWithGoalkeeper({
+export function GoalWithGoalkeeperIcon({
   width = 128,
   height = 128,
   ...props
 }: React.SVGProps<SVGSVGElement>) {
-  props["aria-description"] ??=
-    "Goalkeeper is in the goal";
+  props["aria-description"] ??= "Goalkeeper is in the goal";
 
   return (
     <svg

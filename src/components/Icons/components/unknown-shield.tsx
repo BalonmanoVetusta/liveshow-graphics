@@ -1,5 +1,4 @@
-import * as React from "react"
-export function UnknownShield(props) {
+export function UnknownShieldIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +17,8 @@ export function UnknownShield(props) {
           strokeDasharray: "none",
           strokeOpacity: 1,
         }}
-        transform="translate(-220.915 -362.702)" />
+        transform="translate(-220.915 -362.702)"
+      />
     </svg>
-  )
+  );
 }

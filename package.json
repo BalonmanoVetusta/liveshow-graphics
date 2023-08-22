@@ -139,12 +139,6 @@
     ],
     "graphics": [
       {
-        "file": "scoreboard.html",
-        "width": 1920,
-        "height": 1080,
-        "singleInstance": false
-      },
-      {
         "file": "live.html",
         "width": 1920,
         "height": 1080,

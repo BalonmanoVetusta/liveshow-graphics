@@ -1,10 +1,9 @@
-import { useReplicant } from "hooks/use-replicant";
+import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
 import { useTeamSide } from "hooks/use-team-side";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import styled from "styled-components";
-import { Graphics } from "types/schemas/graphics";
+import { AdvertisingConfig } from "./components/advertising-config";
 import { ShieldSelector } from "./components/shield-selector";
-import { SceneSelector } from "components/scenes/scene-selector";
 
 const Shield = styled.img`
   width: 80px;
@@ -21,35 +20,19 @@ const ShieldsComponent = styled.div<{ localTeamSide: string }>`
 
 function App(): ReactElement {
   const { localTeamSide = "LEFT", toggleSide } = useTeamSide();
-
-  const [currentLocalShield, setCurrentLocalShield] = useState<
-    string | undefined
-  >();
-
-  const [currentVisitorShield, setCurrentVisitorShield] = useState<
-    string | undefined
-  >();
-
-  const [graphics, setGraphics] = useReplicant<Graphics>("graphics", {});
-
-  useEffect(() => {
-    setCurrentLocalShield(graphics.localShield);
-    setCurrentVisitorShield(graphics.visitorShield);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graphics]);
+  const { localShield, visitorShield, setGraphics } = useGraphicsReplicant();
 
   return (
     <>
-     <SceneSelector />
       <fieldset>
         <legend>Local</legend>
         <div>
           <ShieldSelector
-            key={`local-${currentLocalShield}`}
+            key={`local-${localShield}`}
             label="Local Team Shield"
             acceptManuallyInputUrl={true}
-            initialValue={currentLocalShield}
-            onChange={(url) => setGraphics({ ...graphics, localShield: url })}
+            initialValue={localShield}
+            onChange={(url) => setGraphics({ localShield: url })}
           />
         </div>
 
@@ -78,11 +61,11 @@ function App(): ReactElement {
         <legend>Visitor</legend>
         <div>
           <ShieldSelector
-            key={`visitor-${currentVisitorShield}`}
+            key={`visitor-${visitorShield}`}
             label="Visitor Team Shield"
             acceptManuallyInputUrl={true}
-            initialValue={currentVisitorShield}
-            onChange={(url) => setGraphics({ ...graphics, visitorShield: url })}
+            initialValue={visitorShield}
+            onChange={(url) => setGraphics({ visitorShield: url })}
           />
         </div>
 
@@ -110,12 +93,8 @@ function App(): ReactElement {
       <fieldset>
         <legend>Shields preview</legend>
         <ShieldsComponent localTeamSide={localTeamSide}>
-          <Shield src={currentLocalShield} alt="Local Team Shield" width={80} />
-          <Shield
-            src={currentVisitorShield}
-            alt="Visitor Team Shield"
-            width={80}
-          />
+          <Shield src={localShield} alt="Local Team Shield" width={80} />
+          <Shield src={visitorShield} alt="Visitor Team Shield" width={80} />
         </ShieldsComponent>
       </fieldset>
 
@@ -132,33 +111,7 @@ function App(): ReactElement {
         </button>
       </fieldset>
 
-      <fieldset>
-        <legend>Advertising</legend>
-        <input
-          type="number"
-          min={0}
-          max={60}
-          onChange={(event) => {
-            event.preventDefault();
-            let value: number;
-            try {
-              value = parseInt(event.target.value, 10) * 1000;
-            } catch (error) {
-              value = 0;
-            }
-            setGraphics({ ...graphics, advertisingTime: value });
-          }}
-          value={(graphics.advertisingTime ?? 0) / 1000}
-        />
-        <button
-          onClick={(event) => {
-            event.preventDefault();
-            setGraphics({ ...graphics, advertising: !graphics.advertising });
-          }}
-        >
-          Toggle
-        </button>
-      </fieldset>
+      <AdvertisingConfig />
     </>
   );
 }

@@ -1,40 +1,17 @@
-import { useReplicant } from "hooks/use-replicant";
-import { useEffect, useState } from "react";
-import { Scenes } from "types/schemas/scenes";
-
-function useSceneSwitcher() {
-  const [currentScene, setCurrentScene] = useState<string>("default");
-  const [scenes, setScenes] = useReplicant<Scenes>("scenes", {
-    active: "default",
-    scenes: [],
-  });
-
-  useEffect(() => {
-    setScenes((prev) => {
-      prev.active = currentScene;
-      return prev;
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentScene]);
-
-  return { currentScene, setCurrentScene, scenes: scenes.scenes };
-}
+import { useSceneReplicant } from "hooks/replicants/use-scene-replicant";
 
 export function SceneSelector() {
-  const {
-    currentScene = "default",
-    setCurrentScene,
-    scenes,
-  } = useSceneSwitcher();
+  const { active, setActiveScene, scenes } = useSceneReplicant();
+
   return (
     <select
       onChange={(e) => {
-        setCurrentScene(e.target.value);
+        setActiveScene(e.target.value);
       }}
-      value={currentScene}
+      value={active}
     >
       <optgroup label="Scenes">
-        {scenes.map((scene) => (
+        {scenes?.map((scene) => (
           <option key={scene} value={scene}>
             {scene}
           </option>

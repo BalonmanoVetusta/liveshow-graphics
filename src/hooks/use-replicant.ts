@@ -3,7 +3,7 @@ import type NodeCG from "@nodecg/types";
 import structuredClone from "core-js/actual/structured-clone";
 import { useEffect, useState } from "react";
 
-type Setter<T = any> = (newValue: T | ((prev: T) => T)) => void;
+type Setter<T = unknown> = (newValue: T | ((prev: T) => T)) => void;
 
 /**
  * Subscribe to a replicant, returns tuple of the replicant value and `setValue` function.

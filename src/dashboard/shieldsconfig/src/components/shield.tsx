@@ -1,4 +1,4 @@
-import { UnknownShield } from "components/Icons";
+import { UnknownShieldIcon } from "components/Icons";
 import styled from "styled-components";
 
 const StyledShield = styled.img`
@@ -10,7 +10,7 @@ export function Shield({
   ...props
 }: { src: string | undefined } & { [key: string]: unknown }) {
   if (!src) {
-    return <UnknownShield {...props} />;
+    return <UnknownShieldIcon {...props} />;
   }
 
   return <StyledShield src={src} {...props} />;

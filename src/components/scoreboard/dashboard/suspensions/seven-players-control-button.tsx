@@ -1,4 +1,4 @@
-import { Goal, GoalWithGoalkeeper } from "components/Icons";
+import { GoalIcon, GoalWithGoalkeeperIcon } from "components/Icons";
 import { useMatchActions } from "hooks/use-match-actions";
 import { MatchActionType, Team } from "hooks/use-match-actions/types";
 import { useMemo } from "react";
@@ -17,6 +17,7 @@ export function SevenPlayersControlButton({ team }: { team: Team }) {
       startActions.length !== endActions.length &&
       (startActions.length > 0 || endActions.length > 0)
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actions]);
 
   return (
@@ -36,9 +37,9 @@ export function SevenPlayersControlButton({ team }: { team: Team }) {
       }}
     >
       {isSevenPlayers ? (
-        <GoalWithGoalkeeper width={64} height={64} />
+        <GoalWithGoalkeeperIcon width={64} height={64} />
       ) : (
-        <Goal width={64} height={64} />
+        <GoalIcon width={64} height={64} />
       )}
     </button>
   );

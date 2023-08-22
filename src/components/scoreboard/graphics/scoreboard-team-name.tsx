@@ -2,7 +2,7 @@ export function ScoreboardTeamName({
   name,
   show = true,
 }: {
-  name: string;
+  name?: string;
   show?: boolean;
 }) {
   if (!show) return null;

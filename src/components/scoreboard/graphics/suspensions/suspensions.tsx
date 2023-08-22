@@ -1,11 +1,11 @@
-import {
-  MatchActionSuspensionTime,
-  groupSuspensionsByTimeAndPlayerNumber,
-} from "graphics/scoreboard/src/components/suspensions/group-suspensions-by-time-and-player-number";
 import { useMatchActions } from "hooks/use-match-actions";
 import { Team } from "hooks/use-match-actions/types";
 import { useMemo } from "react";
 import styled from "styled-components";
+import {
+  MatchActionSuspensionTime,
+  groupSuspensionsByTimeAndPlayerNumber,
+} from "./group-suspensions-by-time-and-player-number";
 import SuspensionItem from "./suspension-item";
 
 const StyledSuspensionsContainer = styled.div`

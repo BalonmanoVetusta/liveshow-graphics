@@ -1,4 +1,6 @@
-import { Team } from "hooks/use-match-actions/types";
+import { useMatchActions } from "hooks/use-match-actions";
+import { MatchActionType, Team } from "hooks/use-match-actions/types";
+import { useMemo } from "react";
 import { ScoreboardScore } from "./scoreboard-score";
 import { ScoreboardShield } from "./scoreboard-shield";
 import { ScoreboardTeamName } from "./scoreboard-team-name";
@@ -8,7 +10,6 @@ export function ScoreboardTeam({
   src,
   name,
   team,
-  side = "left",
   showTeamName = true,
 }: {
   src?: string;
@@ -17,11 +18,30 @@ export function ScoreboardTeam({
   side?: string;
   showTeamName?: boolean;
 }) {
+  const { getTeamActions, actions } = useMatchActions();
+
+  const isSevenPlayers = useMemo(() => {
+    const startActions = getTeamActions(
+      team,
+      MatchActionType.START_SEVEN_PLAYERS
+    );
+    const endActions = getTeamActions(team, MatchActionType.END_SEVEN_PLAYERS);
+
+    return (
+      (startActions.length > 0 || endActions.length > 0) &&
+      startActions.length !== endActions.length
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actions]);
+
   return (
     <>
-      <div className="scoreboard" data-local-team-side={side}>
-        <ScoreboardShield team={Team.LOCAL} src={src} />(
-        {name ? <ScoreboardTeamName name={name} show={!!name} /> : null})
+      <div
+        className={`${team.toString().toLowerCase()}-team team`}
+        data-active-info={isSevenPlayers}
+      >
+        <ScoreboardShield team={Team.LOCAL} src={src} />
+        <ScoreboardTeamName name={name} show={Boolean(name) && showTeamName} />
         <ScoreboardScore team={team} />
         <Suspensions team={Team.LOCAL} />
       </div>
