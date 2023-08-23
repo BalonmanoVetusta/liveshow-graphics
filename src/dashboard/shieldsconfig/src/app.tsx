@@ -1,8 +1,10 @@
 import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
+import { Team } from "hooks/use-match-actions/types";
 import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement } from "react";
 import styled from "styled-components";
 import { AdvertisingConfig } from "./components/advertising-config";
+import { ShieldBgColor } from "./components/shield-bg-color";
 import { ShieldSelector } from "./components/shield-selector";
 
 const Shield = styled.img`
@@ -20,7 +22,14 @@ const ShieldsComponent = styled.div<{ localTeamSide: string }>`
 
 function App(): ReactElement {
   const { localTeamSide = "LEFT", toggleSide } = useTeamSide();
-  const { localShield, visitorShield, setGraphics } = useGraphicsReplicant();
+  const {
+    localShield,
+    visitorShield,
+    showShields = true,
+    localShieldBgColor,
+    visitorShieldBgColor,
+    setGraphics,
+  } = useGraphicsReplicant();
 
   return (
     <>
@@ -36,25 +45,23 @@ function App(): ReactElement {
           />
         </div>
 
+        <ShieldBgColor team={Team.LOCAL} />
+      </fieldset>
+
+      <fieldset>
+        <legend>Show shields in scoreboard</legend>
         <div>
-          <label htmlFor="local-shield-bgcolor-input">
-            Local Team Background Shield Color
-          </label>
+          <label htmlFor="show-shields-input">Show shields</label>
           <input
-            type="color"
-            name="local-shield-bgcolor"
-            id="local-shield-bgcolor-input"
-            placeholder="Local Team Background Shield Color"
-            list="local-team-colors"
+            type="checkbox"
+            name="show-shields"
+            id="show-shields-input"
+            checked={showShields}
+            onChange={(event) =>
+              setGraphics({ showShields: event.target.checked })
+            }
           />
         </div>
-        <datalist id="local-team-colors">
-          <option value="#F2DE4C" />
-          <option value="#151111" />
-          <option value="#000000" />
-          <option value="#ffffff" />
-          <option value="#00ff00" />
-        </datalist>
       </fieldset>
 
       <fieldset>
@@ -69,25 +76,7 @@ function App(): ReactElement {
           />
         </div>
 
-        <div>
-          <label htmlFor="visitor-shield-bgcolor-input">
-            Visitor Team Background Shield Color
-          </label>
-          <input
-            type="color"
-            name="visitor-shield-bgcolor"
-            id="visitor-shield-bgcolor-input"
-            placeholder="Visitor Team Background Shield Color"
-            list="visitor-team-colors"
-          />
-        </div>
-        <datalist id="visitor-team-colors">
-          <option value="#F2DE4C" />
-          <option value="#151111" />
-          <option value="#000000" />
-          <option value="#ffffff" />
-          <option value="#00ff00" />
-        </datalist>
+        <ShieldBgColor team={Team.VISITOR} />
       </fieldset>
 
       <fieldset>
@@ -117,3 +106,5 @@ function App(): ReactElement {
 }
 
 export default App;
+"#f2de4c",
+"#fede58",

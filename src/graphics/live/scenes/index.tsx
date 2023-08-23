@@ -1,6 +1,6 @@
-import { EmptyScene } from "./empty-scene";
-import { InMatchScene } from "./in-match-scene";
-import { NotInMatch } from "./not-match";
+import { default as EmptyScene } from "./empty-scene";
+import { default as InMatchScene } from "./in-match-scene";
+import { default as NotInMatch } from "./not-match";
 
 export const registeredScenes = {
   default: EmptyScene,

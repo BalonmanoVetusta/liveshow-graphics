@@ -6,6 +6,6 @@ const Div = styled.div`
   height: 100%;
 `;
 
-export function EmptyScene() {
+export default function EmptyScene() {
   return <Div></Div>;
 }

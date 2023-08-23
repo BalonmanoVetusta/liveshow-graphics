@@ -1,3 +1,4 @@
+import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
 import { useMatchActions } from "hooks/use-match-actions";
 import { MatchActionType, Team } from "hooks/use-match-actions/types";
 import { useMemo } from "react";
@@ -18,6 +19,7 @@ export function ScoreboardTeam({
   side?: string;
   showTeamName?: boolean;
 }) {
+  const { showShields } = useGraphicsReplicant();
   const { getTeamActions, actions } = useMatchActions();
 
   const isSevenPlayers = useMemo(() => {
@@ -40,7 +42,7 @@ export function ScoreboardTeam({
         className={`${team.toString().toLowerCase()}-team team`}
         data-active-info={isSevenPlayers}
       >
-        <ScoreboardShield team={Team.LOCAL} src={src} />
+        <ScoreboardShield team={Team.LOCAL} src={src} show={showShields} />
         <ScoreboardTeamName name={name} show={Boolean(name) && showTeamName} />
         <ScoreboardScore team={team} />
         <Suspensions team={Team.LOCAL} />

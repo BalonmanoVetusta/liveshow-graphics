@@ -33,6 +33,12 @@
       "title": "Play Spot",
       "description": "If a spot must be played"
     },
+    "localTeamName": {
+      "type": "string",
+      "default": "Local Team",
+      "title": "Local Team Name",
+      "description": "Local Team name"
+    },
     "localShield": {
       "type": "string",
       "default": "https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg",
@@ -51,6 +57,12 @@
       "title": "Local Team Color",
       "description": "Local Team color"
     },
+    "visitorTeamName": {
+      "type": "string",
+      "default": "Visitor Team",
+      "title": "Visitor Team Name",
+      "description": "Visitor Team name"
+    },
     "visitorShield": {
       "type": "string",
       "default": "https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg",
@@ -68,6 +80,12 @@
       "default": "transparent",
       "title": "Visitor Team Color",
       "description": "Visitor Team color"
+    },
+    "showShields": {
+      "type": "boolean",
+      "default": true,
+      "title": "View Shields",
+      "description": "If shields must be showed"
     },
     "scoreboardPosition": {
       "type": "string",
