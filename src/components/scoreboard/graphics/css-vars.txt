@@ -1,6 +1,0 @@
-
-/* Suspension Item */
---suspension-color: red;
---suspension-font-color: white;
---suspension-border-radius: 8px;
---suspension-number-font-color: #ccc;
