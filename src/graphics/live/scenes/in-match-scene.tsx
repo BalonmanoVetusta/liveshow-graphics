@@ -19,7 +19,7 @@ const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
 
 // TODO: Suspensions must recognise the case where a player has a double suspension
 
-export default function InMatchScene(): ReactElement | null {
+export function InMatchScene(): ReactElement | null {
   const { goals, actions } = useMatchActions();
   // const { goals, actions, getSuspensions } = useMatchActions();
   const { localTeamSide = "LEFT" } = useTeamSide();
