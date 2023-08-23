@@ -1,26 +1,21 @@
 import { useLayoutEffect } from "react";
 import { CssVars } from "types/schemas/css-vars";
-import { useReplicant } from "./use-replicant";
+import { useCSSVariablesReplicant } from "./replicants/use-css-variables-replicant";
 
-export declare interface UseCSSVariables {
-  cssVariables: CssVars;
-  setCssVar: (key: string, value: string) => void;
-}
-
-export declare interface UseCSSVariablesOptions {
+export interface UseCSSVariablesOptions {
+  initialCssVariablesValues?: CssVars;
   cssVariablesToSet?: string[] | string;
   rootElement?: string;
 }
 
+
+
 export function useCSSVariables({
+  initialCssVariablesValues,
   cssVariablesToSet,
-  rootElement = "body",
-}: UseCSSVariablesOptions = {}): UseCSSVariables {
-  const [cssVariables, setCssVariables] = useReplicant<CssVars>(
-    "css-vars",
-    {},
-    { persistent: true }
-  );
+  rootElement = ":root",
+}: UseCSSVariablesOptions = {}) {
+  const { cssVariables, setCssVariables } = useCSSVariablesReplicant(initialCssVariablesValues);
 
   const setCssVar = (key: string, value: string) => {
     const newCssVariables = structuredClone(cssVariables);
@@ -28,8 +23,13 @@ export function useCSSVariables({
     setCssVariables(newCssVariables);
   };
 
+  const removeCssVar = (key: string) => {
+    const element = document.querySelector(rootElement) as HTMLElement;
+    element.style.removeProperty(key);
+  }
+
   const _isValidToSet = (key: string) =>
-    !cssVariablesToSet || cssVariablesToSet.includes(key);
+    !Boolean(cssVariablesToSet) || cssVariablesToSet?.includes(key);
 
   useLayoutEffect(() => {
     Object.keys(cssVariables).forEach((key) => {
@@ -51,5 +51,5 @@ export function useCSSVariables({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cssVariables]);
 
-  return { cssVariables, setCssVar };
+  return { cssVariables, setCssVar, setCssVariables, removeCssVar };
 }

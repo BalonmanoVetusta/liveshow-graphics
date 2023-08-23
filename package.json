@@ -89,7 +89,7 @@
         "width": 4,
         "height": "auto",
         "headerColor": "#525F78",
-        "workspace": "1. workspace",
+        "workspace": "3. Other",
         "fullbleed": false,
         "dialog": false
       },
@@ -100,7 +100,7 @@
         "width": 2,
         "height": "auto",
         "headerColor": "#525F78",
-        "workspace": "1. workspace",
+        "workspace": "2. Scoreboard",
         "fullbleed": false,
         "dialog": false
       },
@@ -110,7 +110,7 @@
         "file": "stopwatch.html",
         "width": 4,
         "headerColor": "#525F78",
-        "workspace": "1. workspace",
+        "workspace": "2. Scoreboard",
         "fullbleed": false,
         "dialog": false
       },
@@ -121,7 +121,7 @@
         "width": 2,
         "height": "auto",
         "headerColor": "#525F78",
-        "workspace": "2. Scoreboard: Graphics",
+        "workspace": "2. Scoreboard",
         "fullbleed": false,
         "dialog": false
       },
@@ -132,7 +132,7 @@
         "width": 2,
         "height": "auto",
         "headerColor": "#525F78",
-        "workspace": "3. Graphics: Live",
+        "workspace": "1. Graphics: Scene Switcher",
         "fullbleed": false,
         "dialog": false
       }

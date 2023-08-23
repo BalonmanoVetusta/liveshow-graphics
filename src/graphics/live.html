@@ -54,14 +54,18 @@
       }
 
       :root {
+        /* Positioning */
+        --offset-top: 30px;
+        --offset-bottom: 0;
+
+        /* Scoreboard */
+        --size-scale-factor: 1;
+
         --vetusta-yellow-color: #fede58;
         --vetusta-black-color: #151111;
         --local-shield-background-color: var(--vetusta-yellow-color, black);
         --visitor-shield-background-color: white;
 
-        --offset-top: 30px;
-        --offset-bottom: 0;
-        --size-scale-factor: 1;
         /* Not used yet */
 
         --space-margin: calc(5px * var(--size-scale-factor, 1));
@@ -80,6 +84,8 @@
         --font-size-time: calc(48px * var(--size-scale-factor, 1));
         --font-color-info: red;
         --emty-goal-size: calc(16px * var(--size-scale-factor, 1));
+
+        --scoreboard-font-color: black;
 
         --stopwatch-padding: calc(5px * var(--size-scale-factor, 1)) calc(5px * var(--size-scale-factor, 1));
         --stopwatch-border-radius: calc(10px * var(--size-scale-factor, 1));

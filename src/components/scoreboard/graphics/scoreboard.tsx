@@ -1,7 +1,9 @@
 import { StopwatchTime } from "components/stopwatch";
+import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
 import { Team } from "hooks/use-match-actions/types";
 import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement } from "react";
+import { styled } from "styled-components";
 import { ScoreboardTeam } from "./scoreboard-team";
 
 // const WARNING = "WARNING";
@@ -12,13 +14,23 @@ import { ScoreboardTeam } from "./scoreboard-team";
 
 // const SUSPENSION_TIME = 120_000;
 
-// TODO: Suspensions must recognise the case where a player has a double suspension
+const StyledScoreboardContainer = styled.div`
+  font:
+    bolder var(--font-size, calc(22px * var(--size-scale-factor, 1))) Cursed
+      Timer ULiL,
+    monospace,
+    sans-serif;
+  color: var(--scoreboard-font-color, black);
+  background-color: var(--background-color, #00ff00);
+`;
 
+// TODO: Suspensions must recognise the case where a player has a double suspension
 export default function Scoreboard(): ReactElement | null {
   const { localTeamSide = "LEFT" } = useTeamSide();
+  const { scoreboardPosition = "top center" } = useGraphicsReplicant();
   return (
     <>
-      <div data-position="top center">
+      <StyledScoreboardContainer data-position={scoreboardPosition}>
         <div
           className="scoreboard"
           data-local-team-side={
@@ -47,7 +59,7 @@ export default function Scoreboard(): ReactElement | null {
           </div>
           <ScoreboardTeam team={Team.VISITOR} />
         </div>
-      </div>
+      </StyledScoreboardContainer>
     </>
   );
 }
