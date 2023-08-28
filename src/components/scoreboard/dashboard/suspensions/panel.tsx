@@ -5,8 +5,8 @@ import { MatchAction } from "types/schemas/match-action";
 import { AddSuspensionForm } from "./add-suspension-form";
 import { SevenPlayersControlButton } from "./seven-players-control-button";
 
-const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
-const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
+// const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
+// const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
 const GOAL = "GOAL";
 // const SUSPENSION = "SUSPENSION";
 

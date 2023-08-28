@@ -1,5 +1,5 @@
 // Copied from https://github.com/Hoishin/use-nodecg/blob/master/src/use-replicant.ts
-import type NodeCG from "@nodecg/types";
+import NodeCG from "@nodecg/types";
 import structuredClone from "core-js/actual/structured-clone";
 import { useEffect, useState } from "react";
 

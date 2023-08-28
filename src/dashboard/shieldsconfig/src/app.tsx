@@ -26,8 +26,6 @@ function App(): ReactElement {
     localShield,
     visitorShield,
     showShields = true,
-    localShieldBgColor,
-    visitorShieldBgColor,
     setGraphics,
   } = useGraphicsReplicant();
 
