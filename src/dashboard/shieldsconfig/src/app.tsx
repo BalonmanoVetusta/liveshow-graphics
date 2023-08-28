@@ -106,5 +106,3 @@ function App(): ReactElement {
 }
 
 export default App;
-"#f2de4c",
-"#fede58",

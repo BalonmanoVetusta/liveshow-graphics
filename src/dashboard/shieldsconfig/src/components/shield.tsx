@@ -10,7 +10,7 @@ export function Shield({
   src,
   ...props
 }: { src: string | undefined } & { [key: string]: unknown }) {
-  return (
-    <StyledShield src={isValidUrl(src) ? src : NO_SHIELD_URL} {...props} />
-  );
+  const imgUrl = isValidUrl(src) ? src : NO_SHIELD_URL;
+
+  return <StyledShield src={imgUrl} {...props} />;
 }
