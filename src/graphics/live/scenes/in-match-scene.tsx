@@ -1,3 +1,4 @@
+import { AdvertisingBanners } from "components/banners/graphics";
 import { StopwatchTime } from "components/stopwatch";
 import { useMatchActions } from "hooks/use-match-actions";
 import { Team } from "hooks/use-match-actions/types";
@@ -170,6 +171,7 @@ export default function InMatchScene(): ReactElement | null {
           </div>
         </div>
       </div>
+      <AdvertisingBanners />
     </>
   );
 }

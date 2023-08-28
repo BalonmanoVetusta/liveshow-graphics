@@ -1,5 +1,4 @@
 import { useReplicant } from "hooks/use-replicant";
-import { useEffect } from "react";
 import { Scenes } from "types/schemas/scenes";
 
 
@@ -11,11 +10,6 @@ export function useSceneReplicant() {
     } as Scenes, {
     persistent: true
   });
-
-  useEffect(() => {
-    console.log('Scenes have changed');
-    console.log({ scenes: scenes.scenes, active: scenes.active });
-  }, [scenes])
 
   const setActiveScene = (sceneName: string) => {
     if (!scenes.scenes?.includes(sceneName)) return;
