@@ -1,5 +1,6 @@
 import { AdvertisingBanners } from "components/banners/graphics";
 import { StopwatchTime } from "components/stopwatch";
+import { BACKGROUND_COLOR_CSS_VAR, useCSSVariables } from "hooks/use-css-variables";
 import { useMatchActions } from "hooks/use-match-actions";
 import { Team } from "hooks/use-match-actions/types";
 import { useReplicant } from "hooks/use-replicant";
@@ -7,6 +8,11 @@ import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement, useLayoutEffect, useMemo } from "react";
 import { Graphics } from "types/schemas/graphics";
 import Suspensions from "../../../components/scoreboard/graphics/suspensions/suspensions";
+
+
+// Scene style
+const BACKGROUND_COLOR = '#0f0';
+
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
 const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
@@ -21,6 +27,7 @@ const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
 // TODO: Suspensions must recognise the case where a player has a double suspension
 
 export default function InMatchScene(): ReactElement | null {
+  const { setCssVar } = useCSSVariables();
   const { goals, actions } = useMatchActions();
   // const { goals, actions, getSuspensions } = useMatchActions();
   const { localTeamSide = "LEFT" } = useTeamSide();
@@ -90,6 +97,7 @@ export default function InMatchScene(): ReactElement | null {
       .querySelector(".local-team")
       ?.setAttribute("data-active-info", isLocalTeamSevenPlayers.toString());
 
+      setCssVar(BACKGROUND_COLOR_CSS_VAR, BACKGROUND_COLOR);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAnyTeamSevenPlayers]);
 
@@ -171,7 +179,6 @@ export default function InMatchScene(): ReactElement | null {
           </div>
         </div>
       </div>
-      <AdvertisingBanners />
     </>
   );
 }

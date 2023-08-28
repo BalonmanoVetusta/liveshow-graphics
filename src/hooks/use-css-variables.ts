@@ -8,8 +8,6 @@ export interface UseCSSVariablesOptions {
   rootElement?: string;
 }
 
-
-
 export function useCSSVariables({
   initialCssVariablesValues,
   cssVariablesToSet,
@@ -26,6 +24,12 @@ export function useCSSVariables({
   const removeCssVar = (key: string) => {
     const element = document.querySelector(rootElement) as HTMLElement;
     element.style.removeProperty(key);
+  }
+
+  const getCssVariableFromElement = (cssVariable: string, element: string = ':root', defaultValue?: string) => {
+    const el = document.querySelector(element) as HTMLElement;
+
+    return el.style.getPropertyValue(cssVariable) ?? defaultValue;
   }
 
   const _isValidToSet = (key: string) =>
@@ -51,5 +55,13 @@ export function useCSSVariables({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cssVariables]);
 
-  return { cssVariables, setCssVar, setCssVariables, removeCssVar };
+  return { cssVariables, setCssVar, setCssVariables, removeCssVar, getCssVariableFromElement };
 }
+
+// Default colors
+export const DEFAULT_BG_COLOR = '#0f0';
+
+// Css variables names
+export const BACKGROUND_COLOR_CSS_VAR = '--background-color';
+
+

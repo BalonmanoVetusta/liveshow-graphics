@@ -1,11 +1,13 @@
-import styled from "styled-components";
-
-const Div = styled.div`
-  background-color: red;
-  width: 100%;
-  height: 100%;
-`;
+import { BACKGROUND_COLOR_CSS_VAR, useCSSVariables } from "hooks/use-css-variables";
+import { useEffect } from "react";
 
 export default function EmptyScene() {
-  return <Div></Div>;
+  const { setCssVar } = useCSSVariables();
+
+  useEffect(() => {
+    setCssVar(BACKGROUND_COLOR_CSS_VAR, '#0f0')
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  return <></>;
 }

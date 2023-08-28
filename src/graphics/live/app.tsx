@@ -1,4 +1,5 @@
 // import { PlayerInfoPayload, Team } from "hooks/use-match-actions/types";
+import { AdvertisingBanners } from "components/banners/graphics";
 import { BroadcastScene } from "components/scenes/broadcast-scene";
 import { useCSSVariables } from "hooks/use-css-variables";
 import { ReactElement } from "react";
@@ -10,6 +11,7 @@ function App(): ReactElement | null {
   return (
     <>
       <BroadcastScene scenes={registeredScenes} />
+      <AdvertisingBanners />
     </>
   );
 }

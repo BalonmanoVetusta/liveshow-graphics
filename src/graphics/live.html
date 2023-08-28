@@ -25,13 +25,11 @@
       }
 
       [data-position~="right"] {
-        right: max(var(--offset-right, var(--offset, 0)),
-            env(safe-area-inset-right, 0));
+        right: var(--offset-right, var(--offset, env(safe-area-inset-right, 0)));
       }
 
       [data-position~="left"] {
-        left: max(var(--offset-left, var(--offset, 0)),
-            env(safe-area-inset-left, 0));
+        left: var(--offset-left, var(--offset, env(safe-area-inset-left, 0)));
       }
 
       [data-position~="center"] {
@@ -57,6 +55,8 @@
         /* Positioning */
         --offset-top: 30px;
         --offset-bottom: 0;
+        --offset-left: 25px;
+        --offset-right: 25px;
 
         /* Scoreboard */
         --size-scale-factor: 1;
@@ -78,7 +78,7 @@
         --font-color: black;
         --font-score-size: calc(32px * var(--size-scale-factor, 1));
         --shield-size: calc(35px * var(--size-scale-factor, 1));
-        --shield-div-scale: calc(1.5 * var(--size-scale-factor, 1));
+        --shield-div-scale: calc(1.8 * var(--size-scale-factor, 1));
         --image-scale: calc(1.2 * var(--size-scale-factor, 1));
         --font-size-info: calc(12px * var(--size-scale-factor, 1));
         --font-size-time: calc(48px * var(--size-scale-factor, 1));
@@ -128,7 +128,7 @@
       .column {
         display: inline-flex;
         flex-flow: column nowrap;
-        gap: 5px;
+        gap: calc(5px * var(--size-scale-factor, 1));
         align-items: center;
         justify-content: flex-start;
         width: fit-content;
@@ -212,7 +212,7 @@
       }
 
       .shield {
-        border-radius: var(--shield-div-border-radius, 50px 25px);
+        border-radius: var(--shield-div-border-radius, calc(50px * var(--size-scale-factor, 1)) calc(25px * var(--size-scale-factor, 1)));
         overflow: hidden;
         rotate: -45deg;
         width: var(--shield-size, 30px);
