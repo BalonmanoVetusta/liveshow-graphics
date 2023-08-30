@@ -1,6 +1,6 @@
 export function ScoreboardTeamName({
-  name,
-  show = true,
+  name = "TEAM",
+  show = false,
 }: {
   name?: string;
   show?: boolean;

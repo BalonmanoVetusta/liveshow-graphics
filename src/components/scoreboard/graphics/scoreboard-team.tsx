@@ -43,7 +43,7 @@ export function ScoreboardTeam({
         data-active-info={isSevenPlayers}
       >
         <ScoreboardShield team={Team.LOCAL} src={src} show={showShields} />
-        <ScoreboardTeamName name={name} show={Boolean(name) && showTeamName} />
+        <ScoreboardTeamName name={name} show={showTeamName} />
         <ScoreboardScore team={team} />
         <Suspensions team={Team.LOCAL} />
       </div>

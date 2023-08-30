@@ -26,7 +26,12 @@ const StyledScoreboardContainer = styled.div`
 
 export default function Scoreboard(): ReactElement | null {
   const { localTeamSide = "LEFT" } = useTeamSide();
-  const { scoreboardPosition = "top center" } = useGraphicsReplicant();
+  const {
+    scoreboardPosition = "top center",
+    visitorTeamName,
+    localTeamName,
+    showName,
+  } = useGraphicsReplicant();
   return (
     <>
       <StyledScoreboardContainer data-position={scoreboardPosition}>
@@ -36,7 +41,11 @@ export default function Scoreboard(): ReactElement | null {
             localTeamSide?.toLowerCase() === "left" ? "left" : "right"
           }
         >
-          <ScoreboardTeam team={Team.LOCAL} />
+          <ScoreboardTeam
+            team={Team.LOCAL}
+            name={localTeamName}
+            showTeamName={showName}
+          />
           <div className="stopwatch column">
             <div className="competition-banner">
               <img
@@ -56,7 +65,11 @@ export default function Scoreboard(): ReactElement | null {
               </svg> */}
             </div>
           </div>
-          <ScoreboardTeam team={Team.VISITOR} />
+          <ScoreboardTeam
+            team={Team.VISITOR}
+            name={visitorTeamName}
+            showTeamName={showName}
+          />
         </div>
       </StyledScoreboardContainer>
     </>

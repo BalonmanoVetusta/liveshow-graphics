@@ -26,6 +26,9 @@ function App(): ReactElement {
     localShield,
     visitorShield,
     showShields = true,
+    showName = false,
+    visitorTeamName,
+    localTeamName,
     setGraphics,
   } = useGraphicsReplicant();
 
@@ -33,6 +36,18 @@ function App(): ReactElement {
     <>
       <fieldset>
         <legend>Local</legend>
+        <div>
+          <input
+            type="text"
+            name="localTeamName"
+            id="localTeamName"
+            placeholder="Local Team name..."
+            value={localTeamName}
+            onChange={(e) => {
+              setGraphics({ localTeamName: e.target.value });
+            }}
+          />
+        </div>
         <div>
           <ShieldSelector
             key={`local-${localShield}`}
@@ -65,6 +80,18 @@ function App(): ReactElement {
       <fieldset>
         <legend>Visitor</legend>
         <div>
+          <input
+            type="text"
+            name="visitorTeamName"
+            id="visitorTeamName"
+            placeholder="Visitor Team name..."
+            value={visitorTeamName}
+            onChange={(e) => {
+              setGraphics({ visitorTeamName: e.target.value });
+            }}
+          />
+        </div>
+        <div>
           <ShieldSelector
             key={`visitor-${visitorShield}`}
             label="Visitor Team Shield"
@@ -86,11 +113,20 @@ function App(): ReactElement {
       </fieldset>
 
       <fieldset>
-        <legend>Common shield configuration</legend>
+        <legend>Common scoreboar config</legend>
+        <label htmlFor="showNames">Show the team names in scoreboard</label>
+        <input
+          type="checkbox"
+          name="showNames"
+          id="showNames"
+          value={showName.toString()}
+          onChange={() => {
+            setGraphics({ showName: !showName });
+          }}
+        />
         <button
           id="changeSide"
-          onClick={(event) => {
-            event.preventDefault();
+          onClick={() => {
             toggleSide();
           }}
         >

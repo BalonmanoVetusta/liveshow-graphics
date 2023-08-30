@@ -87,6 +87,12 @@
       "title": "View Shields",
       "description": "If shields must be showed"
     },
+    "showName": {
+      "type": "boolean",
+      "default": false,
+      "title": "Should the name be viewed?",
+      "description": "Allow or disallow to show the team name in the scoreboard"
+    },
     "scoreboardPosition": {
       "type": "string",
       "default": "top center",
