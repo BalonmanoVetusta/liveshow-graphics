@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, usePresence } from "framer-motion";
+import { motion, usePresence } from "framer-motion";
 import { useRotationValue } from "hooks/use-rotation-value";
 import { PropsWithoutRef, useEffect } from "react";
 import styled from "styled-components";
@@ -13,10 +13,12 @@ const ANIMATION_DURATION = 1;
 
 const StyledBanner = styled(motion.img)`
   display: flex;
-  max-height: var(--banners-max-height, 120px);
+  max-height: 100%;
   max-width: 100%;
   object-fit: cover;
   margin: 0 auto;
+  // min-width: 100%;
+  background-color: var(--advertising-background-color, #f9d700);
 `;
 
 export function BannersAnimation({ duration = 10, banners }: BannersProps) {
@@ -63,9 +65,5 @@ export function BannersAnimation({ duration = 10, banners }: BannersProps) {
     );
   };
 
-  return (
-    <AnimatePresence initial={true}>
-      {isVisible ? <Item index={value % banners.length} /> : null}
-    </AnimatePresence>
-  );
+  return <>{isVisible ? <Item index={value % banners.length} /> : null}</>;
 }

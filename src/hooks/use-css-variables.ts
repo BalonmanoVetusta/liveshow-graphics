@@ -64,4 +64,12 @@ export const DEFAULT_BG_COLOR = '#0f0';
 // Css variables names
 export const BACKGROUND_COLOR_CSS_VAR = '--background-color';
 
+// Advertising
+export const BANNER_MAX_HEIGHT_CSS_VAR = '--banners-max-height';
 
+// Offsets
+export const OFFSET_CSS_VAR = '--offset'
+export const OFFSET_TOP_CSS_VAR = '--offset-top'
+export const OFFSET_LEFT_CSS_VAR = '--offset-left'
+export const OFFSET_RIGT_CSS_VAR = '--offset-right'
+export const OFFSET_BOTTOM_CSS_VAR = '--offset-bottom'

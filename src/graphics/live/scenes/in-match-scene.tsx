@@ -1,6 +1,13 @@
-import { AdvertisingBanners } from "components/banners/graphics";
 import { StopwatchTime } from "components/stopwatch";
-import { BACKGROUND_COLOR_CSS_VAR, useCSSVariables } from "hooks/use-css-variables";
+import {
+  BACKGROUND_COLOR_CSS_VAR,
+  BANNER_MAX_HEIGHT_CSS_VAR,
+  OFFSET_BOTTOM_CSS_VAR,
+  OFFSET_LEFT_CSS_VAR,
+  OFFSET_RIGT_CSS_VAR,
+  OFFSET_TOP_CSS_VAR,
+  useCSSVariables,
+} from "hooks/use-css-variables";
 import { useMatchActions } from "hooks/use-match-actions";
 import { Team } from "hooks/use-match-actions/types";
 import { useReplicant } from "hooks/use-replicant";
@@ -9,10 +16,8 @@ import { ReactElement, useLayoutEffect, useMemo } from "react";
 import { Graphics } from "types/schemas/graphics";
 import Suspensions from "../../../components/scoreboard/graphics/suspensions/suspensions";
 
-
 // Scene style
-const BACKGROUND_COLOR = '#0f0';
-
+const BACKGROUND_COLOR = "#0f0";
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
 const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
@@ -97,7 +102,13 @@ export default function InMatchScene(): ReactElement | null {
       .querySelector(".local-team")
       ?.setAttribute("data-active-info", isLocalTeamSevenPlayers.toString());
 
-      setCssVar(BACKGROUND_COLOR_CSS_VAR, BACKGROUND_COLOR);
+    setCssVar(BACKGROUND_COLOR_CSS_VAR, BACKGROUND_COLOR);
+    setCssVar(BANNER_MAX_HEIGHT_CSS_VAR, "130px");
+    setCssVar(OFFSET_TOP_CSS_VAR, "30px");
+    setCssVar(OFFSET_BOTTOM_CSS_VAR, "0");
+    setCssVar(OFFSET_LEFT_CSS_VAR, "0");
+    setCssVar(OFFSET_RIGT_CSS_VAR, "0");
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAnyTeamSevenPlayers]);
 
