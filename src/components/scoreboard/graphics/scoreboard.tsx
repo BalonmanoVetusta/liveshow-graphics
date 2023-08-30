@@ -24,7 +24,6 @@ const StyledScoreboardContainer = styled.div`
   background-color: var(--background-color, #00ff00);
 `;
 
-// TODO: Suspensions must recognise the case where a player has a double suspension
 export default function Scoreboard(): ReactElement | null {
   const { localTeamSide = "LEFT" } = useTeamSide();
   const { scoreboardPosition = "top center" } = useGraphicsReplicant();
