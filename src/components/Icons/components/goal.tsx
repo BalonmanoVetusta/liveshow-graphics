@@ -1,13 +1,8 @@
 // Downloaded from: https://www.svgrepo.com/svg/322437/goal-keeper
 // Used svgr to adapt it to react: https://react-svgr.com/playground/
 
-export function GoalIcon({
-  width = 128,
-  height = 128,
-  ...props
-}: React.SVGProps<SVGSVGElement>) {
-  props["aria-description"] ??=
-    "Goalkeeper is not playing. The team is attacking with seven players.";
+export function GoalIcon({ width = 128, height = 128, ...props }: React.SVGProps<SVGSVGElement>) {
+  props["aria-description"] ??= "Goalkeeper is not playing. The team is attacking with seven players.";
 
   return (
     <svg

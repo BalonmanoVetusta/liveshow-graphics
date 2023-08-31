@@ -5,10 +5,7 @@ import type NodeCG from "@nodecg/types";
 import { MaxTimeUnit } from "hooks/use-stopwatch-replicant/lib/get-time-from-miliseconds";
 import { useEffect, useRef, useState } from "react";
 import { STOPWATCH_REPLICANT_NAME } from "services/stopwatch-replicant-name";
-import {
-  StopwatchPropsReturn,
-  getStopwatchTimeValues,
-} from "./lib/get-stopwatch-time-values";
+import { StopwatchPropsReturn, getStopwatchTimeValues } from "./lib/get-stopwatch-time-values";
 import { useStopwatchReplicantControl } from "./use-stopwatch-replicant-control";
 
 export interface UseStopwatchReplicantReaderProps {
@@ -39,7 +36,7 @@ export function useStopwatchReplicantReader({
       periodTime: 0,
       total: 0,
     } as Stopwatch,
-    replicantOptions
+    replicantOptions,
   );
 
   const timer = useRef<number | null>(null);
@@ -59,11 +56,7 @@ export function useStopwatchReplicantReader({
   const [isEndOfPeriod, setIsEndOfPeriod] = useState<boolean>(false);
 
   const updateStates = (): void => {
-    const currentValues = getStopwatchTimeValues(
-      stopwatch,
-      maxTimeUnit,
-      tickTime
-    );
+    const currentValues = getStopwatchTimeValues(stopwatch, maxTimeUnit, tickTime);
 
     setTime(currentValues.time);
     setDays(currentValues.days ?? 0);

@@ -1,9 +1,5 @@
 import { useMatchActions } from "hooks/use-match-actions";
-import {
-  MatchActionType,
-  MatchSuspensionActionType,
-  Team,
-} from "hooks/use-match-actions/types";
+import { MatchActionType, MatchSuspensionActionType, Team } from "hooks/use-match-actions/types";
 import { useId, useState } from "react";
 
 interface AddSuspensionFormProps {
@@ -20,9 +16,7 @@ export function AddSuspensionForm({ team }: AddSuspensionFormProps) {
   const { addAction } = useMatchActions();
   return (
     <>
-      <label htmlFor={`player-number-${team.toLowerCase()}-${id}`}>
-        Player number
-      </label>
+      <label htmlFor={`player-number-${team.toLowerCase()}-${id}`}>Player number</label>
       <input
         type="number"
         name="playerNumber"
@@ -34,9 +28,7 @@ export function AddSuspensionForm({ team }: AddSuspensionFormProps) {
           setPlayerNumber(value);
         }}
       />
-      <label htmlFor={`minutes-${team.toLowerCase()}-${id}`}>
-        Check for custom time
-      </label>
+      <label htmlFor={`minutes-${team.toLowerCase()}-${id}`}>Check for custom time</label>
       <input
         type="checkbox"
         name={`current-time-checkbox-${team.toLowerCase()}-${id}`}
@@ -75,16 +67,12 @@ export function AddSuspensionForm({ team }: AddSuspensionFormProps) {
           />
         </>
       ) : null}
-      <label htmlFor={`double-suspension-${team.toLowerCase}-${id}`}>
-        Double suspension
-      </label>
+      <label htmlFor={`double-suspension-${team.toLowerCase}-${id}`}>Double suspension</label>
       <input
         type="checkbox"
         name="doubleSuspension"
         id={`double-suspension-${team.toLowerCase}-${id}`}
-        key={`double-suspension-${
-          team.toLowerCase
-        }-${id}-${isDoubleSuspension.toString()}`}
+        key={`double-suspension-${team.toLowerCase}-${id}-${isDoubleSuspension.toString()}`}
         checked={isDoubleSuspension}
         onChange={(event) => {
           event.preventDefault();

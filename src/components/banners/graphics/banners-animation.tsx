@@ -22,11 +22,7 @@ const StyledBanner = styled(motion.img)`
 `;
 
 export function BannersAnimation({ duration = 10, banners }: BannersProps) {
-  const { value, isVisible } = useRotationValue(
-    duration * 1_000,
-    ANIMATION_DURATION * 1_000,
-    true
-  );
+  const { value, isVisible } = useRotationValue(duration * 1_000, ANIMATION_DURATION * 1_000, true);
 
   if (banners.length === 0) {
     return null;

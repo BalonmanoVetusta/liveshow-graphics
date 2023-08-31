@@ -23,25 +23,16 @@ export function ScoreboardTeam({
   const { getTeamActions, actions } = useMatchActions();
 
   const isSevenPlayers = useMemo(() => {
-    const startActions = getTeamActions(
-      team,
-      MatchActionType.START_SEVEN_PLAYERS
-    );
+    const startActions = getTeamActions(team, MatchActionType.START_SEVEN_PLAYERS);
     const endActions = getTeamActions(team, MatchActionType.END_SEVEN_PLAYERS);
 
-    return (
-      (startActions.length > 0 || endActions.length > 0) &&
-      startActions.length !== endActions.length
-    );
+    return (startActions.length > 0 || endActions.length > 0) && startActions.length !== endActions.length;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actions]);
 
   return (
     <>
-      <div
-        className={`${team.toString().toLowerCase()}-team team`}
-        data-active-info={isSevenPlayers}
-      >
+      <div className={`${team.toString().toLowerCase()}-team team`} data-active-info={isSevenPlayers}>
         <ScoreboardShield team={Team.LOCAL} src={src} show={showShields} />
         <ScoreboardTeamName name={name} show={showTeamName} />
         <ScoreboardScore team={team} />

@@ -6,8 +6,7 @@ const config = {
   developer: true,
   login: {
     enabled: false,
-    sessionSecret:
-      process.env.NODECG_SESSION_SECRET ?? randomBytes(128).toString("hex"),
+    sessionSecret: process.env.NODECG_SESSION_SECRET ?? randomBytes(128).toString("hex"),
   },
   logging: {
     replicants: false,
@@ -78,9 +77,7 @@ if (!config.developer) {
     process.env.NODECG_TWITCH_CLIENT_SECRET &&
     process.env.NODECG_TWITCH_ALLOWED_USERNAMES
   ) {
-    const allowedUsernames = process.env.NODECG_TWITCH_ALLOWED_USERNAMES.split(
-      ","
-    ).filter((id) => id.length > 0);
+    const allowedUsernames = process.env.NODECG_TWITCH_ALLOWED_USERNAMES.split(",").filter((id) => id.length > 0);
 
     if (allowedUsernames.length > 0) {
       console.info("Twitch auth enabled");
@@ -101,9 +98,7 @@ if (!config.developer) {
     process.env.NODECG_DISCORD_CLIENT_SECRET &&
     process.env.NODECG_DISCORD_ALLOWED_USERNAMES
   ) {
-    const allowedUsernames = process.env.NODECG_DISCORD_ALLOWED_USERNAMES.split(
-      ","
-    ).filter((id) => id.length > 0);
+    const allowedUsernames = process.env.NODECG_DISCORD_ALLOWED_USERNAMES.split(",").filter((id) => id.length > 0);
 
     if (allowedUsernames.length > 0) {
       console.info("Discord auth enabled");
@@ -119,13 +114,8 @@ if (!config.developer) {
   }
 
   // Steam auth
-  if (
-    process.env.NODECG_STEAM_API_KEY &&
-    process.env.NODECG_STEAM_ALLOWED_IDS
-  ) {
-    const allowedIds = process.env.NODECG_STEAM_ALLOWED_IDS.split(",").filter(
-      (id) => id.length > 0
-    );
+  if (process.env.NODECG_STEAM_API_KEY && process.env.NODECG_STEAM_ALLOWED_IDS) {
+    const allowedIds = process.env.NODECG_STEAM_ALLOWED_IDS.split(",").filter((id) => id.length > 0);
 
     if (allowedIds.length > 0) {
       config.login.enabled = true;

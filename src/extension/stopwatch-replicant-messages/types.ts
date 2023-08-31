@@ -14,7 +14,7 @@ export type StopwatchSetTypeByCallback<T> = (
   prev: T,
   startTime: number | undefined,
   limit: number | undefined,
-  offset: number | undefined
+  offset: number | undefined,
 ) => T;
 
 export interface StopwatchAction {

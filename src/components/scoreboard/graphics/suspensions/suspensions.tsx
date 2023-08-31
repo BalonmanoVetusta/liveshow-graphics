@@ -29,15 +29,10 @@ export declare interface SuspensionsProps {
   suspensionTimeMilliseconds?: number;
 }
 
-export default function Suspensions({
-  team,
-  suspensionTimeMilliseconds = 120_000,
-}: SuspensionsProps) {
+export default function Suspensions({ team, suspensionTimeMilliseconds = 120_000 }: SuspensionsProps) {
   const { actions } = useMatchActions();
 
-  const teamSuspensionsActions = useMemo<
-    Array<MatchActionSuspensionTime>
-  >(() => {
+  const teamSuspensionsActions = useMemo<Array<MatchActionSuspensionTime>>(() => {
     return groupSuspensionsByTimeAndPlayerNumber(actions, team);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actions]);
@@ -49,15 +44,10 @@ export default function Suspensions({
       <StyledSuspensionsList>
         {teamSuspensionsActions.map((action) => {
           const suspensionLength = action.payload?.suspensionLength ?? 1;
-          const suspensionTimeInMilliseconds =
-            suspensionLength * suspensionTimeMilliseconds;
+          const suspensionTimeInMilliseconds = suspensionLength * suspensionTimeMilliseconds;
 
           return (
-            <SuspensionItem
-              key={action.id}
-              action={action}
-              suspensionTimeMilliseconds={suspensionTimeInMilliseconds}
-            />
+            <SuspensionItem key={action.id} action={action} suspensionTimeMilliseconds={suspensionTimeInMilliseconds} />
           );
         })}
       </StyledSuspensionsList>

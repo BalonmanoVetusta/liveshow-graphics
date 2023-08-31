@@ -1,8 +1,4 @@
-import {
-  MaxTimeUnit,
-  useStopwatchReplicantControl,
-  useStopwatchReplicantReader,
-} from "hooks/use-stopwatch-replicant";
+import { MaxTimeUnit, useStopwatchReplicantControl, useStopwatchReplicantReader } from "hooks/use-stopwatch-replicant";
 import { ChangeEvent, ReactElement, useEffect, useRef, useState } from "react";
 
 export interface StopwatchDashboardProps {
@@ -47,7 +43,7 @@ export function StopwatchDashboard({
   const [canEditTime, setCanEditTime] = useState(false);
   const [periodTime, setPeriodTime] = useState<number>(periodTimeSw ?? 0);
   const [periodsNumber, setPeriodsNumber] = useState<number>(
-    limit > 0 && periodTime > 0 ? Math.floor(limit / periodTime) : 0
+    limit > 0 && periodTime > 0 ? Math.floor(limit / periodTime) : 0,
   );
 
   const handleFocus = () => {
@@ -58,17 +54,12 @@ export function StopwatchDashboard({
     }
   };
 
-  const handleBlur = (
-    input: string,
-    currentTimeToChange: number | undefined,
-    unit: number
-  ) => {
+  const handleBlur = (input: string, currentTimeToChange: number | undefined, unit: number) => {
     return () => {
       if (isModifying && canEditTime) {
         try {
           const numericInput = parseInt(input, 10);
-          const calculatedTime =
-            (numericInput - (currentTimeToChange ?? 0)) * unit;
+          const calculatedTime = (numericInput - (currentTimeToChange ?? 0)) * unit;
           addOffset(calculatedTime);
         } catch (error) {}
       }
@@ -113,9 +104,7 @@ export function StopwatchDashboard({
     if (!loaded.current && limit > 0 && periodTimeSw > 0) {
       loaded.current = true;
       const totalPeriods = Math.floor(limit / periodTimeSw);
-      const periodTimeMinutes = Math.floor(
-        periodTimeSw / TIME_LIMITS_UNIT_VALUE
-      );
+      const periodTimeMinutes = Math.floor(periodTimeSw / TIME_LIMITS_UNIT_VALUE);
 
       setPeriodsNumber(totalPeriods);
       setPeriodTime(periodTimeMinutes);
@@ -137,9 +126,7 @@ export function StopwatchDashboard({
         {showTimeControls ? (
           <fieldset className="time-control">
             <div>
-              <label htmlFor="match-period-time">
-                Period time ({TIME_LIMITS_UNIT_VALUE_TEXT})
-              </label>
+              <label htmlFor="match-period-time">Period time ({TIME_LIMITS_UNIT_VALUE_TEXT})</label>
               <input
                 type="number"
                 name="match-period-time"
@@ -199,9 +186,7 @@ export function StopwatchDashboard({
                 Reset
               </button>
 
-              <label htmlFor="enable-reset">
-                {enableReset ? "Desactivar" : "Activar"} reset
-              </label>
+              <label htmlFor="enable-reset">{enableReset ? "Desactivar" : "Activar"} reset</label>
               <input
                 type="checkbox"
                 name="enable-reset"
@@ -243,10 +228,7 @@ export function StopwatchDashboard({
             >
               Add
             </button>
-            <small>
-              To substract a quantity use `-` before. The time must be in
-              seconds
-            </small>
+            <small>To substract a quantity use `-` before. The time must be in seconds</small>
           </fieldset>
         ) : null}
 
@@ -256,11 +238,7 @@ export function StopwatchDashboard({
               type="number"
               name="minutes"
               id="minutes"
-              value={
-                isModifying && canEditTime
-                  ? minutesInput
-                  : formatStopwatchNumber(minutes ?? 0)
-              }
+              value={isModifying && canEditTime ? minutesInput : formatStopwatchNumber(minutes ?? 0)}
               disabled={isRunning}
               readOnly={isReadOnlyTime()}
               onFocus={handleFocus}
@@ -272,11 +250,7 @@ export function StopwatchDashboard({
               type="number"
               name="seconds"
               id="seconds"
-              value={
-                isModifying && canEditTime
-                  ? secondsInput
-                  : formatStopwatchNumber(seconds ?? 0)
-              }
+              value={isModifying && canEditTime ? secondsInput : formatStopwatchNumber(seconds ?? 0)}
               disabled={isRunning}
               readOnly={isReadOnlyTime()}
               onFocus={handleFocus}
@@ -285,10 +259,7 @@ export function StopwatchDashboard({
             />
             <div>
               <fieldset>
-                <label htmlFor="edit-time">
-                  {canEditTime ? "Disable" : "Enable"} editing the time when
-                  stop
-                </label>
+                <label htmlFor="edit-time">{canEditTime ? "Disable" : "Enable"} editing the time when stop</label>
                 <input
                   type="checkbox"
                   name="edit-time"
@@ -302,15 +273,9 @@ export function StopwatchDashboard({
               </fieldset>
             </div>
             <p>
-              <small>
-                Stop and click over the time to edit after enable the edit of
-                the time.
-              </small>
+              <small>Stop and click over the time to edit after enable the edit of the time.</small>
             </p>
-            <p>
-              To set time you must stop the stopwatch first and edit directly
-              the time
-            </p>
+            <p>To set time you must stop the stopwatch first and edit directly the time</p>
             {isEnded ? <p>The stopwatch has ended</p> : null}
           </fieldset>
         ) : null}

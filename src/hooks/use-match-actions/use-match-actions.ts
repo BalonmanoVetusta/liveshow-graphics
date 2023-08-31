@@ -15,24 +15,12 @@ import {
 
 export const MATCH_ACTIONS_REPLICANT_NAME = "match-actions";
 
-export function useMatchActions(
-  initialActions: MatchActions = [],
-  options: MatchActionsReplicantOptions = {}
-) {
+export function useMatchActions(initialActions: MatchActions = [], options: MatchActionsReplicantOptions = {}) {
   const { time } = useStopwatchReplicantReader();
 
-  const [actions, setActions] = useReplicant<MatchActions>(
-    MATCH_ACTIONS_REPLICANT_NAME,
-    initialActions,
-    options
-  );
+  const [actions, setActions] = useReplicant<MatchActions>(MATCH_ACTIONS_REPLICANT_NAME, initialActions, options);
 
-  const addAction = (
-    action:
-      | UseMatchActionsAddActionType
-      | MatchAction
-      | MatchSuspensionActionType
-  ) => {
+  const addAction = (action: UseMatchActionsAddActionType | MatchAction | MatchSuspensionActionType) => {
     if (action.team === undefined || action.team === null) {
       throw new Error("team is required");
     }
@@ -56,9 +44,7 @@ export function useMatchActions(
   };
 
   const removeActionsByTimestamp = (gmtTimestamp: number) => {
-    setActions(
-      actions.filter((action) => action.gmtTimestamp !== gmtTimestamp)
-    );
+    setActions(actions.filter((action) => action.gmtTimestamp !== gmtTimestamp));
   };
 
   const addGoal = (team: Team, goal: GoalActionType = { quantity: 1 }) => {
@@ -70,9 +56,7 @@ export function useMatchActions(
   };
 
   const removeLastGoal = (team: Team) => {
-    const goals = actions.filter(
-      (action) => action.action === MatchActionType.GOAL && action.team === team
-    );
+    const goals = actions.filter((action) => action.action === MatchActionType.GOAL && action.team === team);
 
     if (goals.length > 0) {
       removeActionById(goals[goals.length - 1].id);
@@ -101,10 +85,7 @@ export function useMatchActions(
     });
   };
 
-  const addSuspension = (
-    team: Team,
-    suspensionInfo: Partial<PlayerInfoSuspensionPayload> = {}
-  ) => {
+  const addSuspension = (team: Team, suspensionInfo: Partial<PlayerInfoSuspensionPayload> = {}) => {
     suspensionInfo.length ??= 1;
     suspensionInfo.number ??= 0;
 
@@ -128,8 +109,7 @@ export function useMatchActions(
 
   const getTeamActions = (team: Team, action: MatchActionType) => {
     return actions.filter(
-      ({ action: currentAction, team: currentTeam }) =>
-        currentAction === action && currentTeam === team
+      ({ action: currentAction, team: currentTeam }) => currentAction === action && currentTeam === team,
     );
   };
 
@@ -140,74 +120,48 @@ export function useMatchActions(
   const getSuspensions = (team: Team, suspensionTime = 120_000) => {
     const suspensions = getTeamActions(team, MatchActionType.SUSPENSION);
     const allPlayersNumbers = suspensions
-      .filter(
-        (suspension) =>
-          ((suspension.payload as PlayerInfoSuspensionPayload).number || 0) > 0
-      )
-      .map(
-        (suspension) =>
-          (suspension.payload as PlayerInfoSuspensionPayload).number ?? 0
-      );
+      .filter((suspension) => ((suspension.payload as PlayerInfoSuspensionPayload).number || 0) > 0)
+      .map((suspension) => (suspension.payload as PlayerInfoSuspensionPayload).number ?? 0);
     const playersNumber = new Set<number>(allPlayersNumbers);
 
-    const playersGroupedSuspensions = Array.from(playersNumber).map(
-      (number) => {
-        const currentPlayerSuspensions = suspensions
-          .filter(
-            (suspension) =>
-              (suspension.payload as PlayerInfoSuspensionPayload).number ===
-              number
-          )
-          .sort((a, b) => a.matchTime - b.matchTime);
+    const playersGroupedSuspensions = Array.from(playersNumber).map((number) => {
+      const currentPlayerSuspensions = suspensions
+        .filter((suspension) => (suspension.payload as PlayerInfoSuspensionPayload).number === number)
+        .sort((a, b) => a.matchTime - b.matchTime);
 
-        return currentPlayerSuspensions.reduce((acc, current, index) => {
-          const previous = acc.at(-1);
+      return currentPlayerSuspensions.reduce((acc, current, index) => {
+        const previous = acc.at(-1);
 
-          if (!previous) {
-            return acc.push(current);
-          }
-
-          const { matchTime: currentMatchTime } = current;
-          const { matchTime: previousMatchTime } = previous;
-
-          const previousEndTime = previousMatchTime + suspensionTime;
-          const isPreviousEndingBeforeCurrentSuspension =
-            currentMatchTime > previousEndTime;
-
-          if (isPreviousEndingBeforeCurrentSuspension) {
-            (
-              acc[index - 1].payload as PlayerInfoSuspensionPayload
-            ).length ??= 1;
-            (acc[index - 1].payload as PlayerInfoSuspensionPayload).length += 1;
-            return acc;
-          }
-
+        if (!previous) {
           return acc.push(current);
-        }, [] as MatchActions);
-      }
-    );
+        }
 
-    return playersGroupedSuspensions
-      .flat()
-      .sort((a: MatchAction, b: MatchAction) => a.matchTime - b.matchTime);
+        const { matchTime: currentMatchTime } = current;
+        const { matchTime: previousMatchTime } = previous;
+
+        const previousEndTime = previousMatchTime + suspensionTime;
+        const isPreviousEndingBeforeCurrentSuspension = currentMatchTime > previousEndTime;
+
+        if (isPreviousEndingBeforeCurrentSuspension) {
+          (acc[index - 1].payload as PlayerInfoSuspensionPayload).length ??= 1;
+          (acc[index - 1].payload as PlayerInfoSuspensionPayload).length += 1;
+          return acc;
+        }
+
+        return acc.push(current);
+      }, [] as MatchActions);
+    });
+
+    return playersGroupedSuspensions.flat().sort((a: MatchAction, b: MatchAction) => a.matchTime - b.matchTime);
   };
-
 
   return {
     goals: {
       local: Array.isArray(actions)
-        ? actions.filter(
-          (action) =>
-            action.action === MatchActionType.GOAL &&
-            action.team === Team.LOCAL
-        )
+        ? actions.filter((action) => action.action === MatchActionType.GOAL && action.team === Team.LOCAL)
         : [],
       visitor: Array.isArray(actions)
-        ? actions.filter(
-          (action) =>
-            action.action === MatchActionType.GOAL &&
-            action.team === Team.VISITOR
-        )
+        ? actions.filter((action) => action.action === MatchActionType.GOAL && action.team === Team.VISITOR)
         : [],
     },
     actions,

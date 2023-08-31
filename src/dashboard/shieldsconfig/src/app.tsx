@@ -70,9 +70,7 @@ function App(): ReactElement {
             name="show-shields"
             id="show-shields-input"
             checked={showShields}
-            onChange={(event) =>
-              setGraphics({ showShields: event.target.checked })
-            }
+            onChange={(event) => setGraphics({ showShields: event.target.checked })}
           />
         </div>
       </fieldset>

@@ -25,15 +25,12 @@ export function ShieldBgColor({
   const teamLabel = team === Team.LOCAL ? "Local" : "Visitor";
   const localShieldBgColorCssVar = "--local-shield-background-color";
   const visitorShieldBgColorCssVar = "--visitor-shield-background-color";
-  const variable =
-    team === Team.LOCAL ? localShieldBgColorCssVar : visitorShieldBgColorCssVar;
+  const variable = team === Team.LOCAL ? localShieldBgColorCssVar : visitorShieldBgColorCssVar;
 
   return (
     <>
       <div>
-        <label htmlFor="local-shield-bgcolor-input">
-          Local Team Background Shield Color
-        </label>
+        <label htmlFor="local-shield-bgcolor-input">Local Team Background Shield Color</label>
         <input
           type="color"
           name={`${teamLabel.toLowerCase()}-shield-bgcolor`}

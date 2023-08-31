@@ -16,7 +16,7 @@ type Setter<T = unknown> = (newValue: T | ((prev: T) => T)) => void;
 export const useReplicant = <T>(
   replicantName: string,
   initialValue: T,
-  options?: NodeCG.Replicant.Options<T> & { namespace?: string }
+  options?: NodeCG.Replicant.Options<T> & { namespace?: string },
 ): [T, Setter<T>] => {
   const [value, setValue] = useState<T>(initialValue);
 
@@ -58,8 +58,7 @@ export const useReplicant = <T>(
   return [
     value,
     (newValue) => {
-      replicant.value =
-        newValue instanceof Function ? newValue(value) : newValue;
+      replicant.value = newValue instanceof Function ? newValue(value) : newValue;
     },
   ];
 };

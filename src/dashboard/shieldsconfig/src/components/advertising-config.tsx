@@ -3,11 +3,7 @@ import { useEffect, useState } from "react";
 
 export function AdvertisingConfig() {
   const [initial, setInitial] = useState(true);
-  const {
-    setGraphics,
-    advertising,
-    advertisingTime = 0,
-  } = useGraphicsReplicant();
+  const { setGraphics, advertising, advertisingTime = 0 } = useGraphicsReplicant();
   const [time, setTime] = useState(advertisingTime);
 
   useEffect(() => {

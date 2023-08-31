@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useRotationValue(
-  duration = 10_000,
-  visible = 2000,
-  auto = true
-) {
+export function useRotationValue(duration = 10_000, visible = 2000, auto = true) {
   const [rotationValue, setRotationValue] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(true);
 

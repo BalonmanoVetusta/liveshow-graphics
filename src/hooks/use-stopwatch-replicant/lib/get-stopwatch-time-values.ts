@@ -1,6 +1,4 @@
-import getTimeFromMiliseconds, {
-  MaxTimeUnit,
-} from "hooks/use-stopwatch-replicant/lib/get-time-from-miliseconds";
+import getTimeFromMiliseconds, { MaxTimeUnit } from "hooks/use-stopwatch-replicant/lib/get-time-from-miliseconds";
 import { Stopwatch } from "types/schemas/stopwatch";
 
 const DEFAULT_STOPWATCH_TICK_TIME = 10;
@@ -25,17 +23,11 @@ export declare interface StopwatchPropsReturn {
 export function getStopwatchTimeValues(
   sw: Stopwatch,
   maxTimeUnit: MaxTimeUnit = MaxTimeUnit.HOURS,
-  tickTime = DEFAULT_STOPWATCH_TICK_TIME
+  tickTime = DEFAULT_STOPWATCH_TICK_TIME,
 ): StopwatchPropsReturn {
   let totalTime = 0;
 
-  const {
-    startTime = 0,
-    offset = 0,
-    limit = 0,
-    backwards = false,
-    periodTime = 0,
-  } = sw;
+  const { startTime = 0, offset = 0, limit = 0, backwards = false, periodTime = 0 } = sw;
 
   if (startTime > 0) {
     totalTime = Date.now() - startTime + offset;
@@ -79,9 +71,7 @@ export function getStopwatchTimeValues(
     seconds,
     milliseconds,
     periodTime: sw.periodTime,
-    currentPeriod:
-      periodTime > 0 ? Math.max(Math.ceil(totalTime / periodTime), 1) : 0,
-    totalPeriods:
-      limit > 0 && periodTime > 0 ? Math.ceil(limit / periodTime) : 0,
+    currentPeriod: periodTime > 0 ? Math.max(Math.ceil(totalTime / periodTime), 1) : 0,
+    totalPeriods: limit > 0 && periodTime > 0 ? Math.ceil(limit / periodTime) : 0,
   };
 }

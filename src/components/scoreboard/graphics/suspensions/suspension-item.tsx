@@ -1,8 +1,5 @@
 import { MatchSuspensionActionType } from "hooks/use-match-actions/types";
-import {
-  MaxTimeUnit,
-  useStopwatchReplicantReader,
-} from "hooks/use-stopwatch-replicant";
+import { MaxTimeUnit, useStopwatchReplicantReader } from "hooks/use-stopwatch-replicant";
 import { PropsWithoutRef, useMemo } from "react";
 import styled from "styled-components";
 import { MatchActionSuspensionTime } from "./group-suspensions-by-time-and-player-number";
@@ -43,12 +40,9 @@ export default function SuspensionItem({
     const { matchTime } = action;
     const oddTime = matchTime % 1000;
     const exactMatchTime = matchTime - oddTime;
-    const calculatedCurrentSuspensionTime =
-      suspensionTimeMilliseconds + 1000 - (time - exactMatchTime); // sum 1000 because the odd time causes to show always 1:59 instead of 2:00 even with stopped time
+    const calculatedCurrentSuspensionTime = suspensionTimeMilliseconds + 1000 - (time - exactMatchTime); // sum 1000 because the odd time causes to show always 1:59 instead of 2:00 even with stopped time
     const minutes = Math.floor(calculatedCurrentSuspensionTime / 60000);
-    const seconds = Math.floor(
-      (calculatedCurrentSuspensionTime % 60000) / 1000
-    );
+    const seconds = Math.floor((calculatedCurrentSuspensionTime % 60000) / 1000);
 
     return {
       minutes,
@@ -65,13 +59,8 @@ export default function SuspensionItem({
   }
 
   return (
-    <StyledSuspensionItem
-      data-number={payload.number?.toString() ?? ""}
-      {...props}
-    >
-      {`${minutes.toString().padStart(1, "0")}:${seconds
-        .toString()
-        .padStart(2, "0")}`}
+    <StyledSuspensionItem data-number={payload.number?.toString() ?? ""} {...props}>
+      {`${minutes.toString().padStart(1, "0")}:${seconds.toString().padStart(2, "0")}`}
     </StyledSuspensionItem>
   );
 }

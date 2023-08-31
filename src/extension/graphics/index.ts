@@ -16,9 +16,7 @@ function graphicsReplicant(nodecg: NodeCG.ServerAPI) {
   return graphics;
 }
 
-export default async function handleGraphicsRoutes(
-  nodecg: NodeCG.ServerAPI
-): Promise<void> {
+export default async function handleGraphicsRoutes(nodecg: NodeCG.ServerAPI): Promise<void> {
   const router = nodecg.Router();
 
   router.get("/advertising/:action?", (req, res) => {
@@ -26,11 +24,10 @@ export default async function handleGraphicsRoutes(
     const formatedAction = action.toLowerCase();
 
     const graphics = graphicsReplicant(nodecg);
-    graphics.value ??= {}
+    graphics.value ??= {};
 
     if (req.query?.advertisingTime) {
-      const advertisingTime =
-        Number(req.query.advertisingTime) || DEFAULT_ROTATION_TIME;
+      const advertisingTime = Number(req.query.advertisingTime) || DEFAULT_ROTATION_TIME;
       const advertisingTimeInSeconds = advertisingTime * 1000;
       graphics.value.advertisingTime = advertisingTimeInSeconds;
     }

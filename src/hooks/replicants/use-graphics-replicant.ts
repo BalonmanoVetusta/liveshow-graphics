@@ -14,12 +14,13 @@ export function useGraphicsReplicant() {
     visitorShield: "https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg",
     visitorShieldBgColor: "transparent",
     visitorTeamColor: "white",
-  })
+  });
 
-  const setGraphics = (newGraphics: Graphics) => setInternalGraphics({
-    ...graphics,
-    ...newGraphics,
-  })
+  const setGraphics = (newGraphics: Graphics) =>
+    setInternalGraphics({
+      ...graphics,
+      ...newGraphics,
+    });
 
-  return { setGraphics, ...graphics }
+  return { setGraphics, ...graphics };
 }

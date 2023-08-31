@@ -1,11 +1,7 @@
 import { useSceneReplicant } from "hooks/replicants/use-scene-replicant";
 import { useEffect, type ComponentType } from "react";
 import { Redirect, Route, Router } from "wouter";
-import {
-  BaseLocationHook,
-  navigate,
-  useLocationProperty,
-} from "wouter/use-location";
+import { BaseLocationHook, navigate, useLocationProperty } from "wouter/use-location";
 import { Scene } from "./scene";
 
 const hashLocation = () => window.location.hash.replace(/^#/, "") || "/";

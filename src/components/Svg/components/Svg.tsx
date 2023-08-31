@@ -26,9 +26,7 @@ export function Svg({
   titleId = undefined,
   descriptionId = undefined,
   ...props
-}: PropsWithChildren<
-  { props: React.SVGProps<SVGSVGElement> } & SvgProps
->): ReactElement {
+}: PropsWithChildren<{ props: React.SVGProps<SVGSVGElement> } & SvgProps>): ReactElement {
   // fillValue = "transparent",
   // strokeValue = undefined,
   // shadowValue = undefined,
@@ -52,8 +50,7 @@ export function Svg({
   titleId = titleId || `${props.id}-title`;
   descriptionId = descriptionId || `${props.id}-description`;
   if (!props["aria-labelledby"] && (title || description)) {
-    const labelledby =
-      (title ? titleId : "") + (description ? ` ${descriptionId}` : "");
+    const labelledby = (title ? titleId : "") + (description ? ` ${descriptionId}` : "");
     props["aria-labelledby"] = props["aria-labelledby"] || labelledby;
   }
 

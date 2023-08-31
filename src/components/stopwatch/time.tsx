@@ -1,7 +1,4 @@
-import {
-  MaxTimeUnit,
-  useStopwatchReplicantReader,
-} from "hooks/use-stopwatch-replicant";
+import { MaxTimeUnit, useStopwatchReplicantReader } from "hooks/use-stopwatch-replicant";
 import { ReactElement } from "react";
 
 interface StopwatchTimeProps {
@@ -28,8 +25,7 @@ Partial<StopwatchTimeProps> = {}): ReactElement {
     <>
       <div className="time">
         <p>
-          {minutes.toString().padStart(padZeroes, "0")}:
-          {seconds.toString().padStart(padZeroes, "0")}
+          {minutes.toString().padStart(padZeroes, "0")}:{seconds.toString().padStart(padZeroes, "0")}
         </p>
       </div>
     </>

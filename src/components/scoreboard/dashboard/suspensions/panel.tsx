@@ -55,9 +55,7 @@ export function SunspensionsPanel(): ReactElement {
         <button
           onClick={(event) => {
             event.preventDefault();
-            setActions(
-              actions.filter(({ action }: MatchAction) => action === GOAL)
-            );
+            setActions(actions.filter(({ action }: MatchAction) => action === GOAL));
           }}
         >
           Delete All actions (keep goals)

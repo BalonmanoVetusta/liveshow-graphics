@@ -45,36 +45,19 @@ export default function InMatchScene(): ReactElement | null {
   const visitorName = "VISITOR";
 
   const isLocalTeamSevenPlayers = useMemo<boolean>(() => {
-    const startActions = actions.filter(
-      ({ action, team }) =>
-        action === START_SEVEN_PLAYERS && team === Team.LOCAL
-    );
+    const startActions = actions.filter(({ action, team }) => action === START_SEVEN_PLAYERS && team === Team.LOCAL);
 
-    const endActions = actions.filter(
-      ({ action, team }) => action === END_SEVEN_PLAYERS && team === Team.LOCAL
-    );
+    const endActions = actions.filter(({ action, team }) => action === END_SEVEN_PLAYERS && team === Team.LOCAL);
 
-    return (
-      startActions.length !== endActions.length &&
-      (startActions.length > 0 || endActions.length > 0)
-    );
+    return startActions.length !== endActions.length && (startActions.length > 0 || endActions.length > 0);
   }, [actions]);
 
   const isVisitorTeamSevenPlayers = useMemo<boolean>(() => {
-    const startActions = actions.filter(
-      ({ action, team }) =>
-        action === START_SEVEN_PLAYERS && team === Team.VISITOR
-    );
+    const startActions = actions.filter(({ action, team }) => action === START_SEVEN_PLAYERS && team === Team.VISITOR);
 
-    const endActions = actions.filter(
-      ({ action, team }) =>
-        action === END_SEVEN_PLAYERS && team === Team.VISITOR
-    );
+    const endActions = actions.filter(({ action, team }) => action === END_SEVEN_PLAYERS && team === Team.VISITOR);
 
-    return (
-      startActions.length !== endActions.length &&
-      (startActions.length > 0 || endActions.length > 0)
-    );
+    return startActions.length !== endActions.length && (startActions.length > 0 || endActions.length > 0);
   }, [actions]);
 
   const isAnyTeamSevenPlayers = useMemo<boolean>(() => {
@@ -94,13 +77,9 @@ export default function InMatchScene(): ReactElement | null {
   // }, [actions]);
 
   useLayoutEffect(() => {
-    document
-      .querySelector(".visitor-team")
-      ?.setAttribute("data-active-info", isVisitorTeamSevenPlayers.toString());
+    document.querySelector(".visitor-team")?.setAttribute("data-active-info", isVisitorTeamSevenPlayers.toString());
 
-    document
-      .querySelector(".local-team")
-      ?.setAttribute("data-active-info", isLocalTeamSevenPlayers.toString());
+    document.querySelector(".local-team")?.setAttribute("data-active-info", isLocalTeamSevenPlayers.toString());
 
     setCssVar(BACKGROUND_COLOR_CSS_VAR, BACKGROUND_COLOR);
     setCssVar(BANNER_MAX_HEIGHT_CSS_VAR, "130px");
@@ -115,22 +94,13 @@ export default function InMatchScene(): ReactElement | null {
   return (
     <>
       <div data-position="top center">
-        <div
-          className="scoreboard"
-          data-local-team-side={
-            localTeamSide?.toLowerCase() === "left" ? "left" : "right"
-          }
-        >
+        <div className="scoreboard" data-local-team-side={localTeamSide?.toLowerCase() === "left" ? "left" : "right"}>
           <div className="local-team team">
             <div className="shield shield-local column">
               <div className="yellow-card">
-                {document
-                  .querySelector(".local-team")
-                  ?.getAttribute("data-yellow-cards") || ""}
+                {document.querySelector(".local-team")?.getAttribute("data-yellow-cards") || ""}
               </div>
-              {graphics.localShield ? (
-                <img src={graphics.localShield} alt="Local Team Image" />
-              ) : null}
+              {graphics.localShield ? <img src={graphics.localShield} alt="Local Team Image" /> : null}
             </div>
 
             {showTeamName ? (
@@ -147,11 +117,7 @@ export default function InMatchScene(): ReactElement | null {
           </div>
           <div className="stopwatch column">
             <div className="competition-banner">
-              <img
-                src="https://www.rfebm.com/competiciones/images/logo.png"
-                alt=""
-                width={16}
-              />
+              <img src="https://www.rfebm.com/competiciones/images/logo.png" alt="" width={16} />
             </div>
             <StopwatchTime padZeroes={2} />
             <div className="info column">
@@ -167,13 +133,9 @@ export default function InMatchScene(): ReactElement | null {
           <div className="visitor-team team">
             <div className="shield shield-visitor column">
               <div className="yellow-card">
-                {document
-                  .querySelector(".visitor-team")
-                  ?.getAttribute("data-yellow-cards") || ""}
+                {document.querySelector(".visitor-team")?.getAttribute("data-yellow-cards") || ""}
               </div>
-              {graphics.visitorShield ? (
-                <img src={graphics.visitorShield} alt="Visitor Team Image" />
-              ) : null}
+              {graphics.visitorShield ? <img src={graphics.visitorShield} alt="Visitor Team Image" /> : null}
             </div>
 
             {showTeamName ? (

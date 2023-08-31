@@ -82,10 +82,7 @@ export type MatchActionsReplicantOptions = NodeCG.Replicant.Options<MatchActions
 };
 
 export type UseMatchActionsMatchActionType = Omit<MatchAction, "gmtTimestamp">;
-export type UseMatchActionsAddActionType = Omit<
-  MatchAction,
-  "gmtTimestamp" | "id" | "matchTime"
->;
+export type UseMatchActionsAddActionType = Omit<MatchAction, "gmtTimestamp" | "id" | "matchTime">;
 
 export interface UseMatchActionsReturn extends MatchActions {
   goals: { local: MatchAction[]; visitor: MatchAction[] };

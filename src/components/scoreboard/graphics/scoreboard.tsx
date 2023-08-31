@@ -16,8 +16,7 @@ import { ScoreboardTeam } from "./scoreboard-team";
 
 const StyledScoreboardContainer = styled.div`
   font:
-    bolder var(--font-size, calc(22px * var(--size-scale-factor, 1))) Cursed
-      Timer ULiL,
+    bolder var(--font-size, calc(22px * var(--size-scale-factor, 1))) Cursed Timer ULiL,
     monospace,
     sans-serif;
   color: var(--scoreboard-font-color, black);
@@ -26,33 +25,15 @@ const StyledScoreboardContainer = styled.div`
 
 export default function Scoreboard(): ReactElement | null {
   const { localTeamSide = "LEFT" } = useTeamSide();
-  const {
-    scoreboardPosition = "top center",
-    visitorTeamName,
-    localTeamName,
-    showName,
-  } = useGraphicsReplicant();
+  const { scoreboardPosition = "top center", visitorTeamName, localTeamName, showName } = useGraphicsReplicant();
   return (
     <>
       <StyledScoreboardContainer data-position={scoreboardPosition}>
-        <div
-          className="scoreboard"
-          data-local-team-side={
-            localTeamSide?.toLowerCase() === "left" ? "left" : "right"
-          }
-        >
-          <ScoreboardTeam
-            team={Team.LOCAL}
-            name={localTeamName}
-            showTeamName={showName}
-          />
+        <div className="scoreboard" data-local-team-side={localTeamSide?.toLowerCase() === "left" ? "left" : "right"}>
+          <ScoreboardTeam team={Team.LOCAL} name={localTeamName} showTeamName={showName} />
           <div className="stopwatch column">
             <div className="competition-banner">
-              <img
-                src="https://www.rfebm.com/competiciones/images/logo.png"
-                alt=""
-                width={16}
-              />
+              <img src="https://www.rfebm.com/competiciones/images/logo.png" alt="" width={16} />
             </div>
             <StopwatchTime padZeroes={2} />
             <div className="info column">
@@ -65,11 +46,7 @@ export default function Scoreboard(): ReactElement | null {
               </svg> */}
             </div>
           </div>
-          <ScoreboardTeam
-            team={Team.VISITOR}
-            name={visitorTeamName}
-            showTeamName={showName}
-          />
+          <ScoreboardTeam team={Team.VISITOR} name={visitorTeamName} showTeamName={showName} />
         </div>
       </StyledScoreboardContainer>
     </>

@@ -1,4 +1,4 @@
-import type NodeCG  from "@nodecg/types";
+import type NodeCG from "@nodecg/types";
 import { Stopwatch } from "types/schemas/stopwatch";
 import { setHandleInterval } from "./handle-interval";
 import {
@@ -17,7 +17,7 @@ export default function handleStart(
     backwards: newBackwards = undefined,
     limit: newLimit = undefined,
     periodTime: newPeriodTime = undefined,
-  }: Partial<StopwatchStartActionTypePayloadObject> = {}
+  }: Partial<StopwatchStartActionTypePayloadObject> = {},
 ) {
   // Set common values between start and reset
   const newValue = {

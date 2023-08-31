@@ -15,9 +15,7 @@ import { clearHandleInterval } from "./actions/start/handle-interval";
 const STOPWATCH_REPLICANT_NAME = "stopwatch";
 const STOPWATCH_TICK_TIME = 10;
 
-function assertPayload(
-  payload: StopwatchActionPayloadType | undefined = undefined
-) {
+function assertPayload(payload: StopwatchActionPayloadType | undefined = undefined) {
   if (typeof payload === typeof undefined || payload === null) {
     throw new Error("Payload is required");
   }
@@ -29,17 +27,13 @@ export type HandleStopwatchReplicantParams = StopwatchAction & {
 
 export function handleStopwatchReplicant(
   nodecg: NodeCG.ServerAPI,
-  { type: actionType, payload = undefined }: HandleStopwatchReplicantParams
+  { type: actionType, payload = undefined }: HandleStopwatchReplicantParams,
 ) {
   // TODO: Good idea is to define in message if the replicant must be persistent or not
-  const stopwatch = nodecg.Replicant<Stopwatch>(
-    STOPWATCH_REPLICANT_NAME,
-    nodecg.bundleName,
-    {
-      defaultValue: defaultStopwatchValues,
-      persistent: true,
-    }
-  );
+  const stopwatch = nodecg.Replicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName, {
+    defaultValue: defaultStopwatchValues,
+    persistent: true,
+  });
 
   const currentValue: Stopwatch = {
     ...defaultStopwatchValues,
@@ -48,8 +42,7 @@ export function handleStopwatchReplicant(
 
   let newValue: Stopwatch = { ...currentValue };
 
-  const currentTotalTime =
-    Date.now() - currentValue.startTime + currentValue.offset;
+  const currentTotalTime = Date.now() - currentValue.startTime + currentValue.offset;
   let tmpValue: number | boolean;
 
   if (currentTotalTime < 0) {
@@ -65,7 +58,7 @@ export function handleStopwatchReplicant(
         currentValue,
         STOPWATCH_REPLICANT_NAME,
         STOPWATCH_TICK_TIME,
-        payload as StopwatchStartActionTypePayloadObject
+        payload as StopwatchStartActionTypePayloadObject,
       );
       break;
 
@@ -84,12 +77,7 @@ export function handleStopwatchReplicant(
 
       if (typeof payload === typeof Function) {
         const callback = payload as StopwatchSetTypeByCallback<boolean>;
-        tmpValue = callback(
-          currentValue.backwards,
-          currentValue.startTime,
-          currentValue.limit,
-          currentValue.offset
-        );
+        tmpValue = callback(currentValue.backwards, currentValue.startTime, currentValue.limit, currentValue.offset);
       } else {
         tmpValue = payload as boolean;
       }
@@ -106,12 +94,7 @@ export function handleStopwatchReplicant(
 
       if (typeof payload === typeof Function) {
         const callback = payload as StopwatchSetTypeByCallback<number>;
-        tmpValue = callback(
-          currentValue.offset,
-          currentValue.startTime,
-          currentValue.limit,
-          currentValue.offset
-        );
+        tmpValue = callback(currentValue.offset, currentValue.startTime, currentValue.limit, currentValue.offset);
       } else {
         tmpValue = payload as number;
       }
@@ -133,7 +116,7 @@ export function handleStopwatchReplicant(
       const calculatedOffset = currentOffset + newOffsetValue;
       if (calculatedOffset < 0) {
         throw new Error(
-          "You can not set an offset that makes the stopwatch restart or have negative values, use backwards instead"
+          "You can not set an offset that makes the stopwatch restart or have negative values, use backwards instead",
         );
       }
 
@@ -145,12 +128,7 @@ export function handleStopwatchReplicant(
 
       if (typeof payload === typeof Function) {
         const callback = payload as StopwatchSetTypeByCallback<number>;
-        tmpValue = callback(
-          currentValue.limit,
-          currentValue.startTime,
-          currentValue.limit,
-          currentValue.offset
-        );
+        tmpValue = callback(currentValue.limit, currentValue.startTime, currentValue.limit, currentValue.offset);
       } else {
         tmpValue = payload as number;
       }
@@ -163,12 +141,7 @@ export function handleStopwatchReplicant(
 
       if (typeof payload === typeof Function) {
         const callback = payload as StopwatchSetTypeByCallback<number>;
-        tmpValue = callback(
-          currentValue.periodTime,
-          currentValue.startTime,
-          currentValue.limit,
-          currentValue.offset
-        );
+        tmpValue = callback(currentValue.periodTime, currentValue.startTime, currentValue.limit, currentValue.offset);
       } else {
         tmpValue = payload as number;
       }

@@ -8,6 +8,6 @@ declare global {
 
 declare module "framer-motion" {
   export interface AnimatePresenceProps {
-    children?: React.ReactNode
+    children?: React.ReactNode;
   }
 }

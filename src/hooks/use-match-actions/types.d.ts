@@ -31,9 +31,7 @@ export declare type MatchAction = {
   payload: ReplicantMatchAction & { payload?: PlayerInfoPayload };
 };
 
-export declare type MatchActions = Array<
-  MatchAction & { payload?: PlayerInfoPayload }
->;
+export declare type MatchActions = Array<MatchAction & { payload?: PlayerInfoPayload }>;
 
 export enum Team {
   LOCAL = "LOCAL",
@@ -88,10 +86,7 @@ export type MatchActionsReplicantOptions = ReplicantOptions<MatchActions> & {
 };
 
 export type UseMatchActionsMatchActionType = Omit<MatchAction, "gmtTimestamp">;
-export type UseMatchActionsAddActionType = Omit<
-  MatchAction,
-  "gmtTimestamp" | "id" | "matchTime"
->;
+export type UseMatchActionsAddActionType = Omit<MatchAction, "gmtTimestamp" | "id" | "matchTime">;
 
 export interface UseMatchActionsReturn extends MatchActions {
   goals: { local: MatchAction[]; visitor: MatchAction[] };
