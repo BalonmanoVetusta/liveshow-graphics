@@ -18,8 +18,9 @@ const SideShield = styled.div`
     object-fit: cover;
   }
   & > div.score {
+    text-align: center;
     position: absolute;
-    left: 225px;
+    left: 200px;
     top: 540px;
     transform: translateX(-50%);
     font:
@@ -44,7 +45,7 @@ export function TeamNotInMatch({ team }: { team: Team }) {
     <>
       <SideShield data-position={dataPosition}>
         <img src={src} alt="Shield" />
-        <div className="score">{score}</div>
+        <div className="score">{(score ?? 0).toString().padStart(2, "0")}</div>
       </SideShield>
     </>
   );
