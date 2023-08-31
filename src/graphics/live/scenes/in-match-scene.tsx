@@ -32,7 +32,7 @@ const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
 // TODO: Suspensions must recognise the case where a player has a double suspension
 
 export default function InMatchScene(): ReactElement | null {
-  const { setCssVar } = useCSSVariables();
+  const { setCssVariables } = useCSSVariables();
   const { goals, actions } = useMatchActions();
   // const { goals, actions, getSuspensions } = useMatchActions();
   const { localTeamSide = "LEFT" } = useTeamSide();
@@ -78,12 +78,15 @@ export default function InMatchScene(): ReactElement | null {
 
     document.querySelector(".local-team")?.setAttribute("data-active-info", isLocalTeamSevenPlayers.toString());
 
-    setCssVar(BACKGROUND_COLOR_CSS_VAR, BACKGROUND_COLOR);
-    setCssVar(BANNER_MAX_HEIGHT_CSS_VAR, "130px");
-    setCssVar(OFFSET_TOP_CSS_VAR, "30px");
-    setCssVar(OFFSET_BOTTOM_CSS_VAR, "0");
-    setCssVar(OFFSET_LEFT_CSS_VAR, "0");
-    setCssVar(OFFSET_RIGT_CSS_VAR, "0");
+    setCssVariables((prev) => ({
+      ...prev,
+      [BACKGROUND_COLOR_CSS_VAR]: BACKGROUND_COLOR,
+      [BANNER_MAX_HEIGHT_CSS_VAR]: "130px",
+      [OFFSET_TOP_CSS_VAR]: "30px",
+      [OFFSET_BOTTOM_CSS_VAR]: "0",
+      [OFFSET_LEFT_CSS_VAR]: "0",
+      [OFFSET_RIGT_CSS_VAR]: "0",
+    }));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAnyTeamSevenPlayers]);

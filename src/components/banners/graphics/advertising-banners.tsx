@@ -28,7 +28,7 @@ export function AdvertisingBanners() {
   return (
     <>
       <StyledBanners data-position="bottom center">
-        <AnimatePresence initial={true}>
+        <AnimatePresence initial={true} mode="wait">
           <BannersAnimation duration={advertisingTime} banners={banners} />
         </AnimatePresence>
       </StyledBanners>

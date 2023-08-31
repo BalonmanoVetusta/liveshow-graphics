@@ -46,6 +46,7 @@ function App(): ReactElement {
             onChange={(e) => {
               setGraphics({ localTeamName: e.target.value });
             }}
+            disabled={true}
           />
         </div>
         <div>
@@ -71,6 +72,7 @@ function App(): ReactElement {
             id="show-shields-input"
             checked={showShields}
             onChange={(event) => setGraphics({ showShields: event.target.checked })}
+            disabled={true}
           />
         </div>
       </fieldset>
@@ -87,6 +89,7 @@ function App(): ReactElement {
             onChange={(e) => {
               setGraphics({ visitorTeamName: e.target.value });
             }}
+            disabled={true}
           />
         </div>
         <div>
@@ -121,6 +124,7 @@ function App(): ReactElement {
           onChange={() => {
             setGraphics({ showName: !showName });
           }}
+          disabled={true}
         />
         <button
           id="changeSide"

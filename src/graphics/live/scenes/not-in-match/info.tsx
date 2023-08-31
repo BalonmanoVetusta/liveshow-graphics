@@ -1,5 +1,6 @@
 import { StopwatchTime } from "components/stopwatch";
 import { MaxTimeUnit, useStopwatchReplicantReader } from "hooks/use-stopwatch-replicant";
+import { useMemo } from "react";
 import styled from "styled-components";
 
 const StyledInfo = styled.div`
@@ -8,17 +9,19 @@ const StyledInfo = styled.div`
   align-items: center;
   text-align: center;
   font:
-    bolder 68px Cursed Timer ULiL,
+    bolder 48px Cursed Timer ULiL,
     monospace;
   height: fit-content;
   padding: 0;
   margin: 50px 30px;
 
   & div.time {
+    font-size: 72px;
   }
 
   & > h2 {
     color: red;
+    font-sixe: 64px;
   }
 
   & > * {
@@ -37,19 +40,22 @@ export function InfoNotInMatch({ info }: { info?: string }) {
     maxTimeUnit: MaxTimeUnit.MINUTES,
   });
 
-  let title = info ?? "Tiempo Muerto";
-  if (!info && minutes === 30 && seconds === 0) {
-    title = "Descanso";
-  }
+  const title = useMemo(() => {
+    if (!!info) return info;
 
-  if (!info && minutes === 60) {
-    title = "Final del partido";
-  }
+    if (minutes === 0 && seconds === 0) return "COMENZANDO";
+
+    if (minutes === 30 && seconds === 0) return "DESCANSO";
+
+    if (minutes >= 60) return "FINALIZADO";
+
+    return "TIEMPO MUERTO";
+  }, [info, minutes, seconds]);
 
   return (
     <StyledInfo>
       <h2>{title}</h2>
-      <StopwatchTime padZeroes={2} />
+      {minutes === 0 && seconds === 0 ? null : <StopwatchTime padZeroes={2} />}
     </StyledInfo>
   );
 }

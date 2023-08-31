@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { CssVars } from "types/schemas/css-vars";
 import { useCSSVariablesReplicant } from "./replicants/use-css-variables-replicant";
 
@@ -13,13 +13,7 @@ export function useCSSVariables({
   cssVariablesToSet,
   rootElement = ":root",
 }: UseCSSVariablesOptions = {}) {
-  const { cssVariables, setCssVariables } = useCSSVariablesReplicant(initialCssVariablesValues);
-
-  const setCssVar = (key: string, value: string) => {
-    const newCssVariables = structuredClone(cssVariables);
-    newCssVariables[key] = value;
-    setCssVariables(newCssVariables);
-  };
+  const { cssVariables, setCssVar, setCssVariables } = useCSSVariablesReplicant(initialCssVariablesValues);
 
   const removeCssVar = (key: string) => {
     const element = document.querySelector(rootElement) as HTMLElement;
@@ -34,7 +28,7 @@ export function useCSSVariables({
 
   const _isValidToSet = (key: string) => !Boolean(cssVariablesToSet) || cssVariablesToSet?.includes(key);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     Object.keys(cssVariables).forEach((key) => {
       if (!_isValidToSet(key)) {
         return;
@@ -44,10 +38,12 @@ export function useCSSVariables({
       const newValue = cssVariables[key]?.toString();
       const oldValue = element.style.getPropertyValue(key);
       if (newValue !== oldValue && newValue !== undefined) {
+        // console.log('Setting key "%s" with value "%s"', key, newValue);
         element.style.setProperty(key, newValue);
       }
 
       if (newValue === undefined) {
+        // console.log('Removeing key "%s"', key);
         element.style.removeProperty(key);
       }
     });

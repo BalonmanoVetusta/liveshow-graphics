@@ -7,14 +7,24 @@ import styled from "styled-components";
 const SideShield = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   width: 400px;
-  font:
-    bolder 108px Cursed Timer ULiL,
-    monospace;
+  height: 500px;
   margin: 30px 50px 0;
   & > img {
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+  & > div.score {
+    position: absolute;
+    left: 225px;
+    top: 540px;
+    transform: translateX(-50%);
+    font:
+      bolder 108px Cursed Timer ULiL,
+      monospace;
   }
 `;
 
@@ -31,9 +41,11 @@ export function TeamNotInMatch({ team }: { team: Team }) {
   const score = team === Team.LOCAL ? goals.local.length : goals.visitor.length;
 
   return (
-    <SideShield data-position={dataPosition}>
-      <img src={src} alt="Shield" />
-      <div className="score">{score}</div>
-    </SideShield>
+    <>
+      <SideShield data-position={dataPosition}>
+        <img src={src} alt="Shield" />
+        <div className="score">{score}</div>
+      </SideShield>
+    </>
   );
 }

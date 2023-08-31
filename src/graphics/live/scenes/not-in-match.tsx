@@ -13,15 +13,18 @@ import { InfoNotInMatch } from "./not-in-match/info";
 import { TeamNotInMatch } from "./not-in-match/team";
 
 export default function NotInMatch() {
-  const { setCssVar } = useCSSVariables();
+  const { setCssVariables } = useCSSVariables();
 
   useEffect(() => {
-    setCssVar(BACKGROUND_COLOR_CSS_VAR, "var(--vetusta-yellow, #fede58)");
-    setCssVar(BANNER_MAX_HEIGHT_CSS_VAR, "180px");
-    setCssVar(OFFSET_TOP_CSS_VAR, "80px");
-    setCssVar(OFFSET_BOTTOM_CSS_VAR, "0");
-    setCssVar(OFFSET_LEFT_CSS_VAR, "30px");
-    setCssVar(OFFSET_RIGT_CSS_VAR, "30px");
+    setCssVariables((prev) => ({
+      ...prev,
+      [BACKGROUND_COLOR_CSS_VAR]: "var(--vetusta-yellow, #fede58)",
+      [BANNER_MAX_HEIGHT_CSS_VAR]: "200px",
+      [OFFSET_TOP_CSS_VAR]: "120px",
+      [OFFSET_BOTTOM_CSS_VAR]: "0",
+      [OFFSET_LEFT_CSS_VAR]: "30px",
+      [OFFSET_RIGT_CSS_VAR]: "30px",
+    }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -6,10 +6,9 @@ import { Asset } from "types/Asset";
 
 export declare interface BannersProps {
   duration?: number;
+  animation?: number;
   banners: Asset[];
 }
-
-const ANIMATION_DURATION = 1;
 
 const StyledBanner = styled(motion.img)`
   display: flex;
@@ -21,8 +20,8 @@ const StyledBanner = styled(motion.img)`
   background-color: var(--advertising-background-color, #f9d700);
 `;
 
-export function BannersAnimation({ duration = 10, banners }: BannersProps) {
-  const { value, isVisible } = useRotationValue(duration * 1_000, ANIMATION_DURATION * 1_000, true);
+export function BannersAnimation({ duration = 10, animation = 1, banners }: BannersProps) {
+  const { value, isVisible } = useRotationValue(duration * 1_000, animation * 1_000, true);
 
   if (banners.length === 0) {
     return null;
@@ -32,7 +31,7 @@ export function BannersAnimation({ duration = 10, banners }: BannersProps) {
     const [isPresent, safeToRemove] = usePresence();
 
     useEffect(() => {
-      !isPresent && setTimeout(safeToRemove, 3000);
+      !isPresent && setTimeout(safeToRemove, animation * 1_000);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isPresent]);
 
@@ -51,15 +50,15 @@ export function BannersAnimation({ duration = 10, banners }: BannersProps) {
           key={banner.sum}
           src={banner.url}
           alt={banner.name}
-          initial={{ x: -1920, opacity: 0 }}
-          transition={{ duration: ANIMATION_DURATION }}
+          initial={{ x: -1930, opacity: 0 }}
+          transition={{ duration: animation }}
           animate={{ x: 0, opacity: 1 }}
-          exit={{ x: 1920, opacity: 0 }}
+          exit={{ opacity: 0 }}
           {...props}
         />
       </>
     );
   };
 
-  return <>{isVisible ? <Item index={value % banners.length} /> : null}</>;
+  return <>{isVisible ? <Item index={value % banners.length} key={value % banners.length} /> : null}</>;
 }
