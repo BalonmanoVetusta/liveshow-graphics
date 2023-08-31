@@ -40,9 +40,6 @@ export default function InMatchScene(): ReactElement | null {
     advertising: true,
     advertisingTime: 10,
   });
-  const showTeamName = false;
-  const localName = "VETUSTA";
-  const visitorName = "VISITOR";
 
   const isLocalTeamSevenPlayers = useMemo<boolean>(() => {
     const startActions = actions.filter(({ action, team }) => action === START_SEVEN_PLAYERS && team === Team.LOCAL);
@@ -103,11 +100,11 @@ export default function InMatchScene(): ReactElement | null {
               {graphics.localShield ? <img src={graphics.localShield} alt="Local Team Image" /> : null}
             </div>
 
-            {showTeamName ? (
+            {/* {showTeamName ? (
               <div className="team-name">
-                <p>{localName}</p>
+                <p>{localTeamName}</p>
               </div>
-            ) : null}
+            ) : null} */}
 
             <div className="score">
               <p>{goals.local.length.toString().padStart(2, "0")}</p>
@@ -138,11 +135,11 @@ export default function InMatchScene(): ReactElement | null {
               {graphics.visitorShield ? <img src={graphics.visitorShield} alt="Visitor Team Image" /> : null}
             </div>
 
-            {showTeamName ? (
+            {/* {showTeamName ? (
               <div className="team-name">
-                <p>{visitorName}</p>
+                <p>{visitorTeamName}</p>
               </div>
-            ) : null}
+            ) : null} */}
 
             <div className="score">
               <p>{goals.visitor.length.toString().padStart(2, "0")}</p>

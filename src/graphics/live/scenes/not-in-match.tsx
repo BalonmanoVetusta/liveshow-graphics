@@ -7,14 +7,10 @@ import {
   OFFSET_TOP_CSS_VAR,
   useCSSVariables,
 } from "hooks/use-css-variables";
+import { Team } from "hooks/use-match-actions/types";
 import { useEffect } from "react";
-import styled from "styled-components";
-
-const DivContainer = styled.div`
-  width: 200px;
-  height: 300px;
-  background-color: purple;
-`;
+import { InfoNotInMatch } from "./not-in-match/info";
+import { TeamNotInMatch } from "./not-in-match/team";
 
 export default function NotInMatch() {
   const { setCssVar } = useCSSVariables();
@@ -31,12 +27,9 @@ export default function NotInMatch() {
 
   return (
     <>
-      <DivContainer data-position="top left">
-        <h2>VETUSTA</h2>
-      </DivContainer>
-      <DivContainer data-position="top right">
-        <h2>VISITANTE</h2>
-      </DivContainer>
+      <TeamNotInMatch team={Team.LOCAL} />
+      <InfoNotInMatch />
+      <TeamNotInMatch team={Team.VISITOR} />
     </>
   );
 }
