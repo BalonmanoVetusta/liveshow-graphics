@@ -37,6 +37,7 @@
     "dev:start": "include-nodecg start",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
+    "fmt": "prettier --write '**/*.{mjs,ts,tsx,js,jsx,}'",
     "prepare": "husky install",
     "postinstall": "bun run ./bin/postinstall.mjs",
     "pm2": "pm2"
