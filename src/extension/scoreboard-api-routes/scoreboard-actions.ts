@@ -56,7 +56,6 @@ export function scoreboardActions(nodecg: NodeCG.ServerAPI, uuidGenerator: () =>
     newAction.matchTime = time;
     newAction.gmtTimestamp = Date.now();
 
-    console.log({ newAction });
     setActions((prev) => [...prev, newAction]);
   };
 

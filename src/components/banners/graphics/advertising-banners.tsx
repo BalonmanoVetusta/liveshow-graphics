@@ -22,6 +22,7 @@ const StyledBanners = styled.div`
 
 export function AdvertisingBanners() {
   const { advertising, advertisingTime } = useGraphicsReplicant();
+
   const banners = useAssetReplicant("banners");
   if (!advertising || banners.length === 0) return null;
 

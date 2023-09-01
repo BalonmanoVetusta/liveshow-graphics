@@ -40,12 +40,13 @@ export function TeamNotInMatch({ team }: { team: Team }) {
   const dataPosition = isLeftSide ? "top left" : "top right";
   const src = team === Team.LOCAL ? localShield : visitorShield;
   const score = team === Team.LOCAL ? goals.local.length : goals.visitor.length;
+  const scoreString = score.toString().padStart(2, "0");
 
   return (
     <>
       <SideShield data-position={dataPosition}>
         <img src={src} alt="Shield" />
-        <div className="score">{(score ?? 0).toString().padStart(2, "0")}</div>
+        <div className="score">{scoreString}</div>
       </SideShield>
     </>
   );
