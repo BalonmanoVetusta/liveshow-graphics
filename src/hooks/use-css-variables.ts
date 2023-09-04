@@ -38,12 +38,12 @@ export function useCSSVariables({
       const newValue = cssVariables[key]?.toString();
       const oldValue = element.style.getPropertyValue(key);
       if (newValue !== oldValue && newValue !== undefined) {
-        // console.log('Setting key "%s" with value "%s"', key, newValue);
+        // console.debug('Setting key "%s" with value "%s"', key, newValue);
         element.style.setProperty(key, newValue);
       }
 
       if (newValue === undefined) {
-        // console.log('Removeing key "%s"', key);
+        // console.debug('Removeing key "%s"', key);
         element.style.removeProperty(key);
       }
     });
