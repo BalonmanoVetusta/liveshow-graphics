@@ -3,7 +3,9 @@ import { useTimeCounter } from "../hooks/use-time-counter";
 import { TimeCounterStatus } from "../lib/time-worker";
 
 export function TimeTestComponent() {
-  const { start, add, resume, pause, reset, status, errors, time, limit, isBackwards } = useTimeCounter();
+  const { start, add, resume, pause, reset, status, errors, time, limit, isBackwards } = useTimeCounter({
+    name: "stopwatch",
+  });
 
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
@@ -42,13 +44,14 @@ export function TimeTestComponent() {
         <fieldset>
           <legend>Limit</legend>
           <input
-            type="datetime-local"
+            type="datetime"
             name="limitDate"
             id="limitDate"
-            value={optLimit instanceof Date ? (optLimit as Date).getTime() : Date.now()}
+            value={optLimit instanceof Date ? (optLimit as Date).toISOString() : new Date().toISOString()}
             onChange={(event) => {
               const newDate = Date.parse(event.target.value);
               setOptLimit(newDate);
+              setOptBackwards(true);
             }}
           />
           <input
@@ -56,7 +59,11 @@ export function TimeTestComponent() {
             name="limit"
             id="limit"
             placeholder="Limit in seconds"
-            value={!(optLimit instanceof Date) && isFinite(optLimit as number) ? 0 : (optLimit as number)}
+            value={!(optLimit instanceof Date) && isFinite(optLimit as number) ? (optLimit as number) : 0}
+            onChange={(event) => {
+              const n = Number(event.target.value);
+              if (!isNaN(n) && isFinite(n)) setOptLimit(n);
+            }}
           />
         </fieldset>
         <fieldset>
@@ -66,7 +73,13 @@ export function TimeTestComponent() {
             name="backwards"
             id="backwards"
             value={optBackWards.toString()}
-            onChange={() => setOptBackwards(!optBackWards)}
+            onChange={() => {
+              const optLimitNumber: number = !(optLimit instanceof Date) ? optLimit : 0;
+              setOptBackwards(
+                ((optLimit as unknown) instanceof Date && optBackWards === false) ||
+                  (!isNaN(optLimitNumber) && isFinite(optLimitNumber) && optLimitNumber > 0 && optBackWards === false),
+              );
+            }}
           />
         </fieldset>
 
@@ -80,16 +93,16 @@ export function TimeTestComponent() {
             value={optOffset}
             onChange={(event) => {
               const newOffset = Number(event.target.value);
-              if (isFinite(newOffset) && !isNaN(newOffset)) setOptOffset(newOffset * 1000);
+              if (isFinite(newOffset) && !isNaN(newOffset)) setOptOffset(newOffset);
             }}
           />
-          <button onClick={() => add(optOffset)}>Add Offset to Current timer</button>
+          <button onClick={() => add(optOffset * 1000)}>Add Offset to Current timer</button>
         </fieldset>
         <button
           onClick={() =>
             start({
-              offset: optOffset,
-              limit: optLimit ?? 0,
+              offset: optOffset * 1000,
+              limit: optLimit instanceof Date ? optLimit : optLimit * 1000,
               isBackwards: optBackWards,
             })
           }
@@ -100,7 +113,17 @@ export function TimeTestComponent() {
           Resume
         </button>
         <button onClick={pause}>Stop</button>
-        <button onClick={reset}>Reset</button>
+        <button
+          onClick={() =>
+            reset({
+              offset: optOffset * 1000,
+              limit: optLimit instanceof Date ? optLimit : optLimit * 1000,
+              isBackwards: optBackWards,
+            })
+          }
+        >
+          Reset
+        </button>
       </fieldset>
     </>
   );

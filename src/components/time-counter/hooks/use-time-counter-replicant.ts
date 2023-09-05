@@ -20,6 +20,7 @@ export function useTimeCounterReplicant({ name }: { name: string }) {
   };
 
   const timeCounter = useTimeCounter({
+    name,
     onStart: updateTimerForName,
     onRunning: updateTimerForName,
     onFinished: updateTimerForName,

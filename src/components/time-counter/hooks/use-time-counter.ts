@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { functionAsBlob } from "../lib/function-as-blob";
 import {
+  TimeCounterAction,
   TimeCounterActionType,
   TimeCounterMessageData,
   TimeCounterMessageDataError,
@@ -23,6 +24,7 @@ function useWindowEvent(event: string, fn: EventListenerOrEventListenerObject) {
 }
 
 type UseTimeCounterOptions = {
+  name: string;
   onStart: (data: Partial<TimeCounterOptions>) => void;
   onReset: (data: Partial<TimeCounterOptions>) => void;
   onPause: () => void; // Pause and stop is the same
@@ -34,7 +36,9 @@ type UseTimeCounterOptions = {
   onPaused: (data: TimeCounterMessageData) => void;
 };
 
+// It will subscribe to BroadcastChannel with "name" and you can send TimeCounterAction to it
 export function useTimeCounter({
+  name,
   onStart = () => undefined,
   onPause = () => undefined,
   onReset = () => undefined,
@@ -98,6 +102,9 @@ export function useTimeCounter({
           onRunning(data);
         }
       });
+
+      const bc = new BroadcastChannel(`${name}`);
+      bc.addEventListener("message", ({ data }: { data: TimeCounterAction }) => wk.postMessage(data));
     }
 
     return () => {
