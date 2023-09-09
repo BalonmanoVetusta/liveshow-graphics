@@ -16,7 +16,7 @@ export declare interface TimeUnit {
 
 export default function getTimeFromMiliseconds(
   milliseconds: number,
-  maxUnit: MaxTimeUnit = MaxTimeUnit.MINUTES
+  maxUnit: MaxTimeUnit = MaxTimeUnit.MINUTES,
 ): TimeUnit {
   const result: TimeUnit = {} as TimeUnit;
 

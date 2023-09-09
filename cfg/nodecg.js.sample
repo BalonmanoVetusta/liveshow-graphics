@@ -1,0 +1,49 @@
+module.export = {
+  "host": "0.0.0.0",
+  "port": 9090,
+  "developer": false,
+  "bundles": {
+      "enabled": ["bundle-name"],
+      "paths": ["C:\\nodecg\\experimental-bundles"]
+  },
+  "login": {
+      "enabled": true,
+      "sessionSecret": "supersecret",
+      "steam": {
+          "enabled": true,
+          "apiKey": "YYYYY",
+          "allowedIds": ["11111111111111111", "22222222222222222"]
+      },
+      "twitch": {
+          "enabled": true,
+          "clientID": "your_app_id",
+          "clientSecret": "your_app_key",
+          "scope": "user_read",
+          "allowedUsernames": ["some_username"]
+      }
+  },
+  "logging": {
+      "replicants": false,
+      "console": {
+          "enabled": true,
+          "timestamps": false,
+          "level": "trace"
+      },
+      "file": {
+          "enabled": true,
+          "timestamps": true,
+          "path": "logs/server.log",
+          "level": "info"
+      }
+  },
+  "ssl": {
+      "enabled": false,
+      "keyPath": "",
+      "certificatePath": ""
+  },
+  "sentry": {
+      "enabled": true,
+      "dsn": "https://xxx:yyy@sentry.io/zzz",
+      "publicDsn": "https://xxx@sentry.io/zzz"
+  }
+}

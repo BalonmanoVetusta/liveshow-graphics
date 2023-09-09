@@ -1,8 +1,10 @@
-import { useReplicant } from "hooks/use-replicant";
+import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
+import { Team } from "hooks/use-match-actions/types";
 import { useTeamSide } from "hooks/use-team-side";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import styled from "styled-components";
-import { Graphics } from "types/schemas/graphics";
+import { AdvertisingConfig } from "./components/advertising-config";
+import { ShieldBgColor } from "./components/shield-bg-color";
 import { ShieldSelector } from "./components/shield-selector";
 
 const Shield = styled.img`
@@ -20,109 +22,113 @@ const ShieldsComponent = styled.div<{ localTeamSide: string }>`
 
 function App(): ReactElement {
   const { localTeamSide = "LEFT", toggleSide } = useTeamSide();
-
-  const [currentLocalShield, setCurrentLocalShield] = useState<
-    string | undefined
-  >();
-
-  const [currentVisitorShield, setCurrentVisitorShield] = useState<
-    string | undefined
-  >();
-
-  const [graphics, setGraphics] = useReplicant<Graphics>("graphics", {});
-
-  useEffect(() => {
-    setCurrentLocalShield(graphics.localShield);
-    setCurrentVisitorShield(graphics.visitorShield);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graphics]);
+  const {
+    localShield,
+    visitorShield,
+    showShields = true,
+    showName = false,
+    visitorTeamName,
+    localTeamName,
+    setGraphics,
+  } = useGraphicsReplicant();
 
   return (
     <>
       <fieldset>
         <legend>Local</legend>
         <div>
+          <input
+            type="text"
+            name="localTeamName"
+            id="localTeamName"
+            placeholder="Local Team name..."
+            value={localTeamName}
+            onChange={(e) => {
+              setGraphics({ localTeamName: e.target.value });
+            }}
+            disabled={true}
+          />
+        </div>
+        <div>
           <ShieldSelector
-            key={`local-${currentLocalShield}`}
+            key={`local-${localShield}`}
             label="Local Team Shield"
             acceptManuallyInputUrl={true}
-            initialValue={currentLocalShield}
-            onChange={(url) => setGraphics({ ...graphics, localShield: url })}
+            initialValue={localShield}
+            onChange={(url) => setGraphics({ localShield: url })}
           />
         </div>
 
+        <ShieldBgColor team={Team.LOCAL} />
+      </fieldset>
+
+      <fieldset>
+        <legend>Show shields in scoreboard</legend>
         <div>
-          <label htmlFor="local-shield-bgcolor-input">
-            Local Team Background Shield Color
-          </label>
+          <label htmlFor="show-shields-input">Show shields</label>
           <input
-            type="color"
-            name="local-shield-bgcolor"
-            id="local-shield-bgcolor-input"
-            placeholder="Local Team Background Shield Color"
-            list="local-team-colors"
+            type="checkbox"
+            name="show-shields"
+            id="show-shields-input"
+            checked={showShields}
+            onChange={(event) => setGraphics({ showShields: event.target.checked })}
+            disabled={true}
           />
         </div>
-        <datalist id="local-team-colors">
-          <option value="#F2DE4C" />
-          <option value="#151111" />
-          <option value="#000000" />
-          <option value="#ffffff" />
-          <option value="#00ff00" />
-        </datalist>
       </fieldset>
 
       <fieldset>
         <legend>Visitor</legend>
         <div>
+          <input
+            type="text"
+            name="visitorTeamName"
+            id="visitorTeamName"
+            placeholder="Visitor Team name..."
+            value={visitorTeamName}
+            onChange={(e) => {
+              setGraphics({ visitorTeamName: e.target.value });
+            }}
+            disabled={true}
+          />
+        </div>
+        <div>
           <ShieldSelector
-            key={`visitor-${currentVisitorShield}`}
+            key={`visitor-${visitorShield}`}
             label="Visitor Team Shield"
             acceptManuallyInputUrl={true}
-            initialValue={currentVisitorShield}
-            onChange={(url) => setGraphics({ ...graphics, visitorShield: url })}
+            initialValue={visitorShield}
+            onChange={(url) => setGraphics({ visitorShield: url })}
           />
         </div>
 
-        <div>
-          <label htmlFor="visitor-shield-bgcolor-input">
-            Visitor Team Background Shield Color
-          </label>
-          <input
-            type="color"
-            name="visitor-shield-bgcolor"
-            id="visitor-shield-bgcolor-input"
-            placeholder="Visitor Team Background Shield Color"
-            list="visitor-team-colors"
-          />
-        </div>
-        <datalist id="visitor-team-colors">
-          <option value="#F2DE4C" />
-          <option value="#151111" />
-          <option value="#000000" />
-          <option value="#ffffff" />
-          <option value="#00ff00" />
-        </datalist>
+        <ShieldBgColor team={Team.VISITOR} />
       </fieldset>
 
       <fieldset>
         <legend>Shields preview</legend>
         <ShieldsComponent localTeamSide={localTeamSide}>
-          <Shield src={currentLocalShield} alt="Local Team Shield" width={80} />
-          <Shield
-            src={currentVisitorShield}
-            alt="Visitor Team Shield"
-            width={80}
-          />
+          <Shield src={localShield} alt="Local Team Shield" width={80} />
+          <Shield src={visitorShield} alt="Visitor Team Shield" width={80} />
         </ShieldsComponent>
       </fieldset>
 
       <fieldset>
-        <legend>Common shield configuration</legend>
+        <legend>Common scoreboar config</legend>
+        <label htmlFor="showNames">Show the team names in scoreboard</label>
+        <input
+          type="checkbox"
+          name="showNames"
+          id="showNames"
+          value={showName.toString()}
+          onChange={() => {
+            setGraphics({ showName: !showName });
+          }}
+          disabled={true}
+        />
         <button
           id="changeSide"
-          onClick={(event) => {
-            event.preventDefault();
+          onClick={() => {
             toggleSide();
           }}
         >
@@ -130,33 +136,7 @@ function App(): ReactElement {
         </button>
       </fieldset>
 
-      <fieldset>
-        <legend>Advertising</legend>
-        <input
-          type="number"
-          min={0}
-          max={60}
-          onChange={(event) => {
-            event.preventDefault();
-            let value: number;
-            try {
-              value = parseInt(event.target.value, 10) * 1000;
-            } catch (error) {
-              value = 0;
-            }
-            setGraphics({ ...graphics, advertisingTime: value });
-          }}
-          value={(graphics.advertisingTime ?? 0) / 1000}
-        />
-        <button
-          onClick={(event) => {
-            event.preventDefault();
-            setGraphics({ ...graphics, advertising: !graphics.advertising });
-          }}
-        >
-          Toggle
-        </button>
-      </fieldset>
+      <AdvertisingConfig />
     </>
   );
 }

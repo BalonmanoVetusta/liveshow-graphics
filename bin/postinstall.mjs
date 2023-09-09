@@ -4,10 +4,14 @@ import { exec } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-if (
-  !process?.env?.npm_config_local_prefix ||
-  !existsSync(process.env.npm_config_local_prefix)
-)
+const env = process.env.NODE_ENV || process.env.ENV || "development";
+
+if (!env.startsWith("dev")) {
+  console.log("Not in development mode, skipping postinstall");
+  process.exit();
+}
+
+if (!process.env?.npm_config_local_prefix || !existsSync(process.env.npm_config_local_prefix))
   throw new Error("This script must be run with npm when use `npm install`");
 
 const PROJECT_PATH_PREFIX = process.env.npm_config_local_prefix;
@@ -18,34 +22,23 @@ function replaceAllObjectValue(obj, match, replace) {
   const result = JSON.parse(JSON.stringify(obj));
   Array.from(Object.keys(result.scripts)).forEach((key) => {
     if (typeof result.scripts[key] === typeof "") {
-      result.scripts[key] = result.scripts[key]
-        .toString()
-        .replaceAll(match, replace);
+      result.scripts[key] = result.scripts[key].toString().replaceAll(match, replace);
     }
   });
   return result;
 }
 
 function replaceNodeForBunInPackagJsonObject(packageJsonObject) {
-  const nodePackageJson = replaceAllObjectValue(
-    packageJsonObject,
-    "node ",
-    "bun "
-  );
+  const nodePackageJson = replaceAllObjectValue(packageJsonObject, "node ", "bun ");
   return replaceAllObjectValue(nodePackageJson, "npm ", "bun ");
 }
 
 function replaceBunForNodeInPackagJsonObject(packageJsonObject) {
   const obj = { ...packageJsonObject };
   obj.scripts.start = "node index.js";
-  obj.scripts.instrument =
-    "nyc instrument ./src ./instrumented && node test/helpers/retarget-browser-coverage.js";
+  obj.scripts.instrument = "nyc instrument ./src ./instrumented && node test/helpers/retarget-browser-coverage.js";
   const npmIPackageJson = replaceAllObjectValue(obj, "bun i", "npm i");
-  const npmRunPackageJson = replaceAllObjectValue(
-    npmIPackageJson,
-    "bun run",
-    "npm run"
-  );
+  const npmRunPackageJson = replaceAllObjectValue(npmIPackageJson, "bun run", "npm run");
   return replaceAllObjectValue(npmRunPackageJson, "bun ", "npm ");
 }
 
@@ -62,10 +55,7 @@ function modifyPackageJsonAfterCallBack(packageJsonFilePath, callback) {
 }
 
 function modifyNodeCGPackageJSONForBun(packageJsonFilePath) {
-  modifyPackageJsonAfterCallBack(
-    packageJsonFilePath,
-    replaceNodeForBunInPackagJsonObject
-  );
+  modifyPackageJsonAfterCallBack(packageJsonFilePath, replaceNodeForBunInPackagJsonObject);
 }
 
 if (!existsSync(NODECG_PROJECT_PATH)) {
@@ -99,9 +89,6 @@ if (process.argv.includes("--bun")) {
 }
 
 if (process.argv.includes("--node")) {
-  modifyPackageJsonAfterCallBack(
-    PACKAGE_JSON_FILEPATH,
-    replaceBunForNodeInPackagJsonObject
-  );
+  modifyPackageJsonAfterCallBack(PACKAGE_JSON_FILEPATH, replaceBunForNodeInPackagJsonObject);
   process.exit();
 }

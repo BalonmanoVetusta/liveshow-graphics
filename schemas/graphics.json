@@ -3,6 +3,18 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "startTime": {
+      "type": "string",
+      "default": "0",
+      "title": "Start Time",
+      "description": "Start time of the match"
+    },
+    "startTimeFinishText": {
+      "type": "string",
+      "default": "SHOW_HOUR_TEXT",
+      "title": "Start Time Finish",
+      "description": "Start time of the match"
+    },
     "bgColor": {
       "type": "string",
       "title": "Background Color",
@@ -33,45 +45,69 @@
       "title": "Play Spot",
       "description": "If a spot must be played"
     },
+    "localTeamName": {
+      "type": "string",
+      "default": "Local Team",
+      "title": "Local Team Name",
+      "description": "Local Team name"
+    },
     "localShield": {
       "type": "string",
-      "default": null,
+      "default": "https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg",
       "title": "Local Team Shield",
       "description": "Local Team shield. Must be a full URL or a path relative to the app folder"
     },
     "localShieldBgColor": {
       "type": "string",
-      "default": null,
+      "default": "transparent",
       "title": "Local Team Shield Background Color",
       "description": "Local Team shield background color"
     },
     "localTeamColor": {
       "type": "string",
-      "default": null,
+      "default": "transparent",
       "title": "Local Team Color",
       "description": "Local Team color"
     },
+    "visitorTeamName": {
+      "type": "string",
+      "default": "Visitor Team",
+      "title": "Visitor Team Name",
+      "description": "Visitor Team name"
+    },
     "visitorShield": {
       "type": "string",
-      "default": null,
+      "default": "https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg",
       "title": "Visitor Team Shield",
       "description": "Visitor Team shield. Must be a full URL or a path relative to the app folder"
     },
     "visitorShieldBgColor": {
       "type": "string",
-      "default": null,
+      "default": "transparent",
       "title": "Visitor Team Shield Background Color",
       "description": "Visitor Team shield background color"
     },
     "visitorTeamColor": {
       "type": "string",
-      "default": null,
+      "default": "transparent",
       "title": "Visitor Team Color",
       "description": "Visitor Team color"
     },
+    "showShields": {
+      "type": "boolean",
+      "default": true,
+      "title": "View Shields",
+      "description": "If shields must be showed"
+    },
+    "showName": {
+      "type": "boolean",
+      "default": false,
+      "title": "Should the name be viewed?",
+      "description": "Allow or disallow to show the team name in the scoreboard"
+    },
     "scoreboardPosition": {
       "type": "string",
-      "default": "top",
+      "default": "top center",
       "title": "Scoreboard Position",
       "description": "Scoreboard position",
       "enum": [

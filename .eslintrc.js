@@ -21,7 +21,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["import", "react", "react-hooks", "jsx-a11y", "@typescript-eslint"],
+  plugins: ["import", "react", "react-hooks", "jsx-a11y", "@typescript-eslint", "prettier"],
   globals: {
     nodecg: true,
     NodeCG: true,
@@ -40,6 +40,7 @@ module.exports = {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "@typescript-eslint/triple-slash-reference": "off",
+    "prettier/prettier": "error",
   },
   settings: {
     react: {

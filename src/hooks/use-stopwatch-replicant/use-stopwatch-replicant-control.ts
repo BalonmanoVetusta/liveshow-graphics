@@ -43,31 +43,23 @@ interface UseStopwatchReplicantControlReturn {
 }
 
 export function useStopwatchReplicantControl(): UseStopwatchReplicantControlReturn {
-  const start = (payload: StartActionType["payload"] = undefined) =>
-    startSw(payload);
+  const start = (payload: StartActionType["payload"] = undefined) => startSw(payload);
 
   const stop = () => stopSw();
 
   const reset = () => resetSw();
 
-  const updateTime = (payload: UpdateTimeActionType["payload"]) =>
-    updateTimeSw(payload);
+  const updateTime = (payload: UpdateTimeActionType["payload"]) => updateTimeSw(payload);
 
-  const setTimeLimit = (payload: TimeLimitActionType["payload"]) =>
-    setTimeLimitSw(payload);
+  const setTimeLimit = (payload: TimeLimitActionType["payload"]) => setTimeLimitSw(payload);
 
-  const setOffset = (payload: OffsetActionType["payload"]) =>
-    setOffsetSw(payload);
+  const setOffset = (payload: OffsetActionType["payload"]) => setOffsetSw(payload);
 
-  const addOffset = (payload: AddOffsetActionType["payload"]) =>
-    addOffsetSw(payload);
+  const addOffset = (payload: AddOffsetActionType["payload"]) => addOffsetSw(payload);
 
-  const setBackwards = (
-    payload: SetBackwardsActionType["payload"] | undefined = undefined
-  ) => setBackwardsSw(payload);
+  const setBackwards = (payload: SetBackwardsActionType["payload"] | undefined = undefined) => setBackwardsSw(payload);
 
-  const setPeriodTime = (payload: SetPeriodTimeActionType["payload"]) =>
-    setPeriodTimeSw(payload);
+  const setPeriodTime = (payload: SetPeriodTimeActionType["payload"]) => setPeriodTimeSw(payload);
 
   return {
     start,

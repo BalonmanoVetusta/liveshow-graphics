@@ -1,4 +1,4 @@
-import type NodeCG from '@nodecg/types';
+import type NodeCG from "@nodecg/types";
 import { Stopwatch } from "types/schemas/stopwatch";
 import { handleStopwatchReplicant } from "./handle-stopwatch-replicant";
 import { StopwatchAction, StopwatchActionPayloadType } from "./types";
@@ -11,7 +11,7 @@ export function handleListener(nodecg: NodeCG.ServerAPI) {
     }: StopwatchAction & {
       payload: StopwatchActionPayloadType;
     },
-    ack: NodeCG.Acknowledgement
+    ack: NodeCG.Acknowledgement,
   ) => {
     let sw: Stopwatch;
 

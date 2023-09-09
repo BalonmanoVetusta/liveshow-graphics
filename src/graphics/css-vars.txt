@@ -1,0 +1,14 @@
+
+/* Suspension Item */
+--suspension-color: red;
+--suspension-font-color: white;
+--suspension-border-radius: 8px;
+--suspension-number-font-color: #ccc;
+
+
+/* Advertising */
+
+--banners-max-height: 120px;
+--view-banners-opacity: 1;
+--advertising-background-color: #f9d700;
+--advertising-border-top-color: #151111;

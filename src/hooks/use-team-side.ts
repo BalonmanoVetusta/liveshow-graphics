@@ -7,20 +7,13 @@ export enum TeamSideOptions {
 }
 
 export function useTeamSide() {
-  const [{ localTeamSide }, setTeamSide] = useReplicant<TeamSide>(
-    "team-side",
-    {
-      localTeamSide: TeamSideOptions.LEFT,
-    }
-  );
+  const [{ localTeamSide }, setTeamSide] = useReplicant<TeamSide>("team-side", {
+    localTeamSide: TeamSideOptions.LEFT,
+  });
 
-  const setLocalTeamSide = (
-    newSide: TeamSideOptions | undefined = undefined
-  ) => {
+  const setLocalTeamSide = (newSide: TeamSideOptions | undefined = undefined) => {
     const newLocalTeamSide =
-      newSide || localTeamSide === TeamSideOptions.LEFT
-        ? TeamSideOptions.RIGHT
-        : TeamSideOptions.LEFT;
+      newSide || localTeamSide === TeamSideOptions.LEFT ? TeamSideOptions.RIGHT : TeamSideOptions.LEFT;
     setTeamSide({
       localTeamSide: newLocalTeamSide,
     });

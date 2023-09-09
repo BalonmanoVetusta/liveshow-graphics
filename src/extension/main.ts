@@ -1,6 +1,6 @@
-import type NodeCG from '@nodecg/types';
-import { handleAtemAutodiscover } from "./atem-autodiscover";
+import type NodeCG from "@nodecg/types";
 import handleGraphicsRoutes from "./graphics";
+import { handleScenes } from "./scenes";
 import { scoreboardApiRoutes } from "./scoreboard-api-routes";
 import shutdownApi from "./shutdown";
 import { stopwatchReplicantMessages } from "./stopwatch-replicant-messages";
@@ -21,10 +21,4 @@ function main(...calls: Array<ExtensionFunction>) {
   };
 }
 
-export default main(
-  stopwatchReplicantMessages,
-  scoreboardApiRoutes,
-  handleGraphicsRoutes,
-  handleAtemAutodiscover,
-  shutdownApi
-);
+export default main(stopwatchReplicantMessages, scoreboardApiRoutes, handleGraphicsRoutes, shutdownApi, handleScenes);
