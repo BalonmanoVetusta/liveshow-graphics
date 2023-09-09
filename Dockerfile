@@ -10,6 +10,7 @@ USER nodecg
 
 COPY --chown=nodecg:nodecg cfg/nodecg* cfg/
 COPY --chown=nodecg:nodecg package.json bundles/${NODECG_BUNDLE_NAME}/package.json
+COPY --chown=nodecg:nodecg package-lock.json bundles/${NODECG_BUNDLE_NAME}/package-lock.json
 COPY --chown=nodecg:nodecg cfg bundles/${NODECG_BUNDLE_NAME}/cfg
 COPY --chown=nodecg:nodecg images bundles/${NODECG_BUNDLE_NAME}/images
 COPY --chown=nodecg:nodecg schemas bundles/${NODECG_BUNDLE_NAME}/schemas
