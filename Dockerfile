@@ -19,7 +19,7 @@ COPY --chown=nodecg:nodecg schemas bundles/${NODECG_BUNDLE_NAME}/schemas
 # COPY --chown=nodecg:nodecg extension bundles/${NODECG_BUNDLE_NAME}/extension
 WORKDIR /opt/nodecg/bundles/${NODECG_BUNDLE_NAME}
 COPY --chown=nodecg:nodecg src src
-RUN npm install --production --ignore-scripts
+RUN npm install
 RUN npm run build
 RUN rm -rf node_modules src
 
