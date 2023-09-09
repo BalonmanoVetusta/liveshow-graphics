@@ -36,7 +36,7 @@
     "lint:fix": "eslint --fix ./src",
     "lint:staged": "lint-staged",
     "fmt": "prettier --write '**/*.{mjs,ts,tsx,js,jsx,}'",
-    "prepare": "command -v husky && husky install",
+    "prepare": "husky install",
     "replace-runtime": "npm run ./bin/postinstall.mjs",
     "pm2": "pm2"
   },
