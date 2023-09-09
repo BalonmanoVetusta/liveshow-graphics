@@ -1,0 +1,12 @@
+FROM ghcr.io/BalonmanoVetusta/handball-liveshow-spain:latest
+
+ARG NODECG_BUNDLE_NAME=handball-liveshow-spain
+ARG NODECG_PORT=9090
+ARG NODECG_HOST=0.0.0.0
+WORKDIR /opt/nodecg/
+USER nodecg
+VOLUME /opt/nodecg/cfg /opt/nodecg/bundles /opt/nodecg/logs /opt/nodecg/db /opt/nodecg/assets
+EXPOSE ${NODECG_PORT:-9090}/tcp
+
+CMD ["node", "/opt/nodecg/index.js"]
+

@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
-import { exec } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -58,29 +57,29 @@ function modifyNodeCGPackageJSONForBun(packageJsonFilePath) {
   modifyPackageJsonAfterCallBack(packageJsonFilePath, replaceNodeForBunInPackagJsonObject);
 }
 
-if (!existsSync(NODECG_PROJECT_PATH)) {
-  console.log("Installing nodecg");
-  exec("include-nodecg postinstall", (err, stdout, stderr) => {
-    if (err) {
-      console.error({ err });
-      process.exit(1);
-    }
+// if (!existsSync(NODECG_PROJECT_PATH)) {
+//   console.log("Installing nodecg");
+//   exec("include-nodecg postinstall", (err, stdout, stderr) => {
+//     if (err) {
+//       console.error({ err });
+//       process.exit(1);
+//     }
 
-    if (stderr) {
-      console.error(stderr);
-    }
+//     if (stderr) {
+//       console.error(stderr);
+//     }
 
-    console.log(stdout);
+//     console.log(stdout);
 
-    if (process?.isBun) {
-      console.info("Modifying the package.json of .nodecg to use Bun");
-      modifyNodeCGPackageJSONForBun(PACKAGE_JSON_FILEPATH);
-      console.info("Done");
-    }
-  });
-} else {
-  console.log("nodecg already installed, ignoring the postinstall process");
-}
+//     if (process?.isBun) {
+//       console.info("Modifying the package.json of .nodecg to use Bun");
+//       modifyNodeCGPackageJSONForBun(PACKAGE_JSON_FILEPATH);
+//       console.info("Done");
+//     }
+//   });
+// } else {
+//   console.log("nodecg already installed, ignoring the postinstall process");
+// }
 
 // If arguments then it just a bun or node replacement
 if (process.argv.includes("--bun")) {
