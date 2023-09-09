@@ -9,25 +9,18 @@ let timer: NodeJS.Timeout | undefined;
 export function setHandleInterval(
   nodecg: NodeCG.ServerAPI,
   replicantName: string,
-  tickTime: number
+  tickTime: number,
 ): NodeJS.Timeout | null {
   if (!timer) {
-    const stopwatch = nodecg.Replicant<Stopwatch>(
-      replicantName,
-      nodecg.bundleName,
-      { defaultValue: defaultStopwatchValues, persistent: true }
-    );
+    const stopwatch = nodecg.Replicant<Stopwatch>(replicantName, nodecg.bundleName, {
+      defaultValue: defaultStopwatchValues,
+      persistent: true,
+    });
 
     timer = setInterval(() => {
-      const stopwwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
-        replicantName,
-        nodecg.bundleName
-      );
+      const stopwwatchCurrentValue = nodecg.readReplicant<Stopwatch>(replicantName, nodecg.bundleName);
 
-      const { totalTime, shouldStop } = stopwatchTickChecks(
-        stopwwatchCurrentValue,
-        tickTime
-      );
+      const { totalTime, shouldStop } = stopwatchTickChecks(stopwwatchCurrentValue, tickTime);
 
       stopwatch.value.total = totalTime >= 0 ? totalTime : 0;
 

@@ -3,6 +3,18 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "startTime": {
+      "type": "string",
+      "default": "0",
+      "title": "Start Time",
+      "description": "Start time of the match"
+    },
+    "startTimeFinishText": {
+      "type": "string",
+      "default": "SHOW_HOUR_TEXT",
+      "title": "Start Time Finish",
+      "description": "Start time of the match"
+    },
     "bgColor": {
       "type": "string",
       "title": "Background Color",
@@ -33,6 +45,12 @@
       "title": "Play Spot",
       "description": "If a spot must be played"
     },
+    "localTeamName": {
+      "type": "string",
+      "default": "Local Team",
+      "title": "Local Team Name",
+      "description": "Local Team name"
+    },
     "localShield": {
       "type": "string",
       "default": "https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg",
@@ -51,6 +69,12 @@
       "title": "Local Team Color",
       "description": "Local Team color"
     },
+    "visitorTeamName": {
+      "type": "string",
+      "default": "Visitor Team",
+      "title": "Visitor Team Name",
+      "description": "Visitor Team name"
+    },
     "visitorShield": {
       "type": "string",
       "default": "https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg",
@@ -68,6 +92,18 @@
       "default": "transparent",
       "title": "Visitor Team Color",
       "description": "Visitor Team color"
+    },
+    "showShields": {
+      "type": "boolean",
+      "default": true,
+      "title": "View Shields",
+      "description": "If shields must be showed"
+    },
+    "showName": {
+      "type": "boolean",
+      "default": false,
+      "title": "Should the name be viewed?",
+      "description": "Allow or disallow to show the team name in the scoreboard"
     },
     "scoreboardPosition": {
       "type": "string",

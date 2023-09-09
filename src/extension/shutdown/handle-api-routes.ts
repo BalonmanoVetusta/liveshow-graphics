@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import type NodeCG  from "@nodecg/types";
+import type NodeCG from "@nodecg/types";
 
 const SHUTDOWN_PASSWORD = process.env?.SHUTDOWN_PASSWORD; // Must be provided to perform shutdown
 

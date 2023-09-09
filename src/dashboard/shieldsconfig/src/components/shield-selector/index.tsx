@@ -20,12 +20,9 @@ export function ShieldSelector({
     persistent: false,
   });
   const [selectedShield, setSelectedShield] = useState<string>(initialValue);
-  const [shieldUrl, setShieldUrl] = useState<string>(
-    initialValue !== DEFAULT_OPTION_VALUE ? initialValue : ""
-  );
+  const [shieldUrl, setShieldUrl] = useState<string>(initialValue !== DEFAULT_OPTION_VALUE ? initialValue : "");
 
-  const searchShieldAsset = (value: string) =>
-    shields.find((s) => s.url === value || s.sum === value);
+  const searchShieldAsset = (value: string) => shields.find((s) => s.url === value || s.sum === value);
 
   return (
     <>
@@ -43,6 +40,7 @@ export function ShieldSelector({
         value={searchShieldAsset(selectedShield)?.sum ?? DEFAULT_OPTION_VALUE}
       >
         <option value={DEFAULT_OPTION_VALUE}>Choose from the list</option>
+        {/* <option value="https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg">No shield</option> */}
         {shields.length > 0 ? (
           shields.map((shield: Asset) => (
             <option key={shield.sum} value={shield.sum}>

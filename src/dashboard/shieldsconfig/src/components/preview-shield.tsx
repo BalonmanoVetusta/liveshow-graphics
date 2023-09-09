@@ -1,8 +1,6 @@
-import { useReplicant } from "hooks/use-replicant";
+import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
 import { useTeamSide } from "hooks/use-team-side";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Graphics } from "types/schemas/graphics";
 import { Shield } from "./shield";
 
 const ShieldsComponent = styled.div<{ localTeamSide: string }>`
@@ -15,28 +13,13 @@ const ShieldsComponent = styled.div<{ localTeamSide: string }>`
 `;
 
 export function PreviewShield() {
-  const { localTeamSide = "LEFT", toggleSide } = useTeamSide();
-
-  const [currentLocalShield, setCurrentLocalShield] = useState<
-    string | undefined
-  >();
-
-  const [currentVisitorShield, setCurrentVisitorShield] = useState<
-    string | undefined
-  >();
-
-  const [graphics, setGraphics] = useReplicant<Graphics>("graphics", {});
-
-  useEffect(() => {
-    setCurrentLocalShield(graphics.localShield);
-    setCurrentVisitorShield(graphics.visitorShield);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graphics]);
+  const { localTeamSide = "LEFT" } = useTeamSide();
+  const { localShield, visitorShield } = useGraphicsReplicant();
 
   return (
     <ShieldsComponent localTeamSide={localTeamSide}>
-      <Shield src={currentLocalShield} alt="Local Team Shield" width={80} />
-      <Shield src={currentVisitorShield} alt="Visitor Team Shield" width={80} />
+      <Shield src={localShield} alt="Local Team Shield" width={80} />
+      <Shield src={visitorShield} alt="Visitor Team Shield" width={80} />
     </ShieldsComponent>
   );
 }

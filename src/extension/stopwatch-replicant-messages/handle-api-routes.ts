@@ -6,12 +6,7 @@ import { StopwatchActions } from "./types";
 const STOPWATCH_REPLICANT_NAME = "stopwatch";
 
 function getCurrentTimeResponse(stopwatchCurrentValue: Stopwatch): string {
-  const {
-    offset = 0,
-    startTime = 0,
-    limit = 0,
-    backwards = false,
-  } = stopwatchCurrentValue || {};
+  const { offset = 0, startTime = 0, limit = 0, backwards = false } = stopwatchCurrentValue || {};
 
   let totalTime = offset;
   if (startTime > 0) {
@@ -40,16 +35,11 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
 
   router.get("/get", (req, res) => {
     try {
-      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
-        STOPWATCH_REPLICANT_NAME,
-        nodecg.bundleName
-      );
+      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
 
       if (!stopwatchCurrentValue) return res.status(204).send();
 
-      return res
-        .status(200)
-        .json(getCurrentTimeResponse(stopwatchCurrentValue));
+      return res.status(200).json(getCurrentTimeResponse(stopwatchCurrentValue));
     } catch (error) {
       // console.error(error);
       return res.status(500).json("00:00");
@@ -75,10 +65,7 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
 
   router.get("/start", (req, res) => {
     try {
-      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
-        STOPWATCH_REPLICANT_NAME,
-        nodecg.bundleName
-      );
+      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
 
       if (!stopwatchCurrentValue) return res.status(204).send();
 
@@ -98,10 +85,7 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
 
   router.get("/stop", (req, res) => {
     try {
-      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
-        STOPWATCH_REPLICANT_NAME,
-        nodecg.bundleName
-      );
+      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
 
       if (!stopwatchCurrentValue) return res.status(204).send();
 
@@ -134,11 +118,7 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
 
   router.get("/toggle", (req, res) => {
     try {
-      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(
-        STOPWATCH_REPLICANT_NAME,
-        nodecg.bundleName
-      );
-
+      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
 
       if (!stopwatchCurrentValue) return res.status(204).send();
 

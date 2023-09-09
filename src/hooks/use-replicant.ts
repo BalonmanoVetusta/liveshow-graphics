@@ -1,7 +1,9 @@
 // Copied from https://github.com/Hoishin/use-nodecg/blob/master/src/use-replicant.ts
-import type NodeCG from "@nodecg/types";
+import NodeCG from "@nodecg/types";
 import structuredClone from "core-js/actual/structured-clone";
 import { useEffect, useState } from "react";
+
+type Setter<T = unknown> = (newValue: T | ((prev: T) => T)) => void;
 
 /**
  * Subscribe to a replicant, returns tuple of the replicant value and `setValue` function.
@@ -14,8 +16,8 @@ import { useEffect, useState } from "react";
 export const useReplicant = <T>(
   replicantName: string,
   initialValue: T,
-  options?: NodeCG.Replicant.Options<T> & { namespace?: string }
-): [T, (newValue: T) => void] => {
+  options?: NodeCG.Replicant.Options<T> & { namespace?: string },
+): [T, Setter<T>] => {
   const [value, setValue] = useState<T>(initialValue);
 
   const replicantOptions =
@@ -31,7 +33,7 @@ export const useReplicant = <T>(
       : nodecg.Replicant(replicantName, replicantOptions);
 
   const changeHandler = (newValue: T): void => {
-    setValue((oldValue) => {
+    setValue((oldValue: T) => {
       if (newValue !== oldValue) {
         return newValue;
       }
@@ -56,8 +58,7 @@ export const useReplicant = <T>(
   return [
     value,
     (newValue) => {
-      replicant.value =
-        typeof newValue === "function" ? newValue(replicant.value) : newValue;
+      replicant.value = newValue instanceof Function ? newValue(value) : newValue;
     },
   ];
 };

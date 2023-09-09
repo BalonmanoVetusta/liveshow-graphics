@@ -8,7 +8,7 @@ export type UseReplicantOnceOptions = {
 export const useReplicantOnce = <T>(
   replicantName: string,
   initialValue: T,
-  options?: UseReplicantOnceOptions
+  options?: UseReplicantOnceOptions,
 ): T | undefined => {
   const state = useRef<T | undefined>(initialValue);
   if (options && options.namespace) {

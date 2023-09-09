@@ -13,7 +13,7 @@ PORT="${PORT:-9090}"
 NODE_ENV="${NODE_ENV:-development}"
 LOCAL_PORT="${2:-${LOCAL_PORT:-9090}}"
 
-# podman stop -t 0 "${CONTAINER_NAME}" || true
-# podman rm -vf "${CONTAINER_NAME}" || true
+# docker stop -t 0 "${CONTAINER_NAME}" || true
+# docker rm -vf "${CONTAINER_NAME}" || true
 
-podman restart "${CONTAINER_NAME}"
+docker restart "${CONTAINER_NAME}"

@@ -12,20 +12,14 @@ const MATCH_ACTIONS_REPLICANT_NAME = "match-actions";
 const STOPWATCH_REPLICANT_NAME = "stopwatch";
 
 export function scoreboardActions(nodecg: NodeCG.ServerAPI, uuidGenerator: () => string) {
-  const actions = nodecg.Replicant<MatchActions>(
-    MATCH_ACTIONS_REPLICANT_NAME,
-    nodecg.bundleName,
-    {
-      defaultValue: [] as MatchActions,
-      persistent: true,
-    }
-  );
+  const actions = nodecg.Replicant<MatchActions>(MATCH_ACTIONS_REPLICANT_NAME, nodecg.bundleName, {
+    defaultValue: [] as MatchActions,
+    persistent: true,
+  });
 
   // const actions = { value: [] as MatchActions };
 
-  const setActions = (
-    newActions: MatchActions | ((prev: MatchActions) => MatchActions)
-  ) => {
+  const setActions = (newActions: MatchActions | ((prev: MatchActions) => MatchActions)) => {
     // typeof newActions === typeof Function
     if (typeof newActions === "function") {
       actions.value = newActions(actions.value);
@@ -50,10 +44,7 @@ export function scoreboardActions(nodecg: NodeCG.ServerAPI, uuidGenerator: () =>
       offset = 0,
       limit = 0,
       backwards = false,
-    } = nodecg.readReplicant<Stopwatch>(
-      STOPWATCH_REPLICANT_NAME,
-      nodecg.bundleName
-    ) ?? {};
+    } = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName) ?? {};
     const absoluteTime = total || offset;
     let time = absoluteTime;
 
@@ -65,7 +56,6 @@ export function scoreboardActions(nodecg: NodeCG.ServerAPI, uuidGenerator: () =>
     newAction.matchTime = time;
     newAction.gmtTimestamp = Date.now();
 
-    console.log({ newAction });
     setActions((prev) => [...prev, newAction]);
   };
 
@@ -74,9 +64,7 @@ export function scoreboardActions(nodecg: NodeCG.ServerAPI, uuidGenerator: () =>
   };
 
   const removeActionsByTimestamp = (gmtTimestamp: number) => {
-    setActions(
-      actions.value.filter((action) => action.gmtTimestamp !== gmtTimestamp)
-    );
+    setActions(actions.value.filter((action) => action.gmtTimestamp !== gmtTimestamp));
   };
 
   const addGoal = (team: Team, goal: GoalActionType = { quantity: 1 }) => {
@@ -88,9 +76,7 @@ export function scoreboardActions(nodecg: NodeCG.ServerAPI, uuidGenerator: () =>
   };
 
   const removeLastGoal = (team: Team) => {
-    const goals = actions.value.filter(
-      (action) => action.action === MatchActionType.GOAL && action.team === team
-    );
+    const goals = actions.value.filter((action) => action.action === MatchActionType.GOAL && action.team === team);
 
     if (goals.length > 0) {
       removeActionById(goals[goals.length - 1].id);

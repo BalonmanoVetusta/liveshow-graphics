@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scenes",
+    "active"
+  ],
+  "properties": {
+    "scenes": {
+      "type": "array",
+      "title": "All registered scenes",
+      "description": "All available scenes to switch and view",
+      "items": {
+        "type": "string",
+        "title": "Scene name",
+        "description": "Name of the scene"
+      }
+    },
+    "active": {
+      "type": "string",
+      "default": "default",
+      "title": "Current active scene",
+      "description": "Active scene to be viewed. By default if any scene is called default it will be the active scene."
+    }
+  }
+}

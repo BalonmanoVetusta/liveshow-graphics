@@ -1,15 +1,12 @@
 // import useCtx from "hooks/useCtx";
 import { createContext, useContext } from "react";
 
-export default function createNewContextOf<A extends object | null>(
-  defaultState: A | undefined = undefined
-) {
+export default function createNewContextOf<A extends object | null>(defaultState: A | undefined = undefined) {
   const Ctx = createContext<A | undefined>(defaultState);
 
   function useCtx() {
     const c = useContext(Ctx);
-    if (c === undefined)
-      throw new Error("useCtx must be inside a Provider with a value");
+    if (c === undefined) throw new Error("useCtx must be inside a Provider with a value");
     return c;
   }
 
