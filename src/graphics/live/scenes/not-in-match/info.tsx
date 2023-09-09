@@ -1,3 +1,4 @@
+import { StartCountdownText } from "components/start-countdown-text";
 import { StopwatchTime } from "components/stopwatch";
 import { MaxTimeUnit, useStopwatchReplicantReader } from "hooks/use-stopwatch-replicant";
 import { useMemo } from "react";
@@ -43,7 +44,7 @@ export function InfoNotInMatch({ info }: { info?: string }) {
   const title = useMemo(() => {
     if (!!info) return info;
 
-    if (minutes === 0 && seconds === 0) return "COMENZANDO";
+    if (minutes === 0 && seconds === 0) return <StartCountdownText stripLeadingZero={true} />;
 
     if (minutes === 30 && seconds === 0) return "DESCANSO";
 

@@ -3,6 +3,18 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "startTime": {
+      "type": "string",
+      "default": "0",
+      "title": "Start Time",
+      "description": "Start time of the match"
+    },
+    "startTimeFinishText": {
+      "type": "string",
+      "default": "SHOW_HOUR_TEXT",
+      "title": "Start Time Finish",
+      "description": "Start time of the match"
+    },
     "bgColor": {
       "type": "string",
       "title": "Background Color",

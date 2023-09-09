@@ -1,4 +1,3 @@
-import { TimeTestComponent } from "components/time-counter/components/time-test-component";
 import { BACKGROUND_COLOR_CSS_VAR, useCSSVariables } from "hooks/use-css-variables";
 import { useEffect } from "react";
 
@@ -10,9 +9,5 @@ export default function EmptyScene() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <>
-      <TimeTestComponent />
-    </>
-  );
+  return <></>;
 }

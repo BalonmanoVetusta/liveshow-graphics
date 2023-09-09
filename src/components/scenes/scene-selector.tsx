@@ -4,19 +4,22 @@ export function SceneSelector() {
   const { active, setActiveScene, scenes } = useSceneReplicant();
 
   return (
-    <select
-      onChange={(e) => {
-        setActiveScene(e.target.value);
-      }}
-      value={active}
-    >
-      <optgroup label="Scenes">
-        {scenes?.map((scene) => (
-          <option key={scene} value={scene}>
-            {scene}
-          </option>
-        ))}
-      </optgroup>
-    </select>
+    <fieldset>
+      <legend>Select current scene to view</legend>
+      <select
+        onChange={(e) => {
+          setActiveScene(e.target.value);
+        }}
+        value={active}
+      >
+        <optgroup label="Scenes">
+          {scenes?.map((scene) => (
+            <option key={scene} value={scene}>
+              {scene}
+            </option>
+          ))}
+        </optgroup>
+      </select>
+    </fieldset>
   );
 }
