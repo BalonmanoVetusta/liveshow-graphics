@@ -24,6 +24,6 @@ COPY --chown=nodecg:nodecg extension bundles/${NODECG_BUNDLE_NAME}/extension
 
 WORKDIR /opt/nodecg/
 VOLUME /opt/nodecg/cfg /opt/nodecg/bundles /opt/nodecg/logs /opt/nodecg/db /opt/nodecg/assets
-EXPOSE 9090/tcp
+EXPOSE ${NODECG_PORT:-9090}/tcp
 
 CMD ["node", "/opt/nodecg/index.js"]
