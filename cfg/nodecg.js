@@ -1,4 +1,4 @@
-import { randomBytes } from "node:crypto";
+// import { randomBytes } from "node:crypto";
 
 const config = {
   host: "0.0.0.0",
@@ -6,7 +6,7 @@ const config = {
   developer: true,
   login: {
     enabled: false,
-    sessionSecret: process.env.NODECG_SESSION_SECRET ?? randomBytes(128).toString("hex"),
+    sessionSecret: process.env.NODECG_SESSION_SECRET ?? "notsecure", // randomBytes(128).toString("hex"),
   },
   logging: {
     replicants: false,
