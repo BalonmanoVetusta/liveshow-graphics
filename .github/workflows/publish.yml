@@ -16,6 +16,11 @@ jobs:
       packages: write
       contents: read
     runs-on: med-ubuntu
+    strategy:
+      matrix:
+        include:
+          - cpu: native
+            arch: aarch64
     steps:
       - name: Login to GitHub Container Registry
         uses: actions/checkout@v2
