@@ -1,24 +1,12 @@
-FROM node:18-alpine
+FROM ghcr.io/nodecg/nodecg:2
 LABEL org.opencontainers.image.source=https://github.com/BalonmanoVetusta/handball-liveshow-spain
 
 ARG NODECG_BUNDLE_NAME=handball-liveshow-spain
 ARG NODECG_PORT=9090
 ARG NODECG_HOST=0.0.0.0
-WORKDIR /opt
 
-USER root
-RUN apk add git
-
-# Sets up the runtime user, makes nodecg-cli available to images which extend this image, and creates the directory structure with the appropriate permissions.
-RUN addgroup --system nodecg \
-  && adduser --system nodecg --ingroup nodecg \
-  && npm i -g nodecg-cli
-
-USER nodecg
-RUN git clone --depth 1 --branch v2.1.0 https://github.com/nodecg/nodecg.git
 WORKDIR /opt/nodecg
-RUN npm install
-RUN npm run build
+USER nodecg
 
 COPY --chown=nodecg:nodecg cfg/nodecg* cfg/
 COPY --chown=nodecg:nodecg package.json bundles/${NODECG_BUNDLE_NAME}/package.json
