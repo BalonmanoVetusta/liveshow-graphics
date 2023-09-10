@@ -9,4 +9,3 @@ VOLUME /opt/nodecg/cfg /opt/nodecg/bundles /opt/nodecg/logs /opt/nodecg/db /opt/
 EXPOSE ${NODECG_PORT:-9090}/tcp
 
 CMD ["node", "/opt/nodecg/index.js"]
-

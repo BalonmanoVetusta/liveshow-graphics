@@ -26,7 +26,6 @@ COPY --chown=nodecg:nodecg dashboard bundles/${NODECG_BUNDLE_NAME}/dashboard
 COPY --chown=nodecg:nodecg graphics bundles/${NODECG_BUNDLE_NAME}/graphics
 COPY --chown=nodecg:nodecg extension bundles/${NODECG_BUNDLE_NAME}/extension
 
-WORKDIR /opt/nodecg/
 VOLUME /opt/nodecg/cfg /opt/nodecg/bundles /opt/nodecg/logs /opt/nodecg/db /opt/nodecg/assets
 EXPOSE ${NODECG_PORT:-9090}/tcp
 
