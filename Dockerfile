@@ -6,10 +6,6 @@ ARG NODECG_PORT=9090
 ARG NODECG_HOST=0.0.0.0
 WORKDIR /opt/nodecg/
 
-RUN apt-get update \
-  && apt-get install -y git \
-  && rm -rf /var/lib/apt/lists/*
-
 # Sets up the runtime user, makes nodecg-cli available to images which extend this image, and creates the directory structure with the appropriate permissions.
 RUN addgroup --system nodecg \
   && adduser --system nodecg --ingroup nodecg \
