@@ -26,7 +26,8 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     env:
-      DOCKER_TARGET_PLATFORM: linux/amd64,linux/arm64
+      DOCKER_TARGET_PLATFORM: linux/amd64
+      # DOCKER_TARGET_PLATFORM: linux/amd64,linux/arm64
     steps:
       - name: Login to GitHub Container Registry
         uses: actions/checkout@v2
