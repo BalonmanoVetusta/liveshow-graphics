@@ -12,7 +12,7 @@ RUN addgroup --system nodecg \
   && npm i -g nodecg-cli
 
 USER nodecg
-RUN apk install git
+RUN apk add git
 RUN nodecg setup
 
 COPY --chown=nodecg:nodecg cfg/nodecg* cfg/
