@@ -1,4 +1,4 @@
-FROM ghcr.io/balonmanovetusta/handball-liveshow-spain:latest
+FROM --platform=linux/amd64 ghcr.io/balonmanovetusta/handball-liveshow-spain:latest
 
 ARG NODECG_BUNDLE_NAME=handball-liveshow-spain
 ARG NODECG_PORT=9090
