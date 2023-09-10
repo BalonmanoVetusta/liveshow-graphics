@@ -28,7 +28,7 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v2
         env:
-          cache-name: cache-node-modules
+          cache-name: cache-nodecg-modules-${{ hashFiles('**/package-lock.json') }}
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
