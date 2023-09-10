@@ -37,10 +37,13 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-      - name: Run NPM install
-        run: npm install
+
+      - name: Run NPM ci
+        run: npm ci
+
       - name: Run NPM build
         run: npm run build
+
       - name: Build Docker image
         run: |
           docker build . --tag ghcr.io/balonmanovetusta/handball-liveshow-spain:latest
