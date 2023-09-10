@@ -9,6 +9,7 @@ on:
       - "cfg/**"
       - "images/**"
       - "schemas/**"
+      - ".github/workflows/publish.yml"
     branches:
       - main
   # workflow_dispatch:
@@ -44,7 +45,7 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v2
         env:
-          cache-name: cache-nodecg-modules-${{ hashFiles('**/package-lock.json') }}
+          cache-name: cache-nodecg-modules-
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
