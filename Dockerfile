@@ -9,12 +9,10 @@ WORKDIR /opt/nodecg/
 # Sets up the runtime user, makes nodecg-cli available to images which extend this image, and creates the directory structure with the appropriate permissions.
 RUN addgroup --system nodecg \
   && adduser --system nodecg --ingroup nodecg \
-  && npm i -g nodecg-cli 
+  && npm i -g nodecg-cli
 
 USER nodecg
-RUN nodecg setup \
-  && chown -R nodecg:nodecg /opt/nodecg \
-  npm install
+RUN nodecg setup
 
 COPY --chown=nodecg:nodecg cfg/nodecg* cfg/
 COPY --chown=nodecg:nodecg package.json bundles/${NODECG_BUNDLE_NAME}/package.json
