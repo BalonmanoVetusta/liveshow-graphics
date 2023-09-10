@@ -1,6 +1,14 @@
 name: publish
 on:
   push:
+    paths:
+      - "package.json"
+      - "package-lock.json"
+      - "Dockerfile"
+      - "src/**"
+      - "cfg/**"
+      - "images/**"
+      - "schemas/**"
     branches:
       - main
   # workflow_dispatch:
