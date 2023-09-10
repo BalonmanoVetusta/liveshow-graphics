@@ -15,7 +15,7 @@ jobs:
     permissions:
       packages: write
       contents: read
-    runs-on: ubuntu-latest
+    runs-on: med-ubuntu
     steps:
       - name: Login to GitHub Container Registry
         uses: actions/checkout@v2
