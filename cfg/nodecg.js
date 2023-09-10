@@ -56,9 +56,9 @@ if (env.NODE_ENV?.toLowerCase().startsWith("prod")) {
 
   // Discord auth
   if (env.NODECG_DISCORD_CLIENT_ID && env.NODECG_DISCORD_CLIENT_SECRET && env.NODECG_DISCORD_ALLOWED_USERNAMES) {
-    const allowedUsernames = env.NODECG_DISCORD_ALLOWED_USERNAMES.split(",").filter((id) => id.length > 0);
+    const allowedUserIDs = env.NODECG_DISCORD_ALLOWED_USERIDS.split(",").filter(Boolean);
 
-    if (allowedUsernames.length > 0) {
+    if (allowedUserIDs.length > 0) {
       console.info("Discord auth enabled");
       config.login.enabled = true;
       config.login.discord = {
@@ -66,7 +66,7 @@ if (env.NODE_ENV?.toLowerCase().startsWith("prod")) {
         clientID: env.NODECG_DISCORD_CLIENT_ID,
         clientSecret: env.NODECG_DISCORD_CLIENT_SECRET,
         scope: "identify",
-        allowedUsernames,
+        allowedUserIDs,
       };
     }
   }
