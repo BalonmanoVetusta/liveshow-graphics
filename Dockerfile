@@ -17,6 +17,8 @@ RUN addgroup --system nodecg \
 USER nodecg
 RUN nodecg setup
 
+RUN ls
+
 COPY --chown=nodecg:nodecg cfg/nodecg* cfg/
 COPY --chown=nodecg:nodecg package.json bundles/${NODECG_BUNDLE_NAME}/package.json
 COPY --chown=nodecg:nodecg cfg bundles/${NODECG_BUNDLE_NAME}/cfg
