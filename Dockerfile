@@ -6,13 +6,15 @@ ARG NODECG_PORT=9090
 ARG NODECG_HOST=0.0.0.0
 WORKDIR /opt/nodecg/
 
+USER root
+RUN apk add git
+
 # Sets up the runtime user, makes nodecg-cli available to images which extend this image, and creates the directory structure with the appropriate permissions.
 RUN addgroup --system nodecg \
   && adduser --system nodecg --ingroup nodecg \
   && npm i -g nodecg-cli
 
 USER nodecg
-RUN apk add git
 RUN nodecg setup
 
 COPY --chown=nodecg:nodecg cfg/nodecg* cfg/
