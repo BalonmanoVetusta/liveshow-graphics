@@ -238,6 +238,9 @@
     "styled-components": "6.0.7",
     "wouter": "2.11.0"
   },
+  "optionalDependencies": {
+    "@parcel/watcher-linux-x64-glibc": "2.3.0"
+  },
   "prettier": {
     "singleQuote": false,
     "printWidth": 120,
