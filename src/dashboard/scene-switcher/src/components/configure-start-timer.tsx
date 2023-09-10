@@ -43,19 +43,7 @@ export function ConfigureStartTimer() {
             pattern="[0-9]{2}:[0-9]{2}"
           />
           <label htmlFor="disable-start-time"></label>
-          <input
-            type="checkbox"
-            name="disable-start-time"
-            id="disable-start-time"
-            value={(startTime !== "0" || startTime?.includes(":")).toString()}
-            onChange={(event) => {
-              if (event.target.checked) {
-                return setGraphics({ startTime: "00:00" });
-              }
-
-              return setGraphics({ startTime: "0" });
-            }}
-          />
+          <button onClick={() => setGraphics({ startTime: "0" })}>Remove Countdown</button>
         </div>
       </fieldset>
     </>

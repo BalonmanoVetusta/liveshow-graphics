@@ -61,15 +61,10 @@ jobs:
       - name: Run NPM build
         run: npm run build
 
-      # - name: Build and push
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     context: .
-      #     platforms: linux/amd64,linux/arm64
-      #     push: true
-      #     tags: ghcr.io/balonmanovetusta/handball-liveshow-spain:latest
-
-      - name: Build Docker image
-        run: |
-          docker build . --tag ghcr.io/balonmanovetusta/handball-liveshow-spain:latest
-          docker push ghcr.io/balonmanovetusta/handball-liveshow-spain:latest
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/balonmanovetusta/handball-liveshow-spain:latest
