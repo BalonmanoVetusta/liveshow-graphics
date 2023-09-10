@@ -239,7 +239,8 @@
     "wouter": "2.11.0"
   },
   "optionalDependencies": {
-    "@parcel/watcher-linux-x64-glibc": "2.3.0"
+    "@parcel/watcher-linux-x64-glibc": "2.3.0",
+    "lightningcss-linux-x64-gnu": "^1.21.7"
   },
   "prettier": {
     "singleQuote": false,
