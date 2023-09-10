@@ -5,7 +5,6 @@ ARG NODECG_BUNDLE_NAME=handball-liveshow-spain
 ARG NODECG_PORT=9090
 ARG NODECG_HOST=0.0.0.0
 WORKDIR /opt/nodecg/
-USER nodecg
 
 RUN apt-get update \
   && apt-get install -y git \
@@ -17,6 +16,7 @@ RUN addgroup --system nodecg \
   && npm i -g nodecg-cli \
   && mkdir cfg bundles logs db assets 
 
+USER nodecg
 RUN nodecg setup \
   && chown -R nodecg:nodecg /opt/nodecg
 
