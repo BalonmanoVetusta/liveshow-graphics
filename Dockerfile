@@ -4,7 +4,7 @@ LABEL org.opencontainers.image.source=https://github.com/BalonmanoVetusta/handba
 ARG NODECG_BUNDLE_NAME=handball-liveshow-spain
 ARG NODECG_PORT=9090
 ARG NODECG_HOST=0.0.0.0
-WORKDIR /opt/nodecg/
+WORKDIR /opt
 
 USER root
 RUN apk add git
@@ -15,9 +15,10 @@ RUN addgroup --system nodecg \
   && npm i -g nodecg-cli
 
 USER nodecg
-RUN nodecg setup
-
-RUN ls
+RUN git clone --depth 1 --branch v2.1.0 https://github.com/nodecg/nodecg.git
+WORKDIR /opt/nodecg
+RUN npm install
+RUN npm run build
 
 COPY --chown=nodecg:nodecg cfg/nodecg* cfg/
 COPY --chown=nodecg:nodecg package.json bundles/${NODECG_BUNDLE_NAME}/package.json
@@ -28,7 +29,7 @@ COPY --chown=nodecg:nodecg dashboard bundles/${NODECG_BUNDLE_NAME}/dashboard
 COPY --chown=nodecg:nodecg graphics bundles/${NODECG_BUNDLE_NAME}/graphics
 COPY --chown=nodecg:nodecg extension bundles/${NODECG_BUNDLE_NAME}/extension
 
-VOLUME /opt/nodecg/cfg /opt/nodecg/bundles /opt/nodecg/logs /opt/nodecg/db /opt/nodecg/assets
 EXPOSE ${NODECG_PORT:-9090}/tcp
 
+VOLUME /opt/nodecg/cfg /opt/nodecg/bundles /opt/nodecg/logs /opt/nodecg/db /opt/nodecg/assets
 CMD ["node", "/opt/nodecg/index.js"]
