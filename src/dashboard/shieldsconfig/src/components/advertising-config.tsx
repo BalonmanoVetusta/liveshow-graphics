@@ -1,10 +1,7 @@
 import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
-import { useEffect } from "react";
 
 export function AdvertisingConfig() {
   const { setGraphics, advertising, advertisingTime = 0 } = useGraphicsReplicant();
-
-  useEffect(() => {}, [advertisingTime]);
 
   return (
     <fieldset>
