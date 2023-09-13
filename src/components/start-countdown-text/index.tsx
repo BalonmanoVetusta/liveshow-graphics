@@ -40,7 +40,7 @@ export function StartCountdownText({
         if (diff > 0) {
           const calculatedHours = Math.floor(diff / 3_600_000);
           let odd = diff % 3_600_000;
-          const calculatedMinutes = Math.floor(diff / 60_000);
+          const calculatedMinutes = Math.floor(odd / 60_000);
           odd = diff % 60_000;
           const calculatedSeconds = Math.floor(odd / 1000);
           setHours(calculatedHours);
