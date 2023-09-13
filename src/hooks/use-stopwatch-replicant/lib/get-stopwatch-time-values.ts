@@ -21,7 +21,14 @@ export declare interface StopwatchPropsReturn {
 }
 
 export function getStopwatchTimeValues(
-  sw: Stopwatch,
+  sw: Partial<Stopwatch> = {
+    startTime: 0,
+    offset: 0,
+    limit: 0,
+    backwards: false,
+    periodTime: 0,
+    total: 0,
+  },
   maxTimeUnit: MaxTimeUnit = MaxTimeUnit.HOURS,
   tickTime = DEFAULT_STOPWATCH_TICK_TIME,
 ): StopwatchPropsReturn {
@@ -70,7 +77,7 @@ export function getStopwatchTimeValues(
     minutes,
     seconds,
     milliseconds,
-    periodTime: sw.periodTime,
+    periodTime: sw?.periodTime || 0,
     currentPeriod: periodTime > 0 ? Math.max(Math.ceil(totalTime / periodTime), 1) : 0,
     totalPeriods: limit > 0 && periodTime > 0 ? Math.ceil(limit / periodTime) : 0,
   };
