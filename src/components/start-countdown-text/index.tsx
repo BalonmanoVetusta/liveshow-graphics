@@ -41,7 +41,7 @@ export function StartCountdownText({
           const calculatedHours = Math.floor(diff / 3_600_000);
           let odd = diff % 3_600_000;
           const calculatedMinutes = Math.floor(odd / 60_000);
-          odd = diff % 60_000;
+          odd %= 60_000;
           const calculatedSeconds = Math.floor(odd / 1000);
           setHours(calculatedHours);
           setMinutes(calculatedMinutes);
