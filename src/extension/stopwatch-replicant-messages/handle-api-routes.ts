@@ -114,7 +114,7 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
       // console.error(error);
     }
 
-    return res.json(handleGetTime());
+    return res.json("00:00");
   });
 
   router.get("/toggle", (req, res) => {
