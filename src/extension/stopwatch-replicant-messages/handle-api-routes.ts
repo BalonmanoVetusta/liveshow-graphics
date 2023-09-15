@@ -32,11 +32,11 @@ function getCurrentTimeResponse(stopwatchCurrentValue: Stopwatch): string {
 
 export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
   const router = nodecg.Router();
-  const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
 
   function handleGetTime() {
+    const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
     try {
-      if (!stopwatchCurrentValue) throw new Error();
+      if (!stopwatchCurrentValue) throw new Error("stopwatchCurrentValue is undefined");
 
       return getCurrentTimeResponse(stopwatchCurrentValue);
     } catch (error) {
@@ -110,19 +110,17 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
         type: StopwatchActions.RESET,
         payload: undefined,
       });
-      return res.sendStatus(200);
     } catch (error) {
       // console.error(error);
     }
 
-    return res.json(handleGetTime());
+    return res.json("00:00");
   });
 
   router.get("/toggle", (req, res) => {
+    const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
     try {
-      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
-
-      if (!stopwatchCurrentValue) return res.status(204).send();
+      if (!stopwatchCurrentValue) throw new Error("stopwatchCurrentValue is undefined");
 
       let type = StopwatchActions.STOP;
 
