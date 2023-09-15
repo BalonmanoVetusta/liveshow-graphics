@@ -108,3 +108,5 @@ dist
 
 # NodeCG Schemas because are generated at build/dev time
 src/types/schemas/*.d.ts
+# Bundled
+handball-liveshow-spain.*
