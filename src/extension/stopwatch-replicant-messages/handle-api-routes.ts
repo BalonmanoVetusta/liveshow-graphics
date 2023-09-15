@@ -32,18 +32,22 @@ function getCurrentTimeResponse(stopwatchCurrentValue: Stopwatch): string {
 
 export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
   const router = nodecg.Router();
+  const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
 
-  router.get("/get", (req, res) => {
+  function handleGetTime() {
     try {
-      const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
+      if (!stopwatchCurrentValue) throw new Error();
 
-      if (!stopwatchCurrentValue) return res.status(204).send();
-
-      return res.status(200).json(getCurrentTimeResponse(stopwatchCurrentValue));
+      return getCurrentTimeResponse(stopwatchCurrentValue);
     } catch (error) {
       // console.error(error);
-      return res.status(500).json("00:00");
     }
+
+    return "00:00";
+  }
+
+  router.get("/get", (req, res) => {
+    return res.json(handleGetTime());
   });
 
   router.get("/addOffset", (req, res) => {
@@ -55,12 +59,11 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
         type: StopwatchActions.ADD_OFFSET,
         payload: offsetFormattedValue,
       });
-
-      return res.sendStatus(200);
     } catch (error) {
       // console.error(error);
     }
-    return res.sendStatus(500);
+
+    return res.json(handleGetTime());
   });
 
   router.get("/start", (req, res) => {
@@ -75,12 +78,11 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
           payload: undefined,
         });
       }
-
-      return res.sendStatus(200);
     } catch (error) {
       // console.error(error);
     }
-    return res.sendStatus(500);
+
+    return res.json(handleGetTime());
   });
 
   router.get("/stop", (req, res) => {
@@ -95,12 +97,11 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
           payload: undefined,
         });
       }
-
-      return res.sendStatus(200);
     } catch (error) {
       // console.error(error);
     }
-    return res.sendStatus(500);
+
+    return res.json(handleGetTime());
   });
 
   router.get("/reset", (req, res) => {
@@ -113,7 +114,8 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
     } catch (error) {
       // console.error(error);
     }
-    return res.sendStatus(500);
+
+    return res.json(handleGetTime());
   });
 
   router.get("/toggle", (req, res) => {
@@ -132,12 +134,11 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
         type,
         payload: undefined,
       });
-      return res.sendStatus(200);
     } catch (error) {
       // console.error(error);
     }
 
-    return res.sendStatus(500);
+    return res.json(handleGetTime());
   });
 
   nodecg.mount(`/${nodecg.bundleName}/stopwatch`, router);
