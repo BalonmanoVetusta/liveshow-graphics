@@ -1,0 +1,290 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "activated": {
+      "type": "boolean",
+      "default": false,
+      "title": "Is active",
+      "description": "Is auto goal activated"
+    },
+    "tournamentId": {
+      "type": "number",
+      "title": "RFEBM Tournament Id",
+      "description": "Tournament Id in RFEBM web page",
+      "default": 0
+    },
+    "matchId": {
+      "type": "number",
+      "title": "RFEBM Tournament Id",
+      "description": "Tournament Id in RFEBM web page",
+      "default": 0
+    },
+    "weekId": {
+      "type": "number",
+      "title": "Tournament Week",
+      "description": "Tournament Week to get right teams names and some other info",
+      "default": 0
+    },
+    "matchStatus": {
+      "type": "string",
+      "default": "desconocido",
+      "title": "Match status",
+      "description": "Match status in spanish"
+    },
+    "liveData": {
+      "type": "object",
+      "properties": {
+        "local": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "shieldImageUrl": {
+              "type": "string"
+            },
+            "score": {
+              "type": "number"
+            },
+            "people": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "fullName": {
+                        "type": "string"
+                      },
+                      "profileImageUrl": {
+                        "default": "https://www.rfebm.com/competiciones/images/fotos/sinfoto.jpg",
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "age": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "fullName",
+                      "profileImageUrl",
+                      "role"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "number": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "required": [
+            "name",
+            "shieldImageUrl",
+            "score",
+            "people"
+          ]
+        },
+        "visitor": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "shieldImageUrl": {
+              "type": "string"
+            },
+            "score": {
+              "type": "number"
+            },
+            "people": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "fullName": {
+                        "type": "string"
+                      },
+                      "profileImageUrl": {
+                        "default": "https://www.rfebm.com/competiciones/images/fotos/sinfoto.jpg",
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "age": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "fullName",
+                      "profileImageUrl",
+                      "role"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "number": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "required": [
+            "name",
+            "shieldImageUrl",
+            "score",
+            "people"
+          ]
+        },
+        "court": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "latitude": {
+              "type": "number"
+            },
+            "longitude": {
+              "type": "number"
+            },
+            "address": {
+              "type": "string"
+            },
+            "timezone": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        },
+        "date": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "people": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "fullName": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "fullName",
+              "role"
+            ]
+          }
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "time": {
+                "type": "string"
+              },
+              "event": {
+                "type": "string"
+              },
+              "period": {
+                "type": "number"
+              },
+              "team": {
+                "type": "string"
+              },
+              "people": {
+                "type": "object",
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "fullName": {
+                        "type": "string"
+                      },
+                      "profileImageUrl": {
+                        "default": "https://www.rfebm.com/competiciones/images/fotos/sinfoto.jpg",
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "age": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "fullName",
+                      "profileImageUrl",
+                      "role"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "number": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                ]
+              },
+              "score": {
+                "type": "object",
+                "properties": {
+                  "local": {
+                    "type": "number"
+                  },
+                  "visitor": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "local",
+                  "visitor"
+                ]
+              }
+            },
+            "required": [
+              "time",
+              "event",
+              "period",
+              "team"
+            ]
+          }
+        }
+      },
+      "required": [
+        "local",
+        "visitor",
+        "people",
+        "actions"
+      ]
+    }
+  }
+}
