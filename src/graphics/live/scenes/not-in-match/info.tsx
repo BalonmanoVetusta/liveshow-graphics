@@ -44,7 +44,8 @@ export function InfoNotInMatch({ info }: { info?: string }) {
   const title = useMemo(() => {
     if (!!info) return info;
 
-    if (minutes === 0 && seconds === 0) return <StartCountdownText stripLeadingZero={true} />;
+    if (minutes === 0 && seconds === 0)
+      return <StartCountdownText stripLeadingZero={true} notSetText={"COMENZANDO..."} />;
 
     if (minutes === 30 && seconds === 0) return "DESCANSO";
 
