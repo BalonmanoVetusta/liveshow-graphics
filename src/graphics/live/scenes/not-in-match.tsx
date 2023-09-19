@@ -20,7 +20,7 @@ export default function NotInMatch() {
       ...prev,
       [BACKGROUND_COLOR_CSS_VAR]: "var(--vetusta-yellow, #fede58)",
       [BANNER_MAX_HEIGHT_CSS_VAR]: "200px",
-      [OFFSET_TOP_CSS_VAR]: "120px",
+      [OFFSET_TOP_CSS_VAR]: "50px",
       [OFFSET_BOTTOM_CSS_VAR]: "0",
       [OFFSET_LEFT_CSS_VAR]: "30px",
       [OFFSET_RIGT_CSS_VAR]: "30px",
