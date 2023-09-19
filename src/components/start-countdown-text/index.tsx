@@ -93,8 +93,8 @@ export function StartCountdownText({
       hours > 0 ? hours.toString().padStart(padLength, padString) + ":" : ""
     }${
       // minutes
-      minutes > 0 ? minutes.toString().padStart(padLength, padString) + ":" : ""
+      hours > 0 || minutes > 0 ? minutes.toString().padStart(padLength, padString) + ":" : ""
       // seconds
-    }${seconds > 0 ? seconds.toString().padStart(padLength, padString) : ""}`}</>
+    }${seconds.toString().padStart(padLength, padString)}`}</>
   );
 }
