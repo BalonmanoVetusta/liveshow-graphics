@@ -77,8 +77,8 @@
     "compatibleRange": ">=2.0.0",
     "mount": [
       {
-        "directory": "images",
-        "endpoint": "images"
+        "directory": "assets",
+        "endpoint": "assets"
       }
     ],
     "dashboardPanels": [
