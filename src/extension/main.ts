@@ -4,6 +4,7 @@ import { handleScenes } from "./scenes";
 import { scoreboardApiRoutes } from "./scoreboard-api-routes";
 import shutdownApi from "./shutdown";
 import { stopwatchReplicantMessages } from "./stopwatch-replicant-messages";
+import { autoStats } from "./auto-stats";
 
 export type ExtensionFunction = (nodecg: NodeCG.ServerAPI) => Promise<void>;
 
@@ -21,4 +22,11 @@ function main(...calls: Array<ExtensionFunction>) {
   };
 }
 
-export default main(stopwatchReplicantMessages, scoreboardApiRoutes, handleGraphicsRoutes, shutdownApi, handleScenes);
+export default main(
+  stopwatchReplicantMessages,
+  scoreboardApiRoutes,
+  handleGraphicsRoutes,
+  shutdownApi,
+  handleScenes,
+  autoStats,
+);
