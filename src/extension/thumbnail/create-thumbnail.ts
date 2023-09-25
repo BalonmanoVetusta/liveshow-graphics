@@ -6,9 +6,9 @@ import { addTextOnImage } from "./lib/add-text-on-image";
 import { join } from "node:path";
 
 const assetsName = "shields";
-const VISITOR_SHIELD_START_POSITION_COORDINATES: Coordinates2D = [1105, 275];
+const VISITOR_SHIELD_START_POSITION_COORDINATES: Coordinates2D = [1130, 275];
 const CATEGORY_START_POSITION_COORDINATES: Coordinates2D = [639, 275];
-const VISITOR_SHIELD_MAX_AREA: Area = [450, 400];
+const VISITOR_SHIELD_MAX_AREA: Area = [400, 400];
 const WEEK_POSITION: Coordinates2D = [30, 820];
 
 async function composeImage(backgroundFilePath, shieldFilePath, week = "", categoryText = "") {
@@ -100,7 +100,7 @@ export async function createThumnail(nodecg: NodeCG.ServerAPI): Promise<void> {
         backgroundFilePath,
         join(process.cwd(), decodeURI(asset.url)),
         week.toString(),
-        subtitle.toString(),
+        decodeURI(subtitle.toString()),
       ).then((image) => {
         image.toBuffer().then((buffer) => {
           res.type("png");
@@ -119,12 +119,48 @@ export async function createThumnail(nodecg: NodeCG.ServerAPI): Promise<void> {
     }
   });
 
-  router.get("/test", (req, res) => {
-    const { s = "" } = req.query;
-    const asset = shields.find(
-      (a: NodeCG.AssetFile) => a.sum === s || a.name.toLowerCase().includes(s.toString().toLowerCase()),
-    );
-    return res.send(JSON.stringify(asset));
+  router.get("/png/download", async (req, res) => {
+    nodecg.log.info("Creating the image");
+    const { shield: shieldQuery = "", week = "0", subtitle = "" } = req.query;
+
+    try {
+      if (shieldQuery.length === 0) {
+        throw new Error("422");
+      }
+
+      const asset = shields.find(
+        (a: NodeCG.AssetFile) =>
+          a.sum === shieldQuery || a.name.toLowerCase().includes(shieldQuery.toString().toLowerCase()),
+      );
+
+      if (!asset) throw new Error("404");
+
+      composeImage(
+        backgroundFilePath,
+        join(process.cwd(), decodeURI(asset.url)),
+        week.toString(),
+        decodeURI(subtitle.toString()),
+      ).then((image) => {
+        image.toBuffer().then((buffer) => {
+          res.setHeader("Content-Type", "application/force-download");
+          res.setHeader("Pragma", "public");
+          res.setHeader("Expires", 0);
+          res.setHeader("Cache-Control", "no-cache,must-revalidate,post-check=0,pre-check=0");
+          res.setHeader("Content-Disposition", `attachment;filename=${week.toString().padStart(2, "0")}.png`);
+          res.setHeader("Content-Length", buffer.length);
+          res.send(buffer);
+        });
+      });
+    } catch (error) {
+      try {
+        const code = parseInt((error as unknown as string).toString());
+
+        res.sendStatus(code);
+      } catch (error) {
+        // nodecg.log.error(error)
+        res.status(500);
+      }
+    }
   });
 
   nodecg.mount(`/${nodecg.bundleName}/thumbnail`, router);

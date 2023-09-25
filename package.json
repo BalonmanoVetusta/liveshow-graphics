@@ -83,10 +83,10 @@
     ],
     "dashboardPanels": [
       {
-        "name": "match-actions",
-        "title": "Match Actions adder & remover",
-        "file": "match-actions.html",
-        "width": 4,
+        "name": "Other",
+        "title": "Other admin options & actions",
+        "file": "other.html",
+        "width": 6,
         "height": "auto",
         "headerColor": "#525F78",
         "workspace": "3. Other",
