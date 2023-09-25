@@ -7,6 +7,7 @@ const processingImages = {};
 const assetCategoriesToConvert = ["shields", "banners"];
 
 export async function convertAssetsToWebp(nodecg: NodeCG.ServerAPI): Promise<void> {
+  nodecg.log.info("Convert all image assets to webp automatically");
   async function convertPngToWebp(asset: NodeCG.AssetFile): Promise<void | string> {
     const webpFileName = basename(decodeURI(asset.name), asset.ext).replace(" ", "_").toLowerCase() + ".webp";
     const fullPathCurrentAsset = join(process.cwd(), decodeURI(asset.url));

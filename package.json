@@ -80,7 +80,7 @@
         "directory": "assets",
         "endpoint": "assets"
       }
-    ],()
+    ],
     "dashboardPanels": [
       {
         "name": "match-actions",

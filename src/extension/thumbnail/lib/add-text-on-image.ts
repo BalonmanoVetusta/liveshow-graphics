@@ -11,19 +11,24 @@ export function addTextOnImage(
   const width = 0.3 * text.length * height;
   const x = anchor === "middle" ? "50%" : "0";
   try {
+    const fontSize = `${height * 0.8}px`;
     const svgImage = `
     <svg width="${width}" height="${height}">
       <style>
-      text { fill: ${fontColor}; font-size: ${
-        height * 0.8
-      }px; text-align: left; font-weight: bolder; font-family: Alumni Sans, Helvetica Neue, Helvetica, sans-serif; }
+      text { 
+        fill: ${fontColor};
+        font-size: ${fontSize};
+        text-align: left;
+        font-weight: bolder;
+        font-family: Alumni Sans, Helvetica Neue, Helvetica, sans-serif; 
+      }
       </style>
       <text x="${x}" y="50%" text-anchor="${anchor}">${text}</text>
     </svg>
     `;
     return Buffer.from(svgImage);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 
   return null;

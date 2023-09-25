@@ -11,5 +11,5 @@ export function positionAreaToBeCentered(
   const x1 = Math.abs(wMax - w) / 2;
   const y1 = Math.abs(hMax - h) / 2;
 
-  return [x0 + x1, y0 + y1];
+  return [x0 + x1, y0 + y1].map(Math.floor) as Coordinates2D;
 }
