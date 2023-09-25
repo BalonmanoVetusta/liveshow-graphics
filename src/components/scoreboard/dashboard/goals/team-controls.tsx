@@ -5,12 +5,12 @@ import { ReactElement } from "react";
 export function GoalsTeamControls({ team, teamLabel }: { team: Team; teamLabel?: string }): ReactElement {
   const { addGoal, removeLastGoal, getTeamActions } = useMatchActions();
 
-  const handleAddGoal = (team: Team) => (event) => {
+  const handleAddGoal = () => (event) => {
     event.preventDefault();
     addGoal(team);
   };
 
-  const handleSubstractGoal = (team: Team) => (event) => {
+  const handleSubstractGoal = () => (event) => {
     event.preventDefault();
     removeLastGoal(team);
   };
@@ -25,8 +25,8 @@ export function GoalsTeamControls({ team, teamLabel }: { team: Team; teamLabel?:
     <fieldset>
       <h3>{teamLabel}</h3>
       <h3>{score}</h3>
-      <button onClick={handleAddGoal(team)}>{teamLabel} +1</button>
-      <button onClick={handleSubstractGoal(team)}>{teamLabel} -1</button>
+      <button onClick={handleAddGoal()}>{teamLabel} +1</button>
+      <button onClick={handleSubstractGoal()}>{teamLabel} -1</button>
     </fieldset>
   );
 }
