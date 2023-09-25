@@ -26,7 +26,16 @@ export function useStopwatchReplicantReader({
   tickTime = 10,
 }: Partial<UseStopwatchReplicantReaderProps> = {}): StopwatchPropsReturn {
   const { stop } = useStopwatchReplicantControl();
-  const [stopwatch] = useReplicant<Stopwatch>(
+  const [
+    stopwatch = {
+      startTime: 0,
+      offset: 0,
+      limit: 0,
+      backwards: false,
+      periodTime: 0,
+      total: 0,
+    },
+  ] = useReplicant<Stopwatch>(
     STOPWATCH_REPLICANT_NAME,
     {
       startTime: 0,
@@ -35,7 +44,7 @@ export function useStopwatchReplicantReader({
       backwards: false,
       periodTime: 0,
       total: 0,
-    } as Stopwatch,
+    },
     replicantOptions,
   );
 

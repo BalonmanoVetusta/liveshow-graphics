@@ -90,7 +90,7 @@ if (env.NODECG_PORT) {
   config.port = env.NODECG_PORT ?? 9090;
 }
 
-if (env.NODECG_BASEURL || env.NODECG_DOMAIN) {
-  config.baseUrl = env.NODECG_BASEURL || `${env.HTTP_SCHEME ?? "https"}://${env.NODECG_DOMAIN}`;
-}
+// if (env.NODECG_BASEURL || env.NODECG_DOMAIN) {
+//   config.baseUrl = env.NODECG_BASEURL || `${env.HTTP_SCHEME ?? "https"}://${env.NODECG_DOMAIN}`;
+// }
 module.exports = config;

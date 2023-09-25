@@ -1,7 +1,7 @@
 {
   "name": "handball-liveshow-spain",
   "private": true,
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "NodeCG for Handball matches Live streamings in Spain (valid for other countries but could have calls to spanish league api)",
   "homepage": "https://github.com/BalonmanoVetusta/handball-liveshow-spain",
   "author": "Gabriel Trabanco Llano <gtrabanco@users.noreply.github.com> (https://gabi.io)",
@@ -14,6 +14,7 @@
     "extension"
   ],
   "scripts": {
+    "bundle:tbz2": "rm -f handball-liveshow-spain.tar.bz2 && npm run build:clean && npm run build && tar cvjf handball-liveshow-spain.tar.bz2 cfg dashboard extension graphics assets schemas package.json",
     "pm:start": "pm2 restart ecosystem.config.js",
     "prepm:dev": "./bin/create-local-docker-dev",
     "pm:dev": "pm2 restart docker-dev-ecosystem.config.js --env development",
@@ -29,9 +30,9 @@
     "build": "npm run build:dashboard && npm run build:graphics && npm run build:extension",
     "build:clean": "rm -rf .parcel-cache dashboard extension graphics",
     "build:schemas": "rm -rf ./types/schemas/*.d.ts && cd schemas && json2ts -i '*.json' -o ../src/types/schemas/ && cd ..",
-    "build:dashboard": "parcel build src/dashboard/*.html --dist-dir ./ --target dashboard --log-level warn",
-    "build:graphics": "parcel build src/graphics/*.html --dist-dir ./ --target graphics --log-level warn",
-    "build:extension": "parcel build --no-content-hash --dist-dir ./ --target extension --log-level warn",
+    "build:dashboard": "parcel build src/dashboard/*.html --dist-dir ./ --target dashboard",
+    "build:graphics": "parcel build src/graphics/*.html --dist-dir ./ --target graphics",
+    "build:extension": "parcel build --no-content-hash --dist-dir ./ --target extension",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
     "lint:staged": "lint-staged",
@@ -76,16 +77,16 @@
     "compatibleRange": ">=2.0.0",
     "mount": [
       {
-        "directory": "images",
-        "endpoint": "images"
+        "directory": "assets",
+        "endpoint": "assets"
       }
     ],
     "dashboardPanels": [
       {
-        "name": "match-actions",
-        "title": "Match Actions adder & remover",
-        "file": "match-actions.html",
-        "width": 4,
+        "name": "Other",
+        "title": "Other admin options & actions",
+        "file": "other.html",
+        "width": 6,
         "height": "auto",
         "headerColor": "#525F78",
         "workspace": "3. Other",
@@ -235,6 +236,7 @@
     "pm2": "5.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "sharp": "^0.32.6",
     "styled-components": "6.0.7",
     "wouter": "2.11.0"
   },
