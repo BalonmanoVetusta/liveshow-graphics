@@ -1,7 +1,7 @@
 {
   "name": "handball-liveshow-spain",
   "private": true,
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "NodeCG for Handball matches Live streamings in Spain (valid for other countries but could have calls to spanish league api)",
   "homepage": "https://github.com/BalonmanoVetusta/handball-liveshow-spain",
   "author": "Gabriel Trabanco Llano <gtrabanco@users.noreply.github.com> (https://gabi.io)",
@@ -238,6 +238,7 @@
     "react-dom": "18.2.0",
     "sharp": "0.32.6",
     "styled-components": "6.0.8",
+    "uuid": "9.0.0",
     "wouter": "2.11.0"
   },
   "optionalDependencies": {

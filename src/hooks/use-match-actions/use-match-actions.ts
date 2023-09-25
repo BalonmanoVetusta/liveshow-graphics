@@ -12,6 +12,7 @@ import {
   UseMatchActionsAddActionType,
   WarningActionType,
 } from "./types";
+import { v4 as uuidv4 } from "uuid";
 
 export const MATCH_ACTIONS_REPLICANT_NAME = "match-actions";
 
@@ -31,7 +32,7 @@ export function useMatchActions(initialActions: MatchActions = [], options: Matc
 
     const newAction = structuredClone(action) as MatchAction;
 
-    newAction.id ??= crypto.randomUUID();
+    newAction.id ??= uuidv4();
     newAction.matchTime ??= time;
     newAction.gmtTimestamp ??= Date.now();
     actions.push(newAction);
