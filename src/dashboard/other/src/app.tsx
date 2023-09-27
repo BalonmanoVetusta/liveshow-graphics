@@ -1,13 +1,15 @@
+import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
 import { useReplicant } from "hooks/use-replicant";
 import { ReactElement, useEffect, useId, useState } from "react";
 import { Asset, AssetsReplicant } from "types/Asset";
 
 function App(): ReactElement {
   const id = useId();
+  const { visitorShield } = useGraphicsReplicant();
   const [shields] = useReplicant<AssetsReplicant>("assets:shields", [], {
     persistent: false,
   });
-  const [selectedShield, setSelectedShield] = useState<string>("");
+  const [selectedShield, setSelectedShield] = useState<string>(visitorShield || "");
   const [subtitle, setSubtitle] = useState("PRIMERA NACIONAL");
   const [week, setWeek] = useState(0);
   const [isDisabled, setIsDisabled] = useState(false);
