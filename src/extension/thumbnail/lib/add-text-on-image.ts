@@ -29,7 +29,7 @@ export function addTextOnImage(
     fontAsset?: string;
   } = {},
 ) {
-  width ??= height * text.length * 0.6;
+  width ??= height * text.length * 0.5;
   const x = anchor === "middle" ? "50%" : "0";
   const fontCss = fontAsset
     ? `@font-face {
@@ -41,14 +41,14 @@ export function addTextOnImage(
 }`
     : "";
   try {
-    const fontSize = `${height}px`;
+    const fontSize = `${Math.floor(height * 0.6)}`;
     const svgImage = `
-    <svg width="${width}px" height="${height * 1.2}px" xmlns="http://www.w3.org/2000/svg">
+    <svg width="${width}px" height="${height}px" xmlns="http://www.w3.org/2000/svg">
       <style>
       ${fontCss}
       text { 
         fill: ${fontColor};
-        font-size: ${fontSize};
+        font-size: ${fontSize}px;
         text-align: left;
         font-weight: 700;
         font-family: Alumni Sans, Helvetica Neue, Helvetica, sans-serif; 

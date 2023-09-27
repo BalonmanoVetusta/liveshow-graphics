@@ -40,6 +40,7 @@ export async function composeVetustaThumbnailImage(
       input: await shieldResized.toBuffer(),
       left: x,
       top: y,
+      density: 72,
     },
   ];
 
@@ -55,6 +56,7 @@ export async function composeVetustaThumbnailImage(
         input,
         left: WEEK_POSITION[0],
         top: WEEK_POSITION[1],
+        density: 72,
       });
   }
 
@@ -65,6 +67,7 @@ export async function composeVetustaThumbnailImage(
         input,
         left: CATEGORY_START_POSITION_COORDINATES[0],
         top: CATEGORY_START_POSITION_COORDINATES[1],
+        density: 72,
       });
   }
   return sharp(backgroundFilePath).composite(layers).png({
