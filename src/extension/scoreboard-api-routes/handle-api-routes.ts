@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto";
+import { v4 as uuidV4 } from "uuid";
 import { MatchActions } from "types/schemas/match-actions";
 import { scoreboardActions } from "./scoreboard-actions";
 import type NodeCG from "@nodecg/types";
@@ -25,7 +25,7 @@ function getTeamGoals(nodecg: NodeCG.ServerAPI, team: Team) {
 export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
   const router = nodecg.Router();
 
-  const { removeLastGoal, addGoal } = scoreboardActions(nodecg, randomUUID);
+  const { removeLastGoal, addGoal } = scoreboardActions(nodecg, uuidV4);
 
   router.get("/:team/goals", (req, res) => {
     const team = req.params.team.toUpperCase() as Team;
