@@ -11,7 +11,13 @@ const CATEGORY_START_POSITION_COORDINATES: Coordinates2D = [639, 275];
 const VISITOR_SHIELD_MAX_AREA: Area = [400, 400];
 const WEEK_POSITION: Coordinates2D = [30, 820];
 
-async function composeImage(backgroundFilePath, shieldFilePath, week = "", categoryText = "") {
+async function composeImage(
+  backgroundFilePath,
+  shieldFilePath,
+  week?: string,
+  categoryText?: string,
+  fontAsset?: string,
+) {
   const shield = sharp(shieldFilePath).trim({ threshold: 0 }).png({ compressionLevel: 0, quality: 100 });
   const { width: originalWidth = 0, height: originalHeight = 0 } = await shield.metadata();
 
@@ -40,11 +46,12 @@ async function composeImage(backgroundFilePath, shieldFilePath, week = "", categ
     },
   ];
 
-  if (week.length > 0) {
+  if (week && week.length > 0) {
     const input = addTextOnImage(`JORNADA ${week.toString().padStart(2, "0")}`, {
       height: 64,
       fontColor: "white",
       anchor: "start",
+      fontAsset,
     });
     if (input)
       layers.push({
@@ -54,8 +61,8 @@ async function composeImage(backgroundFilePath, shieldFilePath, week = "", categ
       });
   }
 
-  if (categoryText.length > 0) {
-    const input = addTextOnImage(categoryText, { height: 108, fontColor: "black", anchor: "start" });
+  if (categoryText && categoryText.length > 0) {
+    const input = addTextOnImage(categoryText, { height: 108, fontColor: "black", anchor: "start", fontAsset });
     if (input)
       layers.push({
         input,
@@ -101,6 +108,7 @@ export async function createThumnail(nodecg: NodeCG.ServerAPI): Promise<void> {
         join(process.cwd(), decodeURI(asset.url)),
         week.toString(),
         decodeURI(subtitle.toString()),
+        `/${nodecg.bundleName}/assets/fonts/AlumniSans-Bold.ttf`,
       ).then((image) => {
         image.toBuffer().then((buffer) => {
           res.type("png");
