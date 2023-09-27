@@ -29,7 +29,7 @@ export function addTextOnImage(
     fontAsset?: string;
   } = {},
 ) {
-  width ??= height * text.length * 0.5;
+  width = width ? Math.floor(width) : Math.floor(height * text.length * 0.5);
   const x = anchor === "middle" ? "50%" : "0";
   const fontCss = fontAsset
     ? `@font-face {
@@ -41,7 +41,7 @@ export function addTextOnImage(
 }`
     : "";
   try {
-    const fontSize = `${Math.floor(height * 0.6)}`;
+    const fontSize = `${Math.floor(height * 0.85)}`;
     const svgImage = `
     <svg width="${width}px" height="${height}px" xmlns="http://www.w3.org/2000/svg">
       <style>
