@@ -45,6 +45,18 @@
       "title": "Play Spot",
       "description": "If a spot must be played"
     },
+    "week": {
+      "type": "number",
+      "default": 0,
+      "title": "Week",
+      "description": "Week number"
+    },
+    "category": {
+      "type": "string",
+      "default": "PRIMERA NACIONAL",
+      "title": "Category",
+      "description": "Category name"
+    },
     "localTeamName": {
       "type": "string",
       "default": "Local Team",
