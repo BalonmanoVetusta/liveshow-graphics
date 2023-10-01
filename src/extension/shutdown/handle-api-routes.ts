@@ -4,12 +4,17 @@ import type NodeCG from "@nodecg/types";
 const SHUTDOWN_PASSWORD = process.env?.SHUTDOWN_PASSWORD; // Must be provided to perform shutdown
 
 export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
+  nodecg.log.info("Setting up shutdown API routes...");
   const router = nodecg.Router();
-  router.get("/", (req, res) => {
+  router.post("/", (req, res) => {
     // const { password } = req.body;
     // if (password !== SHUTDOWN_PASSWORD) {
     //   return res.status(403).send("Invalid password");
     // }
+
+    if (process.env.SHUTDOWN_AUTH_KEY && !req.headers.authorization?.includes(process.env.SHUTDOWN_AUTH_KEY)) {
+      return res.status(403).send("Invalid password");
+    }
 
     if (typeof SHUTDOWN_PASSWORD === typeof undefined)
       return res.status(500).json({
