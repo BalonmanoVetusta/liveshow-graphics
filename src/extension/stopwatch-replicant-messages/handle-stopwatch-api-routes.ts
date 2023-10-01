@@ -30,7 +30,8 @@ function getCurrentTimeResponse(stopwatchCurrentValue: Stopwatch): string {
   return `${minutes}:${seconds}`;
 }
 
-export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
+export function handleStopwatcApiRoutes(nodecg: NodeCG.ServerAPI) {
+  nodecg.log.info("Initializing stopwatch-api-routes");
   const router = nodecg.Router();
 
   function handleGetTime() {
@@ -46,27 +47,75 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
     return "00:00";
   }
 
-  router.get("/get", (req, res) => {
+  router.get("/", (req, res) => {
     return res.json(handleGetTime());
   });
 
-  router.get("/addOffset", (req, res) => {
+  router.post("/add-offset", (req, res) => {
     try {
-      const { offset = "0" } = req.query || {};
+      const { offset = "0" } = req.body || {};
+      nodecg.log.info(`Adding offset: ${offset}`);
       const offsetFormattedValue = parseInt(offset as string, 10) || 0;
+      nodecg.log.info(`Formatted offset value: ${offsetFormattedValue}`);
 
       handleStopwatchReplicant(nodecg, {
         type: StopwatchActions.ADD_OFFSET,
         payload: offsetFormattedValue,
       });
     } catch (error) {
-      // console.error(error);
+      console.error(error);
     }
 
     return res.json(handleGetTime());
   });
 
-  router.get("/start", (req, res) => {
+  router.put("/set-time", (req, res) => {
+    try {
+      const timeString = req.body?.timeString?.toString() || "";
+      const { time = "0" } = req.body || {};
+      let { minutes = "0", seconds = "0" } = req.body || {};
+
+      if (timeString.length > 0 && timeString.includes(":")) {
+        [minutes, seconds] = timeString.split(":");
+      }
+
+      if (timeString.length > 0 && !timeString.includes(":")) {
+        if (timeString.length === 4) {
+          minutes = timeString.slice(0, 2);
+          seconds = timeString.slice(2);
+        } else if (timeString.length === 3) {
+          minutes = timeString.slice(0, 1);
+          seconds = timeString.slice(1);
+        } else {
+          // I know this is weird, but to set seconds simply use addOffset and you will set 0 to 59 seconds fast
+          // But to set minutes can be difficult with the streamdeck =)
+          minutes = timeString;
+        }
+      }
+
+      let timeFormattedValue = parseInt(time as string, 10) || 0;
+
+      if (minutes !== "0" || seconds !== "0") {
+        const minutesFormattedValue = parseInt(minutes as string, 10) || 0;
+        const secondsFormattedValue = parseInt(seconds as string, 10) || 0;
+
+        timeFormattedValue = (minutesFormattedValue * 60 + secondsFormattedValue) * 1000;
+      }
+
+      if (timeFormattedValue < 0) throw new Error("Time must be positive");
+
+      handleStopwatchReplicant(nodecg, {
+        type: StopwatchActions.SET_OFFSET,
+        payload: timeFormattedValue,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
+    return res.json(handleGetTime());
+  });
+
+  router.post("/start", (req, res) => {
     try {
       const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
 
@@ -85,7 +134,7 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
     return res.json(handleGetTime());
   });
 
-  router.get("/stop", (req, res) => {
+  router.post("/stop", (req, res) => {
     try {
       const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
 
@@ -104,7 +153,7 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
     return res.json(handleGetTime());
   });
 
-  router.get("/reset", (req, res) => {
+  router.delete("/reset", (req, res) => {
     try {
       handleStopwatchReplicant(nodecg, {
         type: StopwatchActions.RESET,
@@ -117,7 +166,7 @@ export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
     return res.json("00:00");
   });
 
-  router.get("/toggle", (req, res) => {
+  router.post("/toggle", (req, res) => {
     const stopwatchCurrentValue = nodecg.readReplicant<Stopwatch>(STOPWATCH_REPLICANT_NAME, nodecg.bundleName);
     try {
       if (!stopwatchCurrentValue) throw new Error("stopwatchCurrentValue is undefined");
