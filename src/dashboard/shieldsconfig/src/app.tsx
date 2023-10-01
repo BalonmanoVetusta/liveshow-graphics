@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { AdvertisingConfig } from "./components/advertising-config";
 import { ShieldBgColor } from "./components/shield-bg-color";
 import { ShieldSelector } from "./components/shield-selector";
+import { WeekNumberInput } from "components/scoreboard/dashboard/week-number-input";
 
 const Shield = styled.img`
   width: 80px;
@@ -34,6 +35,10 @@ function App(): ReactElement {
 
   return (
     <>
+      <fieldset>
+        <legend>Global</legend>
+        <WeekNumberInput numberOfWeeks={30} />
+      </fieldset>
       <fieldset>
         <legend>Local</legend>
         <div>
@@ -89,7 +94,6 @@ function App(): ReactElement {
             onChange={(e) => {
               setGraphics({ visitorTeamName: e.target.value });
             }}
-            disabled={true}
           />
         </div>
         <div>
