@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { AdvertisingConfig } from "./components/advertising-config";
 import { ShieldBgColor } from "./components/shield-bg-color";
 import { ShieldSelector } from "./components/shield-selector";
-import { WeekNumberInput } from "components/scoreboard/dashboard/week-number-input";
+import { WeekNumberInput } from "components/scoreboard/dashboard/inputs/week-number-input";
 
 const Shield = styled.img`
   width: 80px;
