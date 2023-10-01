@@ -1,4 +1,4 @@
-import { CategoryNameInput } from "components/scoreboard/dashboard/category-namber-input";
+import { CategoryNameInput } from "components/scoreboard/dashboard/category-name-input";
 import { WeekNumberInput } from "components/scoreboard/dashboard/week-number-input";
 import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
 import { useReplicant } from "hooks/use-replicant";
