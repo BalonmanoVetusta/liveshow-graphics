@@ -18,6 +18,7 @@ function graphicsReplicant(nodecg: NodeCG.ServerAPI) {
 
 export default async function handleGraphicsRoutes(nodecg: NodeCG.ServerAPI): Promise<void> {
   const router = nodecg.Router();
+  graphicsReplicant(nodecg);
 
   router.post("/advertising/:action?", (req, res) => {
     const { action = "toggle" } = req.params;
@@ -49,6 +50,20 @@ export default async function handleGraphicsRoutes(nodecg: NodeCG.ServerAPI): Pr
       advertising: graphics.value.advertising,
       advertisingTime: graphics.value.advertisingTime,
     });
+  });
+
+  router.get("/match-filename", (_, res) => {
+    const { value } = graphicsReplicant(nodecg);
+
+    const date = new Date(); // Will be used as fallback
+    const week = value?.week
+      ? `J${value.week.toString().padStart(2, "0")}`
+      : `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+    const local = value?.localTeamName ?? "Local";
+    const visitor = value?.visitorTeamName ?? "Visitante";
+    const payload = `${week} - ${local} - ${visitor}`;
+
+    return res.json(payload);
   });
 
   nodecg.mount(`/${nodecg.bundleName}/graphics`, router);
