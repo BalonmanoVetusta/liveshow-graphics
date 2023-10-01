@@ -19,7 +19,7 @@ function graphicsReplicant(nodecg: NodeCG.ServerAPI) {
 export default async function handleGraphicsRoutes(nodecg: NodeCG.ServerAPI): Promise<void> {
   const router = nodecg.Router();
 
-  router.get("/advertising/:action?", (req, res) => {
+  router.post("/advertising/:action?", (req, res) => {
     const { action = "toggle" } = req.params;
     const formatedAction = action.toLowerCase();
 
