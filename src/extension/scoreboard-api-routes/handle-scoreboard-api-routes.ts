@@ -103,31 +103,27 @@ export function handleScoreboardApiRoutes(nodecg: NodeCG.ServerAPI) {
   });
 
   // Reset all goals handlers
-  router.delete("/reset", (req, res) => {
-    removeActionsByTeam(Team.LOCAL, MatchActionType.GOAL);
-    removeActionsByTeam(Team.VISITOR, MatchActionType.GOAL);
-
-    return res.sendStatus(200);
-  });
-
   router.delete("/reset/:team", (req, res) => {
     try {
-      const team = req.params.team.toUpperCase() as Team;
+      if (!req.params.team) {
+        removeActionsByTeam(Team.LOCAL, MatchActionType.GOAL);
+        removeActionsByTeam(Team.VISITOR, MatchActionType.GOAL);
+        return res.sendStatus(200);
+      }
 
-      if (!(team in Team)) {
+      const team = req.params.team?.toUpperCase() as Team;
+      if (team && !(team in Team)) {
         throw new Error(`Invalid team: ${team}`);
       }
 
-      removeActionsByTeam(team, MatchActionType.GOAL);
+      if (team) removeActionsByTeam(team, MatchActionType.GOAL);
 
       return res.sendStatus(200);
     } catch (e) {
-      // console.error(e);
+      console.error(e);
       return res.sendStatus(422);
     }
   });
-
-  nodecg.log.info("Registering /scoreboard API routes...", router.toString());
 
   nodecg.mount(`/${nodecg.bundleName}/scoreboard`, router);
 }
