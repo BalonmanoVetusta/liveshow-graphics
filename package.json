@@ -131,8 +131,19 @@
         "file": "scene-switcher.html",
         "width": 2,
         "height": "auto",
-        "headerColor": "#525F78",
-        "workspace": "1. Graphics: Scene Switcher",
+        "headerColor": "#f108f5",
+        "workspace": "1. Graphics",
+        "fullbleed": false,
+        "dialog": false
+      },
+      {
+        "name": "advertising",
+        "title": "Advertising settings",
+        "file": "advertising.html",
+        "width": 4,
+        "height": "auto",
+        "headerColor": "#f108f5",
+        "workspace": "1. Graphics",
         "fullbleed": false,
         "dialog": false
       }

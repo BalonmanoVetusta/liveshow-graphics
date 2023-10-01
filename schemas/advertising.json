@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "show": {
+      "type": "boolean",
+      "default": true,
+      "title": "Advertising",
+      "description": "If advertising must be showed"
+    },
+    "sleep": {
+      "type": "number",
+      "default": 10,
+      "title": "Time to show the advertising",
+      "description": "Time in seconds that a banner is showed before change it if more than one banner is available"
+    },
+    "current": {
+      "type": [
+        "number",
+        "string"
+      ],
+      "default": 0,
+      "title": "The current banner",
+      "description": "The current advertising component that is showed. This will allow the restart if deactivate the advertising and activate it again"
+    },
+    "banners": {
+      "type": "array",
+      "title": "Banners to be showed",
+      "description": "Banners that must be showed"
+    },
+    "position": {
+      "type": "string",
+      "default": "top center",
+      "title": "Scoreboard Position",
+      "description": "Scoreboard position",
+      "enum": [
+        "top center",
+        "top left",
+        "top right",
+        "bottom center",
+        "bottom left",
+        "bottom right",
+        "middle left",
+        "middle right",
+        "middle center"
+      ]
+    }
+  }
+}
