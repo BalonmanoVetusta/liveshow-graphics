@@ -5,6 +5,14 @@ const SHUTDOWN_PASSWORD = process.env?.SHUTDOWN_PASSWORD; // Must be provided to
 
 export function handleApiRoutes(nodecg: NodeCG.ServerAPI) {
   nodecg.log.info("Setting up shutdown API routes...");
+  if (!process.env.SHUTDOWN_AUTH_KEY) {
+    nodecg.log.warn("No shutdown auth key provided, shutdown API will be open to anyone");
+  }
+
+  if (!process.env.SHUTDOWN_PASSWORD) {
+    nodecg.log.warn("No shutdown password provided, shutdown API will not work");
+  }
+
   const router = nodecg.Router();
   router.post("/", (req, res) => {
     // const { password } = req.body;
