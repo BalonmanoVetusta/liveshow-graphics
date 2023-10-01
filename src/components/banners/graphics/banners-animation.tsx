@@ -50,9 +50,9 @@ export function BannersAnimation({ duration = 10, animation = 1, banners }: Bann
           key={banner.sum}
           src={banner.url}
           alt={banner.name}
-          initial={{ x: -1930, opacity: 0 }}
+          initial={{ x: -1930 }}
           transition={{ duration: animation }}
-          animate={{ x: 0, opacity: 1 }}
+          animate={{ x: 0 }}
           exit={{ opacity: 0 }}
           {...props}
         />
