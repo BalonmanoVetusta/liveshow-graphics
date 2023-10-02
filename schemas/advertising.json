@@ -16,9 +16,13 @@
       "description": "Time in seconds that a banner is showed before change it if more than one banner is available"
     },
     "current": {
-      "type": [
-        "number",
-        "string"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
       ],
       "default": 0,
       "title": "The current banner",
