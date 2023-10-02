@@ -25,10 +25,10 @@ export function ScoreboardTeam({ team }: { team: Team }) {
   return (
     <>
       <div className={`${team.toString().toLowerCase()}-team team`} data-active-info={isSevenPlayers}>
-        <ScoreboardShield team={Team.LOCAL} src={src} show={showShields} />
+        <ScoreboardShield team={team} src={src} show={showShields} />
         <ScoreboardTeamName name={name} show={showName} />
         <ScoreboardScore team={team} />
-        <Suspensions team={Team.LOCAL} />
+        <Suspensions team={team} />
       </div>
     </>
   );
