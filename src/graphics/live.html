@@ -4,47 +4,12 @@
   <head>
     <meta charset="utf-8" />
     <title>Handball Liveshow</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@400;600;700;900&display=swap"
-      rel="stylesheet" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/bundles/handball-liveshow-spain/assets/fonts/fonts.css" type="text/css"
+      charset="utf-8" />
+    <link rel="stylesheet" href="/bundles/handball-liveshow-spain/assets/styles/global-position.css" type="text/css"
+      charset="utf-8" />
     <style>
-      [data-position] {
-        position: fixed;
-      }
-
-      [data-position~="top"] {
-        top: max(var(--offset-top, var(--offset, 0)),
-            env(safe-area-inset-top, 0));
-      }
-
-      [data-position~="bottom"] {
-        bottom: var(--offset-bottom, var(--offset, 0));
-      }
-
-      [data-position~="right"] {
-        right: var(--offset-right, var(--offset, env(safe-area-inset-right, 0)));
-      }
-
-      [data-position~="left"] {
-        left: var(--offset-left, var(--offset, env(safe-area-inset-left, 0)));
-      }
-
-      [data-position~="center"] {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-
-      [data-position~="middle"] {
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    </style>
-    <style>
-      @import url("https://fonts.cdnfonts.com/css/cursed-timer-ulil");
-
       .national {
         font-family: "Alumni Sans", sans-serif;
         font-weight: 500;
