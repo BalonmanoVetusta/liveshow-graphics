@@ -1,10 +1,5 @@
-export declare type Asset = {
-  base: string;
-  namespace: string;
-  ext: string;
-  name: string;
-  sum: string;
-  url: string;
-};
+import NodeCG from "@nodecg/types";
+
+export declare type Asset = NodeCG.AssetFile;
 
 export declare type AssetsReplicant = Asset[];

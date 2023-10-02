@@ -9,21 +9,20 @@
       "title": "Advertising",
       "description": "If advertising must be showed"
     },
+    "transition": {
+      "type": "number",
+      "default": 2,
+      "title": "Animation Duration",
+      "description": "How long it takes to show the advertising"
+    },
     "sleep": {
       "type": "number",
-      "default": 10,
+      "default": 20,
       "title": "Time to show the advertising",
       "description": "Time in seconds that a banner is showed before change it if more than one banner is available"
     },
     "current": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "number"
-        }
-      ],
+      "type": "number",
       "default": 0,
       "title": "The current banner",
       "description": "The current advertising component that is showed. This will allow the restart if deactivate the advertising and activate it again"
@@ -33,21 +32,21 @@
       "title": "Banners to be showed",
       "description": "Banners that must be showed"
     },
+    "maxHeight": {
+      "type": "string",
+      "default": "120px",
+      "title": "Max Height",
+      "description": "Max height of the banner"
+    },
     "position": {
       "type": "string",
-      "default": "top center",
+      "default": "bottom",
       "title": "Scoreboard Position",
-      "description": "Scoreboard position",
+      "description": "Scoreboard position, only bottom top or middle because the animation",
       "enum": [
-        "top center",
-        "top left",
-        "top right",
-        "bottom center",
-        "bottom left",
-        "bottom right",
-        "middle left",
-        "middle right",
-        "middle center"
+        "bottom",
+        "top",
+        "middle"
       ]
     }
   }
