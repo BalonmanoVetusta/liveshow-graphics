@@ -42,7 +42,7 @@ export default function SuspensionItem({
     const exactMatchTime = matchTime - oddTime;
     const calculatedCurrentSuspensionTime = suspensionTimeMilliseconds + 1000 - (time - exactMatchTime); // sum 1000 because the odd time causes to show always 1:59 instead of 2:00 even with stopped time
     const minutes = Math.floor(calculatedCurrentSuspensionTime / 60000);
-    const seconds = Math.floor((calculatedCurrentSuspensionTime % 60000) / 1000);
+    const seconds = minutes === 2 || minutes === 4 ? 0 : Math.floor((calculatedCurrentSuspensionTime % 60000) / 1000);
 
     return {
       minutes,
