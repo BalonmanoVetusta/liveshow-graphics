@@ -72,3 +72,12 @@ Were copied from project [use-nodecg](https://github.com/Hoishin/use-nodecg). Th
 
 - `add`
 - `remove`
+
+
+## LICENSE
+
+MIT, see [LICENSE](./LICENSE) file.
+
+[Alumni Sans Font](https://github.com/googlefonts/alumni) is licensed under [SIL Open Font License]([./assets/fonts/alumni-sans/LICENSE.txt](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)). See [README.md](./assets/fonts/alumni-sans/README.md) file on [assets/fonts/alumni-sans](./assets/fonts/alumni-sans) folder.
+
+[Cursed Timer Ulil Font](https://www.fontspace.com/cursed-timer-ulil-font-f29411) is licensed under Freeware License. See [README.md](./assets/fonts/CursedTimerUlil-Aznm/README.md) file on [assets/fonts/CursedTimerUlil-Aznm](./assets/fonts/CursedTimerUlil-Aznm) folder.
