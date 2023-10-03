@@ -3,12 +3,11 @@ import { InputTimeShowAdvertising } from "./form-elements/input-time-show-advert
 
 export function AdvertisingDashboard() {
   return (
-    <div>
-      <h1>Advertising Dashboard</h1>
+    <>
       <fieldset>
         <InputTimeShowAdvertising />
         <ShowAdvertisingInput />
       </fieldset>
-    </div>
+    </>
   );
 }

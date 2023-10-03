@@ -3,11 +3,12 @@ import { useId } from "react";
 
 export function InputTimeShowAdvertising({ label }: { label?: string }) {
   const id = useId();
-  const { sleep, setAdvertising } = useAdvertisingReplicant();
+  const { sleep, setAdvertising, show } = useAdvertisingReplicant();
   return (
     <>
       {label ? <label htmlFor={`time-show-advertising-${id}`}>{label}</label> : null}
       <input
+        disabled={!!show}
         type="number"
         name="time-show-advertising"
         id={`time-show-advertising-${id}`}
@@ -23,6 +24,8 @@ export function InputTimeShowAdvertising({ label }: { label?: string }) {
           setAdvertising({ sleep: newValue });
         }}
       />
+      <small>Oculta la publicidad para poder modificar el tiempo</small>
+      {/* <small>You should hide advertising to modify the time</small> */}
     </>
   );
 }
