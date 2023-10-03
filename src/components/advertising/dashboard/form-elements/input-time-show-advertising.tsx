@@ -24,7 +24,6 @@ export function InputTimeShowAdvertising({ label }: { label?: string }) {
           setAdvertising({ sleep: newValue });
         }}
       />
-      <small>Oculta la publicidad para poder modificar el tiempo</small>
       {/* <small>You should hide advertising to modify the time</small> */}
     </>
   );
