@@ -25,10 +25,10 @@ await Bun.build({
   splitting: true,
   sourcemap: "external",
   root: ".",
-  loader: {
-    ".woff": "dataurl",
-    ".woff2": "dataurl",
-  },
+  // loader: {
+  //   ".woff": "dataurl",
+  //   ".woff2": "dataurl",
+  // },
   plugins: [html()],
 });
 
@@ -42,10 +42,10 @@ await Bun.build({
   splitting: true,
   sourcemap: "external",
   root: ".",
-  loader: {
-    ".woff": "dataurl",
-    ".woff2": "dataurl",
-  },
+  // loader: {
+  //   ".woff": "dataurl",
+  //   ".woff2": "dataurl",
+  // },
   plugins: [html()],
 });
 
