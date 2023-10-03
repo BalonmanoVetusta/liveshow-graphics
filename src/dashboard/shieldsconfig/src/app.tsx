@@ -3,7 +3,6 @@ import { Team } from "hooks/use-match-actions/types";
 import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement } from "react";
 import styled from "styled-components";
-import { AdvertisingConfig } from "./components/advertising-config";
 import { ShieldBgColor } from "./components/shield-bg-color";
 import { ShieldSelector } from "./components/shield-selector";
 import { WeekNumberInput } from "components/scoreboard/dashboard/inputs/week-number-input";
@@ -112,8 +111,6 @@ function App(): ReactElement {
           Toggle Sides
         </button>
       </fieldset>
-
-      <AdvertisingConfig />
     </>
   );
 }

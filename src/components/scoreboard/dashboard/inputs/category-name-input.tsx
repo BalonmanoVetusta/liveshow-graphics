@@ -14,7 +14,7 @@ export function CategoryNameInput({ onChange }: Partial<CategoryNameInputProps> 
       <input
         type="text"
         name="category-name"
-        id={`${id}-category-name`}
+        id={`category-name-${id}`}
         value={category}
         placeholder="Category Name"
         onChange={(event) => {

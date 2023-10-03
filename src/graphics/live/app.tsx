@@ -1,9 +1,9 @@
-// import { PlayerInfoPayload, Team } from "hooks/use-match-actions/types";
-import { AdvertisingBanners } from "components/banners/graphics";
+// import { PlayerInfoPayload, Team } from "hooks/use-match-action
 import { BroadcastScene } from "components/scenes/broadcast-scene";
 import { useCSSVariables } from "hooks/use-css-variables";
 import { ReactElement } from "react";
 import { registeredScenes } from "./scenes";
+import { AdvertisingGraphics } from "components/advertising/graphics";
 // import { SCOREBOARD_MAIN_TIMER } from "services/scoreboard-main-timer";
 
 function App(): ReactElement | null {
@@ -11,7 +11,7 @@ function App(): ReactElement | null {
   return (
     <>
       <BroadcastScene scenes={registeredScenes} />
-      <AdvertisingBanners />
+      <AdvertisingGraphics />
     </>
   );
 }

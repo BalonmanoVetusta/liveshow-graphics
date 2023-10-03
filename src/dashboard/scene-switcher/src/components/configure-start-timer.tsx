@@ -1,12 +1,9 @@
 import { StartCountdownText } from "components/start-countdown-text";
 import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
-import { useEffect } from "react";
 
 export function ConfigureStartTimer() {
   const { startTime, startTimeFinishText, setGraphics } = useGraphicsReplicant();
-  useEffect(() => {
-    console.log({ startTime });
-  }, [startTime]);
+
   return (
     <>
       <h3>

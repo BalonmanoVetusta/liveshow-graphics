@@ -1,0 +1,30 @@
+[data-position] {
+  position: fixed;
+}
+
+[data-position~="top"] {
+  top: max(var(--offset-top, var(--offset, 0)),
+      env(safe-area-inset-top, 0));
+}
+
+[data-position~="bottom"] {
+  bottom: var(--offset-bottom, var(--offset, 0));
+}
+
+[data-position~="right"] {
+  right: var(--offset-right, var(--offset, env(safe-area-inset-right, 0)));
+}
+
+[data-position~="left"] {
+  left: var(--offset-left, var(--offset, env(safe-area-inset-left, 0)));
+}
+
+[data-position~="center"] {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+[data-position~="middle"] {
+  top: 50%;
+  transform: translateY(-50%);
+}

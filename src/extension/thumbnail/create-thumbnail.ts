@@ -36,7 +36,7 @@ export async function createThumnail(nodecg: NodeCG.ServerAPI): Promise<void> {
         join(process.cwd(), decodeURI(asset.url)),
         week.toString(),
         decodeURI(subtitle.toString()),
-        `/bundles/${nodecg.bundleName}/assets/fonts/AlumniSans-Bold.ttf`,
+        `/bundles/${nodecg.bundleName}/assets/fonts/AlumniSans/AlumniSans-Black.ttf`,
       )
         .then((image) => {
           image.toBuffer().then((buffer) => {
@@ -81,7 +81,7 @@ export async function createThumnail(nodecg: NodeCG.ServerAPI): Promise<void> {
         join(process.cwd(), decodeURI(asset.url)),
         week.toString(),
         decodeURI(subtitle.toString()),
-        `/bundles/${nodecg.bundleName}/assets/fonts/AlumniSans-Bold.ttf`,
+        `/bundles/${nodecg.bundleName}/assets/fonts/AlumniSans/AlumniSans-Black.ttf`,
       )
         .then((image) => {
           image.toBuffer().then((buffer) => {
