@@ -16,6 +16,7 @@ export const SideFromLeftContainer = styled.div<
     object-fit: cover;
     position: absolute;
     left: -110%;
+    bottom: 0;
   }
   & > *.in {
     left: 50%;
@@ -27,10 +28,6 @@ export const SideFromLeftContainer = styled.div<
     left: 210%;
     transform: translateX(-50%);
     transition: all ${(props) => props.$animationDuration}s linear;
-  }
-
-  body {
-    overflow: hidden;
   }
 `;
 SideFromLeftContainer.defaultProps = {

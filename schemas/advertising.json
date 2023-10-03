@@ -17,15 +17,15 @@
     },
     "sleep": {
       "type": "number",
-      "default": 20,
+      "default": 5,
       "title": "Time to show the advertising",
       "description": "Time in seconds that a banner is showed before change it if more than one banner is available"
     },
     "current": {
       "type": "number",
       "default": 0,
-      "title": "The current banner",
-      "description": "The current advertising component that is showed. This will allow the restart if deactivate the advertising and activate it again"
+      "title": "The current index element",
+      "description": "The current advertising HTML Element that is showed. This will allow the restart if deactivate the advertising and activate it again"
     },
     "banners": {
       "type": "array",
@@ -37,17 +37,6 @@
       "default": "120px",
       "title": "Max Height",
       "description": "Max height of the banner"
-    },
-    "position": {
-      "type": "string",
-      "default": "bottom",
-      "title": "Scoreboard Position",
-      "description": "Scoreboard position, only bottom top or middle because the animation",
-      "enum": [
-        "bottom",
-        "top",
-        "middle"
-      ]
     }
   }
 }

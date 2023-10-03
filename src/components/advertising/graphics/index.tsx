@@ -13,22 +13,30 @@ function useRotationFromReplicant() {
 
   return {
     ...props,
+    transition: transitionDuration,
     ...useRotation({
       timeShowElement,
       transitionDuration,
       initial,
-      onNewIndex: (idx) => setAdvertising({ current: idx }),
+      onNewIndex: (idx: number) => setAdvertising({ current: idx }),
     }),
   };
 }
 
 export function AdvertisingGraphics() {
-  const { ref, show, position = "bottom", maxHeight = "120px" } = useRotationFromReplicant();
+  // const { ref, show = true, position = "bottom", maxHeight = "120px", transition } = useRotationFromReplicant();
+  const { ref, maxHeight = "120px", transition } = useRotationFromReplicant();
 
-  if (!show) return null;
+  // if (!show) return null;
 
   return (
-    <SideFromLeftContainer data-position={position} $maxWidth="100%" $maxHeight={maxHeight} ref={ref}>
+    <SideFromLeftContainer
+      $animationDuration={transition}
+      $waitPreviousDissapear={true}
+      $maxWidth="100%"
+      $maxHeight={maxHeight}
+      ref={ref}
+    >
       <h1>Advertising Graphics</h1>
       <h1>Another Element as text</h1>
     </SideFromLeftContainer>
