@@ -4,8 +4,6 @@ import { Graphics } from "types/schemas/graphics";
 export function useGraphicsReplicant() {
   const [graphics, setInternalGraphics] = useReplicant<Graphics>("graphics", {
     bgColor: "#00ff00",
-    advertising: true,
-    advertisingTime: 10,
     music: false,
     spot: false,
     localShield: "https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg",
