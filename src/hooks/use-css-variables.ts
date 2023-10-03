@@ -54,7 +54,7 @@ export function useCSSVariables({
 }
 
 // Default colors
-export const DEFAULT_BG_COLOR = "#0f0";
+export const DEFAULT_BG_COLOR = "#00ff00";
 
 // Css variables names
 export const BACKGROUND_COLOR_CSS_VAR = "--background-color";

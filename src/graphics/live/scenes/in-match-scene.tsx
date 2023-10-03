@@ -13,7 +13,7 @@ import { ReactElement, useLayoutEffect, useMemo } from "react";
 import Scoreboard from "components/scoreboard/graphics/scoreboard";
 
 // Scene style
-const BACKGROUND_COLOR = "#0f0";
+const BACKGROUND_COLOR = "#00ff00";
 
 const START_SEVEN_PLAYERS = "START_SEVEN_PLAYERS";
 const END_SEVEN_PLAYERS = "END_SEVEN_PLAYERS";
