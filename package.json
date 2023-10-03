@@ -263,7 +263,7 @@
     "tabWidth": 2
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "bun lint"
+    "*.{js,jsx,ts,tsx}": "npm run lint"
   },
   "browserslist": "> 1.5% and last 2 versions, not op_mini all and not ios_saf >= 0 and not and_chr >=0"
 }

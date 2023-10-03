@@ -5,7 +5,6 @@ export const SideFromLeftContainer = styled.div<
   Partial<{
     $animationDuration: number;
     $waitPreviousDissapear: boolean;
-    $maxHeight: string;
   }>
 >`
   & > * {
@@ -18,7 +17,7 @@ export const SideFromLeftContainer = styled.div<
 
     min-width: max-content;
     max-width: 100%;
-    max-height: ${(props) => props.$maxHeight};
+    max-height: var(--banners-max-height, 200px);
 
     display: flex;
     flex-direction: column;
@@ -40,5 +39,4 @@ export const SideFromLeftContainer = styled.div<
 SideFromLeftContainer.defaultProps = {
   $animationDuration: 1,
   $waitPreviousDissapear: true,
-  $maxHeight: "auto",
 };
