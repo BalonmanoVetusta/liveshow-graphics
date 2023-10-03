@@ -32,8 +32,6 @@
         --visitor-shield-background-color: white;
         --advertising-background-color: var(--vetusta-new-yellow-color);
 
-        /* Not used yet */
-
         --space-margin: 5px;
         --scoreboard-space-margin: 10px;
         --space-magin-score-left: 15px 5px 10px;
@@ -42,7 +40,7 @@
         --score-border-radius-left: 20px 0 0 20px;
         --font-size: 22px;
         --font-color: black;
-        --font-score-size: 32px;
+        --font-score-size: 28px;
         --shield-size: 35px;
         --shield-div-scale: 1.6;
         --image-scale: 1.05;
@@ -51,6 +49,7 @@
         --font-color-info: red;
         --emty-goal-size: 16px;
 
+        --scoreboard-zoom: 1.1;
         --scoreboard-font-color: black;
 
         --stopwatch-padding: 5px 5px;
@@ -73,8 +72,8 @@
 
         --banners-max-height: 120px;
 
-
-        --font-size-card: calc(10px * var(--size-scale-factor, 1));
+        --font-size-card: 10px;
+        --suspension-font-size: 18px;
       }
 
       body {
@@ -101,6 +100,7 @@
       }
 
       .scoreboard {
+        zoom: var(--scoreboard-zoom, 1);
         display: inline-flex;
         justify-content: center;
         align-items: center;

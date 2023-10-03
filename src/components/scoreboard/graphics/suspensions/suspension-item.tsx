@@ -10,10 +10,11 @@ const StyledSuspensionItem = styled.li`
   border-radius: var(--suspension-border-radius, 8px);
   margin: 0;
   padding: 2px 5px;
+  font-size: var(--suspension-font-size, 18px);
 
   &[data-number]:before {
     content: attr(data-number);
-    color: var(--suspension-number-font-color, #ccc);
+    color: var(--suspension-number-font-color, #cccccc);
     border-radius: 5px;
     padding: 1px 5px;
   }
