@@ -14,7 +14,7 @@
     "extension"
   ],
   "scripts": {
-    "bundle:tbz2": "rm -f handball-liveshow-spain.tar.bz2 && npm run build:clean && npm run build && tar cvjf handball-liveshow-spain.tar.bz2 cfg dashboard extension graphics assets schemas package.json",
+    "bundle": "rm -f handball-liveshow-spain.tar.bz2 && npm run build:clean && npm run build && tar cvjf handball-liveshow-spain.tar.bz2 cfg dashboard extension graphics assets schemas package.json",
     "pm:start": "pm2 restart ecosystem.config.js",
     "prepm:dev": "./bin/create-local-docker-dev",
     "pm:dev": "pm2 restart docker-dev-ecosystem.config.js --env development",
@@ -27,11 +27,10 @@
     "watch:graphics": "parcel watch src/graphics/*.html --dist-dir ./ --target graphics",
     "watch:extension": "parcel watch --dist-dir ./ --target extension",
     "prebuild": "npm run build:schemas",
-    "build": "npm run build:dashboard && npm run build:graphics && npm run build:extension",
+    "build": "npm run build:bun && npm run build:extension",
+    "build:bun": "bun --bun run ./bin/build.js",
     "build:clean": "rm -rf .parcel-cache dashboard extension graphics",
     "build:schemas": "rm -rf ./types/schemas/*.d.ts && cd schemas && json2ts -i '*.json' -o ../src/types/schemas/ && cd ..",
-    "build:dashboard": "parcel build src/dashboard/*.html --dist-dir ./ --target dashboard",
-    "build:graphics": "parcel build src/graphics/*.html --dist-dir ./ --target graphics",
     "build:extension": "parcel build --no-content-hash --dist-dir ./ --target extension",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
@@ -241,6 +240,7 @@
   "dependencies": {
     "@mdi/js": "7.2.96",
     "@mdi/react": "1.6.1",
+    "bun-plugin-html": "^1.2.0",
     "core-js": "3.32.2",
     "framer-motion": "10.16.4",
     "nodecg": "2.1.11",
