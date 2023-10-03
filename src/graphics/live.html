@@ -45,7 +45,7 @@
         --font-score-size: calc(32px * var(--size-scale-factor, 1));
         --shield-size: calc(35px * var(--size-scale-factor, 1));
         --shield-div-scale: calc(1.8 * var(--size-scale-factor, 1));
-        --image-scale: calc(1.2 * var(--size-scale-factor, 1));
+        --image-scale: calc(1 * var(--size-scale-factor, 1));
         --font-size-info: calc(12px * var(--size-scale-factor, 1));
         --font-size-time: calc(48px * var(--size-scale-factor, 1));
         --font-color-info: red;
@@ -179,6 +179,8 @@
       }
 
       .shield {
+        display: flex;
+        justify-content: center;
         border-radius: var(--shield-div-border-radius, calc(50px * var(--size-scale-factor, 1)) calc(25px * var(--size-scale-factor, 1)));
         overflow: hidden;
         rotate: -45deg;
@@ -229,10 +231,11 @@
       }
 
       .shield img {
-        display: flex;
-        width: var(--shield-size, 30px);
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: cover;
         rotate: 45deg;
-        transform: scale(var(--image-scale, 1.2));
+        transform: scale(var(--image-scale, 1));
       }
 
       .local-team>.shield {
