@@ -18,6 +18,7 @@ export const SideFromLeftContainer = styled.div<
     min-width: max-content;
     max-width: 100%;
     max-height: var(--banners-max-height, 200px);
+    background-color: var(--advertising-background-color, var(--vetusta-new-yellow-color, transparent));
 
     display: flex;
     flex-direction: column;

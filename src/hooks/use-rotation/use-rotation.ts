@@ -7,6 +7,7 @@ type UseRotationProps = {
   classNameIn: string;
   classNameOut: string;
   initial: number;
+  initialStart: boolean;
   onNewIndex: (current: number) => void;
 };
 
@@ -17,31 +18,34 @@ export function useRotation({
   classNameIn = "in",
   classNameOut = "out",
   initial = 0,
+  initialStart = true,
   onNewIndex = () => undefined,
 }: Partial<UseRotationProps> = {}) {
   const intervalTime = 1000 * (waitPreviousDisappear ? timeShowElement + transitionDuration : timeShowElement);
   const ref = useRef(null);
-  const [current, setCurrent] = useState(initial);
+  const interval = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [current, setCurrent] = useState<number>(initial); // Current element index
+  const [start, setStart] = useState<boolean>(initialStart);
 
   useLayoutEffect(() => {
     const adverts = Array.from((ref.current as unknown as HTMLDivElement)?.children ?? []);
-    console.log({ adverts });
     if (adverts.length === 0) return;
-    let interval: null | ReturnType<typeof setInterval> = null;
-    console.log({ adverts });
+
+    if (!start) {
+      if (interval.current) clearInterval(interval.current);
+      adverts.forEach((el) => el.classList.remove(classNameIn, classNameOut));
+      return;
+    }
 
     setTimeout(() => adverts?.[current]?.classList.add(classNameIn), 1);
-    interval = setInterval(() => {
+    interval.current = setInterval(() => {
       setCurrent((prev = 0) => {
         const next = (prev + 1) % adverts.length;
         adverts[prev].classList.replace(classNameIn, classNameOut);
         adverts[next].classList.add(classNameIn); // Add in class to current element
-        console.log(adverts[next]);
         setTimeout(() => {
           adverts.forEach((el) => el.classList.remove(classNameOut));
         }, transitionDuration * 1000); // Remove out class after transition
-
-        console.log({ next, prev, adverts: adverts.length });
         // New element is shown
         onNewIndex(next);
 
@@ -50,10 +54,10 @@ export function useRotation({
     }, intervalTime);
 
     return () => {
-      if (interval) clearInterval(interval);
+      if (interval.current) clearInterval(interval.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ref.current]);
+  }, [ref.current, start]);
 
-  return { ref, current };
+  return { ref, current, setStart };
 }
