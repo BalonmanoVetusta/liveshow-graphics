@@ -14,7 +14,8 @@
     "extension"
   ],
   "scripts": {
-    "bundle": "rm -f handball-liveshow-spain.tar.bz2 && npm run build:clean && npm run build && tar cvjf handball-liveshow-spain.tar.bz2 cfg dashboard extension graphics assets schemas package.json",
+    "prebundle": "rm -f handball-liveshow-spain.tar.bz2 && bun run build:clean",
+    "bundle": "npm run build && tar cvjf handball-liveshow-spain.tar.bz2 cfg dashboard extension graphics assets schemas package.json",
     "pm:start": "pm2 restart ecosystem.config.js",
     "prepm:dev": "./bin/create-local-docker-dev",
     "pm:dev": "pm2 restart docker-dev-ecosystem.config.js --env development",
