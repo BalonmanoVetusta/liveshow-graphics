@@ -1,6 +1,7 @@
 import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
 import { useMatchActions } from "hooks/use-match-actions";
 import { Team } from "hooks/use-match-actions/types";
+import { MaxTimeUnit, useStopwatchReplicantReader } from "hooks/use-stopwatch-replicant";
 import { TeamSideOptions, useTeamSide } from "hooks/use-team-side";
 import styled from "styled-components";
 
@@ -33,6 +34,14 @@ export function TeamNotInMatch({ team }: { team: Team }) {
   const { localTeamSide } = useTeamSide();
   const { localShield, visitorShield } = useGraphicsReplicant();
   const { goals } = useMatchActions();
+  const {
+    minutes = 0,
+    seconds = 0,
+    // milliseconds = 0,
+    // periodTime = 0,
+  } = useStopwatchReplicantReader({
+    maxTimeUnit: MaxTimeUnit.MINUTES,
+  });
 
   const isLeftSide =
     (team === Team.LOCAL && localTeamSide === TeamSideOptions.LEFT) ||
@@ -46,7 +55,7 @@ export function TeamNotInMatch({ team }: { team: Team }) {
     <>
       <SideShield data-position={dataPosition}>
         <img src={src} alt="Shield" />
-        <div className="score">{scoreString}</div>
+        {minutes > 0 || seconds > 0 ? <div className="score">{scoreString}</div> : null}
       </SideShield>
     </>
   );
