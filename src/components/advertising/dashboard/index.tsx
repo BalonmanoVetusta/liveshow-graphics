@@ -1,4 +1,4 @@
-import { ShowAdvertisingInput } from "./form-elements/show-advertising";
+import { ShowAdvertisingInput } from "./form-elements/advertising-toggle-button";
 
 export function AdvertisingDashboard() {
   return (
