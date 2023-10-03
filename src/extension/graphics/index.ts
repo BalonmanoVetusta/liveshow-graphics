@@ -3,7 +3,7 @@ import { Advertising } from "types/schemas/advertising";
 import { Graphics } from "types/schemas/graphics";
 
 const GRAPHICS_REPLICANT_NAME = "graphics";
-const ADVERTISING_REPLICANT_NAME = "graphics";
+const ADVERTISING_REPLICANT_NAME = "advertising";
 const DEFAULT_ROTATION_TIME = 15;
 
 let graphics: NodeCG.ServerReplicant<Graphics> | undefined = undefined;
@@ -34,8 +34,8 @@ export default async function handleGraphicsRoutes(nodecg: NodeCG.ServerAPI): Pr
   graphicsReplicant(nodecg);
   advertisingReplicant(nodecg);
 
-  router.post("/advertising/:action?", (req, res) => {
-    const { action = "toggle" } = req.params;
+  router.post("/advertising/:action", (req, res) => {
+    const { action } = req.params;
     const formatedAction = action.toLowerCase();
 
     const advRpc = advertisingReplicant(nodecg);
@@ -48,7 +48,7 @@ export default async function handleGraphicsRoutes(nodecg: NodeCG.ServerAPI): Pr
     }
 
     if (formatedAction === "toggle") {
-      advRpc.value.show = !advRpc.value.show;
+      advRpc.value.show = !advRpc.value?.show;
     }
 
     if (formatedAction === "show") {
