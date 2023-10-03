@@ -1,39 +1,15 @@
-import { useAdvertisingReplicant } from "hooks/replicants/use-advertising-replicant";
 import { SideFromLeftContainer } from "./side-fron-left-container";
-import { useRotation } from "hooks/use-rotation";
-
-function useRotationFromReplicant() {
-  const {
-    current: initial = 0,
-    transition: transitionDuration,
-    sleep: timeShowElement,
-    setAdvertising,
-    ...props
-  } = useAdvertisingReplicant();
-
-  return {
-    ...props,
-    transition: transitionDuration,
-    ...useRotation({
-      timeShowElement,
-      transitionDuration,
-      initial,
-      onNewIndex: (idx: number) => setAdvertising({ current: idx }),
-    }),
-  };
-}
+import { useRotationFromReplicant } from "hooks/use-rotation/use-rotation-from-replicant";
 
 export function AdvertisingGraphics() {
-  // const { ref, show = true, position = "bottom", maxHeight = "120px", transition } = useRotationFromReplicant();
-  const { ref, maxHeight = "120px", transition } = useRotationFromReplicant();
+  const { ref, maxHeight = "120px", transition, show = false } = useRotationFromReplicant();
 
-  // if (!show) return null;
+  if (!show) return null;
 
   return (
     <SideFromLeftContainer
       $animationDuration={transition}
       $waitPreviousDissapear={true}
-      $maxWidth="100%"
       $maxHeight={maxHeight}
       ref={ref}
     >

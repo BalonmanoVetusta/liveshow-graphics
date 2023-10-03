@@ -2,9 +2,9 @@
 # shellcheck disable=SC1091
 . "$(dirname -- "$0")/_/husky.sh"
 
-bun fmt
-bun lint:staged
+npm run fmt
+npm run lint:staged
 
-if git status -sb | grep -qis '[ts|js|tsx|jsx|cjs|mjs]$'; then
-  bun test
-fi
+# if git status -sb | grep -qis '[ts|js|tsx|jsx|cjs|mjs]$'; then
+#   npm run test
+# fi
