@@ -58,7 +58,7 @@ export default function InMatchScene(): ReactElement | null {
       ...prev,
       [BACKGROUND_COLOR_CSS_VAR]: BACKGROUND_COLOR,
       [BANNER_MAX_HEIGHT_CSS_VAR]: "130px",
-      [OFFSET_TOP_CSS_VAR]: "30px",
+      [OFFSET_TOP_CSS_VAR]: "20px",
       [OFFSET_BOTTOM_CSS_VAR]: "0",
       [OFFSET_LEFT_CSS_VAR]: "0",
       [OFFSET_RIGT_CSS_VAR]: "0",
