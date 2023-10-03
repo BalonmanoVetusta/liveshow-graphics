@@ -42,8 +42,8 @@ function App(): ReactElement {
         <legend>Opciones para hacer la miniatura de Youtube</legend>
         <div>
           <select
-            name={`${id}-shield`}
-            id={`${id}-shield`}
+            name={`shield-${id}`}
+            id={`shield-${id}`}
             onChange={(event) => {
               event.preventDefault();
               const newShield = shields.find((s) => s.sum === event.target.value);

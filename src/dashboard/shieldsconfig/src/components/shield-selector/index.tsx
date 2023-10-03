@@ -27,10 +27,10 @@ export function ShieldSelector({
 
   return (
     <>
-      <label htmlFor={`${id}-shield`}>{label}</label>
+      <label htmlFor={`shield-${id}`}>{label}</label>
       <select
-        name={`${id}-shield`}
-        id={`${id}-shield`}
+        name={`shield-${id}`}
+        id={`shield-${id}`}
         onChange={(event) => {
           event.preventDefault();
           const newValue = event.target.value;

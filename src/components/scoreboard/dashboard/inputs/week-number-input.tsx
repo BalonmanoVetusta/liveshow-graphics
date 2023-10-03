@@ -17,12 +17,12 @@ export function WeekNumberInput({ label, numberOfWeeks, onChange }: Partial<Week
   return (
     <>
       {/* <fieldset> */}
-      {label ? <label htmlFor={`${id}-week-number`}>{label}</label> : null}
+      {label ? <label htmlFor={`week-number-${id}`}>{label}</label> : null}
       <input
         placeholder="Week Number"
         type="number"
         name="week-number"
-        id={`${id}-week-number`}
+        id={`week-number-${id}`}
         min={0}
         max={numberOfWeeks}
         step={1}
