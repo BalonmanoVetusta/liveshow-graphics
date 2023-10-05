@@ -111,13 +111,23 @@
         "dialog": false
       },
       {
+        "name": "auto-goals",
+        "title": "Auto Goals",
+        "file": "auto-goals.html",
+        "width": 4,
+        "headerColor": "#525F78",
+        "workspace": "2. Scoreboard",
+        "fullbleed": false,
+        "dialog": false
+      },
+      {
         "name": "shields",
         "title": "Shields Selector",
         "file": "shieldsconfig.html",
         "width": 2,
         "height": "auto",
-        "headerColor": "#525F78",
-        "workspace": "2. Scoreboard",
+        "headerColor": "#f108f5",
+        "workspace": "1. Graphics",
         "fullbleed": false,
         "dialog": false
       },
