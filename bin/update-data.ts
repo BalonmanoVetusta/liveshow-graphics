@@ -1,22 +1,19 @@
 #!/usr/bin/env bun
-// Update the json data about federations and seasons and get the default values
+// Update the json data about tournaments for given federation and category
 import { join, resolve, dirname } from "path";
 import { mkdir } from "node:fs/promises";
-import { getFederationData } from "../src/services/rfebm-api";
+import { getCurrentSeasonId, getFederationData } from "../src/services/rfebm-api";
 import type { FederationResponse } from "../src/services/rfebm-api/types";
 
+const FEDERATION = 9999; // Federation to parse
+const CATEGORY = 200017; // Category to parse
+const CHAMPIONSHIP = 205385; // Championship to parse
+
 const dataPath = resolve(join(import.meta.dir, "..", "assets", "data"));
-const championshipId = 205385;
 await mkdir(dataPath, { recursive: true });
-const json = await getFederationData({
-  federationId: 9999,
-  seasonId: 2324,
-  categoryId: 200017,
-  championshipId,
-});
 
 async function updateSubfederations({ subFederations = [], id }: FederationResponse) {
-  if (subFederations.length === 0) return;
+  if (subFederations.length <= 1) return;
   const filePath = join(dataPath, id.toString(), "subfederations.json");
   try {
     await mkdir(dirname(filePath), { recursive: true });
@@ -58,9 +55,12 @@ async function updateSeasons({ seasons }: FederationResponse) {
   }
 }
 
-async function updateChampionships({ championships, seasons, id: federationId }: FederationResponse) {
+async function updateChampionships({
+  championships,
+  id: federationId,
+  seasonId,
+}: FederationResponse & { seasonId: number }) {
   if (championships.length === 0) return;
-  const seasonId = seasons.sort((a, b) => b.id - a.id)[0].id; // latest season
   const filePath = join(dataPath, federationId.toString(), seasonId.toString(), "championships.json");
   try {
     await mkdir(dirname(filePath), { recursive: true });
@@ -74,10 +74,14 @@ async function updateChampionships({ championships, seasons, id: federationId }:
   }
 }
 
-async function updateTournaments({ seasons, tournaments, id: federationId }: FederationResponse) {
+async function updateTournaments({
+  tournaments,
+  id: federationId,
+  championshipId,
+  seasonId,
+}: FederationResponse & { championshipId: number; seasonId: number }) {
   if (tournaments.length === 0) return;
 
-  const seasonId = seasons.sort((a, b) => b.id - a.id)[0].id; // latest season
   const filePath = join(
     dataPath,
     federationId.toString(),
@@ -97,14 +101,27 @@ async function updateTournaments({ seasons, tournaments, id: federationId }: Fed
   }
 }
 
-if (json) {
-  Promise.all([
-    updateSubfederations(json),
-    updateCategories(json),
-    updateSeasons(json),
-    updateChampionships(json),
-    updateTournaments(json),
-  ]).then(() => {
-    console.log("Data updated");
+async function main(federationId: number, categoryId: number, championshipId?: number) {
+  const seasonId = getCurrentSeasonId();
+  const json = await getFederationData({
+    federationId,
+    seasonId,
+    categoryId,
+    championshipId,
   });
+
+  if (json) {
+    Promise.all([
+      updateSubfederations(json),
+      updateCategories(json),
+      updateSeasons(json),
+      updateChampionships({ ...json, seasonId }),
+      championshipId ? updateTournaments({ ...json, championshipId, seasonId }) : Promise.resolve(), // Not best solution at all
+    ]).then(() => {
+      console.log("Data updated");
+    });
+  }
 }
+
+// Start for a known federation and category
+main(FEDERATION, CATEGORY, CHAMPIONSHIP);

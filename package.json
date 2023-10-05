@@ -248,6 +248,7 @@
     "@mdi/js": "7.2.96",
     "@mdi/react": "1.6.1",
     "bun-plugin-html": "^1.2.0",
+    "bun-types": "^1.0.5-canary.20231005T140125",
     "core-js": "3.32.2",
     "framer-motion": "10.16.4",
     "nodecg": "2.1.11",
