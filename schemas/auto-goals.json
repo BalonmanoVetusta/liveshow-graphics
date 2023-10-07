@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "activate": {
+      "type": "boolean",
+      "default": true,
+      "title": "Is auto-goals enabled",
+      "description": "If it is activated or none"
+    },
+    "federationId": {
+      "type": "number",
+      "default": 9999
+    },
+    "subfederationId": {
+      "type": "number",
+      "default": 1
+    },
+    "seasonId": {
+      "type": "number",
+      "default": 1
+    },
+    "categoryId": {
+      "type": "number",
+      "default": 1
+    },
+    "championshipId": {
+      "type": "number",
+      "default": 1
+    },
+    "tournamentId": {
+      "type": "number",
+      "default": 1
+    }
+  }
+}

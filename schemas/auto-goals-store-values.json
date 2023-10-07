@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "federations": {
+        "type": "array",
+        "$ref": "./select-option-value.json"
+      },
+      "subfederations": {
+        "type": "array",
+        "$ref": "./select-option-value.json"
+      },
+      "seasons": {
+        "type": "array",
+        "$ref": "./select-option-value.json"
+      },
+      "categories": {
+        "type": "array",
+        "$ref": "./select-option-value.json"
+      },
+      "championships": {
+        "type": "array",
+        "$ref": "./select-option-value.json"
+      },
+      "tournaments": {
+        "type": "array",
+        "$ref": "./select-option-value.json"
+      }
+    }
+  }
+}
