@@ -32,6 +32,14 @@
     "tournamentId": {
       "type": "number",
       "default": 1
+    },
+    "matchId": {
+      "type": "number",
+      "default": 1
+    },
+    "week": {
+      "type": "number",
+      "default": 1
     }
   }
 }
