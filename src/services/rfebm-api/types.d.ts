@@ -39,7 +39,11 @@ export type SubFederation = {
 };
 
 // Tournament stuff
-export type GetTournamentDataParams = {
+export type GetFullTournamentDataParams = {
+  tournamentId: number;
+};
+
+export type GetTournamentDataOfWeekParams = {
   tournamentId: number;
   week?: number | "latest";
 };

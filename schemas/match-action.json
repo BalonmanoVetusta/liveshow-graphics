@@ -2,7 +2,13 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "additionalProperties": false,
   "type": "object",
-  "required": ["id", "gmtTimestamp", "matchTime", "team", "action"],
+  "required": [
+    "id",
+    "gmtTimestamp",
+    "matchTime",
+    "team",
+    "action"
+  ],
   "properties": {
     "id": {
       "type": "string"
@@ -15,7 +21,10 @@
       "minimum": 0
     },
     "team": {
-      "enum": ["LOCAL", "VISITOR"]
+      "enum": [
+        "LOCAL",
+        "VISITOR"
+      ]
     },
     "action": {
       "enum": [

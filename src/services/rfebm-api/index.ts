@@ -1,4 +1,10 @@
-import { FederationResponse, GetFederationDataParams, GetMatchDataParams, GetTournamentDataParams } from "./types";
+import {
+  FederationResponse,
+  GetFederationDataParams,
+  GetFullTournamentDataParams,
+  GetMatchDataParams,
+  GetTournamentDataOfWeekParams,
+} from "./types";
 export { getCurrentSeasonId } from "./get-current-season-id";
 
 const API_BASE_URL = "https://rfebm.7metros.es/api";
@@ -43,10 +49,26 @@ export async function getFederationData({
   return null;
 }
 
-export async function getTournamentData({
+export async function getFullTournamentData({ tournamentId }: Partial<GetFullTournamentDataParams>): Promise<unknown> {
+  const url = new URL(`${API_BASE_URL}/${API_VERSION}/tournament/${tournamentId}`);
+
+  try {
+    const response = await fetch(url.toString());
+    if (response.status !== 200) throw new Error(`Error fetching data from ${url.toString()}`);
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+
+  return null;
+}
+
+export async function getTournamentDataOfWeek({
   tournamentId,
   week = "latest",
-}: Partial<GetTournamentDataParams>): Promise<unknown> {
+}: Partial<GetTournamentDataOfWeekParams>): Promise<unknown> {
   const url = new URL(`${API_BASE_URL}/${API_VERSION}/tournament/${tournamentId}/${week}`);
 
   try {
