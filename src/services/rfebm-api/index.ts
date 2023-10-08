@@ -1,3 +1,4 @@
+import { getCurrentSeasonId } from "./get-current-season-id";
 import {
   FederationResponse,
   GetFederationDataParams,
@@ -6,6 +7,11 @@ import {
   GetTournamentDataOfWeekParams,
 } from "./types";
 export { getCurrentSeasonId } from "./get-current-season-id";
+
+export function getCurrentSeasonLabel() {
+  const getCurrentSeasonIdString = getCurrentSeasonId().toString();
+  return `${getCurrentSeasonIdString.substring(0, 2)}/${getCurrentSeasonIdString.substring(2)}`;
+}
 
 const API_BASE_URL = "https://rfebm.7metros.es/api";
 const API_VERSION = "v2";

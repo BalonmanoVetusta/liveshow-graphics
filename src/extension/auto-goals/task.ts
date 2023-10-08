@@ -1,6 +1,5 @@
 import NodeCG from "@nodecg/types";
-import { schedule } from "node-cron";
-import { getMatchData } from "services/rfebm-api";
+import { getCurrentSeasonLabel, getMatchData } from "services/rfebm-api";
 import { AutoGoals } from "types/schemas/auto-goals";
 import { MatchActions } from "types/schemas/match-actions";
 
@@ -22,7 +21,7 @@ export enum MatchStatus {
 
 const TIMEOUT = 180_000; // 5 minutes without any change of actions or scores then we stop the auto goals and must be reactivated manually
 const PULL_SECONDS = 15;
-const CRON_SCHEDULE = `*/${PULL_SECONDS} * * * * *`;
+export const CRON_SCHEDULE = `*/${PULL_SECONDS} * * * * *`;
 let inMemoryDb: Map<string, unknown> | undefined;
 
 if (typeof inMemoryDb === "undefined") {
@@ -34,20 +33,40 @@ export function startAutoGoals(nodecg: NodeCG.ServerAPI, autoGoals: NodeCG.Serve
   // reset the data before start
   matchActions.value.length = 0;
   matchActions.value = [];
-  autoGoals.value ??= { active: false };
+
+  // Reset all autoGoals data
+  autoGoals.value = {
+    federationId: autoGoals.value?.federationId ?? 0,
+    subfederationId: autoGoals.value?.subfederationId ?? 0,
+    seasonId: autoGoals.value?.seasonId ?? 0,
+    seasonLabel: getCurrentSeasonLabel(),
+    categoryId: autoGoals.value?.categoryId ?? 0,
+    championshipId: autoGoals.value?.championshipId ?? 0,
+    championshipName: "Liga",
+    tournamentId: autoGoals.value?.tournamentId ?? 0,
+    week: autoGoals.value?.week ?? 0,
+    matchId: autoGoals.value?.matchId ?? 0,
+    active: autoGoals.value?.active ?? false,
+    status: MatchStatus.UNKNOWN,
+    localTeam: {},
+    visitorTeam: {},
+  };
+
+  // Should put as inactive if any value change
   autoGoals.on("change", (newValue) => {
     const { active = false, tournamentId = 0, matchId = 0, week = 0 } = newValue ?? {};
-    if (tournamentId === 0 || matchId === 0 || week === 0 || active === false) {
-      task.stop();
+    if (active === false) return;
+
+    if (tournamentId === 0 || matchId === 0 || week === 0) {
+      autoGoals.value!.active = false;
     }
   });
 
   let lastMatchCheckTimestamp = 0;
   let initialDataWasLoaded = false;
 
-  const task = schedule(
-    CRON_SCHEDULE,
-    () => {
+  return {
+    task: () => {
       const time = lastMatchCheckTimestamp > 0 ? Date.now() - lastMatchCheckTimestamp : 0;
       if (time > TIMEOUT) autoGoals.value!.active = false;
 
@@ -105,20 +124,6 @@ export function startAutoGoals(nodecg: NodeCG.ServerAPI, autoGoals: NodeCG.Serve
         // Not in progress or pending stop after get all posible data
         if (![MatchStatus.IN_PROGRESS, MatchStatus.PENDING].includes(status)) autoGoals.value!.active = false;
       });
-    },
-    {
-      scheduled: false,
-      timezone: process.env.TZ ?? "Europe/Madrid",
-    },
-  );
-
-  return {
-    now: () => task.now(),
-    start: () => {
-      task.start();
-    },
-    stop: () => {
-      task.stop();
     },
   };
 }

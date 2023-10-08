@@ -5,7 +5,7 @@ DISCLAIMER: This project is intendeed to run in local. The API is exposed public
 After installing nodecg you need to install some packages in nodecg, stuff that it is executed on extension:
 
 ```bash
-npm install shapr@0.32.6 node-cron@3.0.2
+npm install --save shapr@0.32.6 
 ```
 
 ## Executing
