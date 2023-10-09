@@ -6,6 +6,8 @@ import { MatchAction } from "types/schemas/match-action";
 import { MatchActions } from "types/schemas/match-actions";
 import { Stopwatch } from "types/schemas/stopwatch";
 import { v4 as uuidV4 } from "uuid";
+import { handleStopwatchReplicant } from "extension/stopwatch-replicant-messages/handle-stopwatch-replicant";
+import { StopwatchActions } from "extension/stopwatch-replicant-messages/types";
 
 export enum AutoGoalsFetchActions {
   GOAL = "Gol",
@@ -34,6 +36,24 @@ export enum MatchStatus {
   FINISHED = "finalizado",
 }
 
+function getStopwatchCurrentTime(stopwatchCurrentValue: Stopwatch) {
+  const { offset = 0, startTime = 0, limit = 0, backwards = false } = stopwatchCurrentValue || {};
+
+  let totalTime = offset;
+  if (startTime > 0) {
+    totalTime = Date.now() - startTime;
+    totalTime += offset;
+  }
+
+  if (backwards && totalTime < limit) {
+    totalTime = limit - totalTime;
+  } else if (backwards) {
+    totalTime = 0;
+  }
+
+  return totalTime;
+}
+
 const TIMEOUT = 180_000; // 5 minutes without any change of actions or scores then we stop the auto goals and must be reactivated manually
 const PULL_SECONDS = 15;
 const CRON_SCHEDULE = `*/${PULL_SECONDS} * * * * *`;
@@ -46,6 +66,39 @@ async function startAutoGoals(nodecg: NodeCG.ServerAPI) {
   // reset the data before start
   matchActions.value.length = 0;
   matchActions.value = [];
+
+  // Automations for when actions are added
+  let wasTimeoutCalled = false;
+  matchActions.on("change", (newValue) => {
+    if (newValue.length === 0) return;
+    const lastInput = newValue[newValue.length - 1];
+    const { action, matchTime } = lastInput;
+
+    if (action === "TIMEOUT" && !wasTimeoutCalled) {
+      handleStopwatchReplicant(nodecg, {
+        type: StopwatchActions.STOP,
+        payload: undefined,
+      });
+
+      // On timeout fix the time to the current match time
+      const currentTimeMs = getStopwatchCurrentTime(stopwatch.value);
+      if (currentTimeMs !== matchTime) {
+        stopwatch.value.offset = matchTime;
+        stopwatch.value.startTime = 0;
+      }
+
+      wasTimeoutCalled = true;
+    }
+
+    // Start automatically if other action is called
+    if (action !== "TIMEOUT" && wasTimeoutCalled) {
+      handleStopwatchReplicant(nodecg, {
+        type: StopwatchActions.START,
+        payload: undefined,
+      });
+      wasTimeoutCalled = false;
+    }
+  });
 
   // Reset all autoGoals data
   autoGoals.value = {
@@ -61,6 +114,8 @@ async function startAutoGoals(nodecg: NodeCG.ServerAPI) {
     matchId: autoGoals.value?.matchId ?? 0,
     active: autoGoals.value?.active ?? false,
     status: MatchStatus.UNKNOWN,
+    people: [],
+    court: {},
     local: {},
     visitor: {},
   };
@@ -81,7 +136,6 @@ async function startAutoGoals(nodecg: NodeCG.ServerAPI) {
   });
 
   let lastMatchCheckTimestamp = 0;
-
   // Initial check to allow the auto goals start
   // This is duplicated because the onchange happen while running in case any data change and this is a starting check
   const {
@@ -130,10 +184,12 @@ async function startAutoGoals(nodecg: NodeCG.ServerAPI) {
     }
 
     // Now adds initial data
-    autoGoals.value!.local = data.local;
-    autoGoals.value!.visitor = data.visitor;
+    autoGoals.value!.local = structuredClone(data.local);
+    autoGoals.value!.visitor = structuredClone(data.visitor);
     autoGoals.value!.championshipName = data.championship.name;
     autoGoals.value!.seasonLabel = data.season.label ?? getCurrentSeasonLabel();
+    autoGoals.value!.people = structuredClone(data.people);
+    autoGoals.value!.court = structuredClone(data.court);
   }
 
   return async () => {
@@ -151,11 +207,10 @@ async function startAutoGoals(nodecg: NodeCG.ServerAPI) {
     const data = (await getMatchData({ tournamentId, matchId, week }).catch(() => undefined)) as any;
 
     // Alawys update fields
-    lastMatchCheckTimestamp = Date.now();
     autoGoals.value!.status = data.status.toLowerCase();
-    autoGoals.value!.local ??= data.local ?? {};
+    autoGoals.value!.local ??= structuredClone(data.local) ?? {};
     autoGoals.value!.local!.score = data.local?.score ?? 0; // Should be defined but just in case...
-    autoGoals.value!.visitor ??= data.visitor ?? {};
+    autoGoals.value!.visitor ??= structuredClone(data.visitor) ?? {};
     autoGoals.value!.visitor!.score = data.visitor?.score ?? 0;
 
     // TODO: Match actions implementation here it should add only new actions
@@ -181,6 +236,7 @@ async function startAutoGoals(nodecg: NodeCG.ServerAPI) {
         payload: action,
       };
       matchActions.value.push(newAction);
+      lastMatchCheckTimestamp = Date.now();
     });
 
     // Not in progress or pending stop after get all posible data

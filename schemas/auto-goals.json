@@ -53,6 +53,35 @@
       "type": "string",
       "default": "desconocido"
     },
+    "court": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "string"
+        }
+      }
+    },
+    "people": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "default": "Jugador"
+          },
+          "role": {
+            "type": "string",
+            "default": ""
+          }
+        }
+      }
+    },
     "local": {
       "type": "object",
       "additionalProperties": true,
