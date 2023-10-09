@@ -122,6 +122,7 @@ async function startAutoGoals(nodecg: NodeCG.ServerAPI) {
 
   // Should put as inactive if any value change
   autoGoals.on("change", (newValue) => {
+    nodecg.log.debug(`Auto goals change`, { newValue });
     const { active = false, tournamentId = 0, matchId = 0, week = 0 } = newValue ?? {};
     if (active === false) {
       if (job) job.stop();
@@ -193,6 +194,7 @@ async function startAutoGoals(nodecg: NodeCG.ServerAPI) {
   }
 
   return async () => {
+    nodecg.log.debug(`Running auto goals task =)`);
     const time = lastMatchCheckTimestamp > 0 ? Date.now() - lastMatchCheckTimestamp : 0;
     if (time > TIMEOUT) autoGoals.value!.active = false;
 
@@ -217,6 +219,7 @@ async function startAutoGoals(nodecg: NodeCG.ServerAPI) {
     data.actions.forEach((action) => {
       if (matchActions.value.some((matchAction) => JSON.stringify(matchAction.payload) === JSON.stringify(action)))
         return;
+      nodecg.log.debug(`Adding new action`, { action });
       const periodTime = stopwatch.value.periodTime ?? 1_800_000;
       const period = (action.period ?? 1) - 1;
       const [minute, second] = action.time.split(":").map(Number);

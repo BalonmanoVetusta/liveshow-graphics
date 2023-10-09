@@ -11,12 +11,12 @@ export async function autoGoalsApiRoutes(nodecg: NodeCG.ServerAPI): Promise<void
   const autogoals = nodecg.Replicant<AutoGoals>("auto-goals", nodecg.bundleName, { defaultValue: {} });
   autogoals.on("change", async (newValue) => {
     if (newValue.active) {
-      if (!job)
-        handleAutoGoalsTasks(nodecg).then((j) => {
-          job = j;
-        });
+      if (!job) job = await handleAutoGoalsTasks(nodecg);
 
-      if (job && !job.isRunning()) job.resume();
+      if (job && !job.isRunning()) {
+        nodecg.log.info("Starting auto-goals task");
+        job.resume();
+      }
     }
 
     if (!newValue.active && job && job.isRunning()) job.pause();
