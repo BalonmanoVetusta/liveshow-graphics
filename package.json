@@ -212,17 +212,12 @@
     "uuidv4": "6.2.13"
   },
   "dependencies": {
-    "@mdi/js": "7.3.67",
-    "@mdi/react": "1.6.1",
     "bun-plugin-html": "1.2.0",
     "bun-types": "1.0.5-canary.20231009T140142",
-    "core-js": "3.33.0",
     "croner": "7.0.2",
-    "nodecg": "2.1.11",
-    "pm2": "5.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "sharp": "0.32.6",
+    "sharp": "0.33.0-alpha.6",
     "styled-components": "6.0.8",
     "uuid": "9.0.1",
     "wouter": "2.12.0"
