@@ -184,14 +184,14 @@
   "devDependencies": {
     "@nodecg/types": "2.1.11",
     "@types/express-serve-static-core": "4.17.37",
-    "@types/react": "18.2.22",
-    "@types/react-dom": "18.2.7",
+    "@types/react": "18.2.27",
+    "@types/react-dom": "18.2.12",
     "@types/styled-components": "5.1.28",
-    "@typescript-eslint/eslint-plugin": "6.7.3",
-    "@typescript-eslint/parser": "6.7.3",
+    "@typescript-eslint/eslint-plugin": "6.7.5",
+    "@typescript-eslint/parser": "6.7.5",
     "buffer": "6.0.3",
     "esbuild": "0.19.4",
-    "eslint": "8.50.0",
+    "eslint": "8.51.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-compat": "4.2.0",
@@ -212,11 +212,11 @@
     "uuidv4": "6.2.13"
   },
   "dependencies": {
-    "@mdi/js": "7.2.96",
+    "@mdi/js": "7.3.67",
     "@mdi/react": "1.6.1",
     "bun-plugin-html": "^1.2.0",
-    "bun-types": "^1.0.5-canary.20231005T140125",
-    "core-js": "3.32.2",
+    "bun-types": "1.0.5-canary.20231009T140142",
+    "core-js": "3.33.0",
     "croner": "7.0.2",
     "framer-motion": "10.16.4",
     "nodecg": "2.1.11",
@@ -226,7 +226,7 @@
     "sharp": "0.32.6",
     "styled-components": "6.0.8",
     "uuid": "9.0.1",
-    "wouter": "2.11.0"
+    "wouter": "2.12.0"
   },
   "optionalDependencies": {
     "lightningcss-linux-x64-gnu": "^1.22.0"
