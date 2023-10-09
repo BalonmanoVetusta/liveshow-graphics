@@ -27,9 +27,9 @@
     "prebuild": "npm run build:schemas",
     "build": "bun build:bun && bun build:extension",
     "build:bun": "bun --bun run ./bin/build.js",
+    "build:extension": "esbuild --bundle --sourcemap --minify --format=cjs --outdir=./extension --platform=node --target=node18 --external:sharp ./src/extension/index.ts",
     "build:clean": "rm -rf .parcel-cache dashboard extension graphics",
     "build:schemas": "rm -rf ./types/schemas/*.d.ts && cd schemas && json2ts -i '*.json' -o ../src/types/schemas/ && cd ..",
-    "build:extension": "parcel build --no-content-hash --dist-dir ./ --target extension",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
     "lint:staged": "lint-staged",
@@ -37,33 +37,6 @@
     "prepare": "husky install",
     "replace-runtime": "npm run ./bin/postinstall.mjs",
     "pm2": "pm2"
-  },
-  "targets": {
-    "default": {
-      "distDir": "../",
-      "publicUrl": "./",
-      "engines": {
-        "browsers": "last 2 Chrome versions, last 2 Firefox versions, last 2 Safari versions, last 2 edge versions"
-      },
-      "context": "browser",
-      "outputFormat": "esmodule"
-    },
-    "dashboard": {
-      "publicUrl": "./"
-    },
-    "graphics": {
-      "publicUrl": "./"
-    },
-    "extension": {
-      "publicUrl": "./",
-      "source": "./src/extension/index.ts",
-      "context": "node",
-      "outputFormat": "commonjs",
-      "engines": {
-        "browsers": "node >= 18",
-        "node": "=18"
-      }
-    }
   },
   "keywords": [
     "template",
@@ -210,18 +183,15 @@
   },
   "devDependencies": {
     "@nodecg/types": "2.1.11",
-    "@parcel/config-default": "2.9.3",
-    "@parcel/transformer-svg-react": "2.9.3",
-    "@parcel/transformer-typescript-tsc": "2.9.3",
-    "@parcel/validator-typescript": "2.9.3",
     "@types/express-serve-static-core": "4.17.37",
-    "@types/react": "18.2.22",
-    "@types/react-dom": "18.2.7",
+    "@types/react": "18.2.27",
+    "@types/react-dom": "18.2.12",
     "@types/styled-components": "5.1.28",
-    "@typescript-eslint/eslint-plugin": "6.7.3",
-    "@typescript-eslint/parser": "6.7.3",
+    "@typescript-eslint/eslint-plugin": "6.7.5",
+    "@typescript-eslint/parser": "6.7.5",
     "buffer": "6.0.3",
-    "eslint": "8.50.0",
+    "esbuild": "0.19.4",
+    "eslint": "8.51.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-compat": "4.2.0",
@@ -235,9 +205,6 @@
     "json-schema-to-typescript": "13.1.1",
     "lint-staged": "14.0.1",
     "os-browserify": "0.3.0",
-    "parcel": "2.9.3",
-    "parcel-resolver-ts-base-url": "1.3.1",
-    "parcel-resolver-tspaths": "0.0.9",
     "prettier": "3.0.3",
     "process": "0.11.10",
     "typescript": "5.2.2",
@@ -245,11 +212,11 @@
     "uuidv4": "6.2.13"
   },
   "dependencies": {
-    "@mdi/js": "7.2.96",
+    "@mdi/js": "7.3.67",
     "@mdi/react": "1.6.1",
     "bun-plugin-html": "^1.2.0",
-    "bun-types": "^1.0.5-canary.20231005T140125",
-    "core-js": "3.32.2",
+    "bun-types": "1.0.5-canary.20231009T140142",
+    "core-js": "3.33.0",
     "croner": "7.0.2",
     "framer-motion": "10.16.4",
     "nodecg": "2.1.11",
@@ -259,10 +226,9 @@
     "sharp": "0.32.6",
     "styled-components": "6.0.8",
     "uuid": "9.0.1",
-    "wouter": "2.11.0"
+    "wouter": "2.12.0"
   },
   "optionalDependencies": {
-    "@parcel/watcher-linux-x64-glibc": "2.3.0",
     "lightningcss-linux-x64-gnu": "^1.22.0"
   },
   "prettier": {

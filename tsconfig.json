@@ -37,7 +37,6 @@
     "sourceMap": true,
     "types": [
       "bun-types",
-      "nodecg"
     ],
     "baseUrl": "./src",
     "paths": {
