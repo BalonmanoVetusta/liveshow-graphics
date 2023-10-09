@@ -16,18 +16,15 @@ function getAutoGoalsReplicant(nodecg: NodeCG.ServerAPI) {
 export function handleAutoGoalsApiRoutes(nodecg: NodeCG.ServerAPI) {
   nodecg.log.info("Initializing scoreboard-api-routes");
   const router = nodecg.Router();
-  getAutoGoalsReplicant(nodecg);
+  const autoGoals = getAutoGoalsReplicant(nodecg);
 
   // Team handlers
   router.get("/", (req, res) => {
-    const autoGoals = getAutoGoalsReplicant(nodecg).value;
-
-    return res.json(autoGoals);
+    return res.json(autoGoals.value);
   });
 
   // Set custom status
   router.post("/", (req, res) => {
-    const autoGoals = getAutoGoalsReplicant(nodecg);
     try {
       const { active } = req.body;
       const activeLower = active.toLowerCase();
@@ -39,7 +36,7 @@ export function handleAutoGoalsApiRoutes(nodecg: NodeCG.ServerAPI) {
       autoGoals.value.active ??= newStatus;
       autoGoals.value.active = newStatus;
 
-      return res.sendStatus(200).json({ active: newStatus });
+      return res.sendStatus(200).json({ active: autoGoals.value.active });
     } catch (e) {
       // console.error(e);
       return res.sendStatus(422);
