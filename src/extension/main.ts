@@ -6,6 +6,7 @@ import shutdownApi from "./shutdown";
 import { stopwatchReplicantMessages } from "./stopwatch-replicant-messages";
 import { convertAssetsToWebp } from "./thumbnail/convert-assets-to-webp";
 import { createThumnail } from "./thumbnail/create-thumbnail";
+import { autoGoalsApiRoutes } from "./auto-goals";
 
 export type ExtensionFunction = (nodecg: NodeCG.ServerAPI) => Promise<void>;
 
@@ -31,4 +32,5 @@ export default main(
   handleScenes,
   convertAssetsToWebp,
   createThumnail,
+  autoGoalsApiRoutes,
 );

@@ -218,7 +218,6 @@
     "bun-types": "1.0.5-canary.20231009T140142",
     "core-js": "3.33.0",
     "croner": "7.0.2",
-    "framer-motion": "10.16.4",
     "nodecg": "2.1.11",
     "pm2": "5.3.0",
     "react": "18.2.0",
