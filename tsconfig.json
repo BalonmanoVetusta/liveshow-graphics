@@ -36,6 +36,8 @@
     "removeComments": true,
     "sourceMap": true,
     "types": [
+      "react",
+      "react-dom",
       "bun-types",
       "nodecg"
     ],
