@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "title": "Is auto-goals enabled",
+      "description": "If it is activated or none"
+    },
+    "federationId": {
+      "type": "number",
+      "default": 9999
+    },
+    "subfederationId": {
+      "type": "number",
+      "default": 0
+    },
+    "seasonId": {
+      "type": "number",
+      "default": 0
+    },
+    "seasonLabel": {
+      "type": "string",
+      "default": "23/24"
+    },
+    "categoryId": {
+      "type": "number",
+      "default": 0
+    },
+    "championshipId": {
+      "type": "number",
+      "default": 0
+    },
+    "championshipName": {
+      "type": "string",
+      "default": "Liga"
+    },
+    "tournamentId": {
+      "type": "number",
+      "default": 0
+    },
+    "week": {
+      "type": "number",
+      "default": 0
+    },
+    "matchId": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "default": "desconocido"
+    },
+    "court": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "string"
+        }
+      }
+    },
+    "people": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "default": "Jugador"
+          },
+          "role": {
+            "type": "string",
+            "default": ""
+          }
+        }
+      }
+    },
+    "local": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "number",
+          "default": 0
+        },
+        "score": {
+          "type": "number",
+          "default": 0
+        },
+        "name": {
+          "type": "string",
+          "default": "Local"
+        },
+        "shieldImageUrl": {
+          "type": "string",
+          "default": "https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg"
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "fullName": {
+                "type": "string",
+                "default": "Jugador"
+              },
+              "number": {
+                "type": "number",
+                "default": 0
+              },
+              "role": {
+                "type": "string",
+                "default": ""
+              },
+              "profileImageUrl": {
+                "type": "string",
+                "default": "https://www.rfebm.com/competiciones/images/fotos/sinfoto.jpg"
+              }
+            }
+          }
+        }
+      }
+    },
+    "visitor": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "number",
+          "default": 0
+        },
+        "score": {
+          "type": "number",
+          "default": 0
+        },
+        "name": {
+          "type": "string",
+          "default": "Local"
+        },
+        "shieldImageUrl": {
+          "type": "string",
+          "default": "https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg"
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "fullName": {
+                "type": "string",
+                "default": "Jugador"
+              },
+              "number": {
+                "type": "number",
+                "default": 0
+              },
+              "role": {
+                "type": "string",
+                "default": ""
+              },
+              "profileImageUrl": {
+                "type": "string",
+                "default": "https://www.rfebm.com/competiciones/images/fotos/sinfoto.jpg"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

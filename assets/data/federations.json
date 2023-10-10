@@ -1,0 +1,84 @@
+[
+  {
+    "id": 16,
+    "name": "FEDERACION TERRIT. DE CASTILLA LA MANCHA"
+  },
+  {
+    "id": 17,
+    "name": "FEDERACION CATALANA"
+  },
+  {
+    "id": 18,
+    "name": "FEDERACION VASCA"
+  },
+  {
+    "id": 19,
+    "name": "FEDERACION EXTREMEÑA"
+  },
+  {
+    "id": 20,
+    "name": "FEDERACION GALEGA de BALONMAN"
+  },
+  {
+    "id": 21,
+    "name": "FEDERACION TERRITORIAL MADRILEÑA"
+  },
+  {
+    "id": 22,
+    "name": "FEDERACION DE LA R. DE MURCIA"
+  },
+  {
+    "id": 24,
+    "name": "FEDERACION DE CEUTA"
+  },
+  {
+    "id": 25,
+    "name": "FEDERACION MELILLENSE"
+  },
+  {
+    "id": 26,
+    "name": "FEDERACION TERRITORIAL ANDALUZA"
+  },
+  {
+    "id": 27,
+    "name": "FEDERACION TERRITORIAL DE ARAGON"
+  },
+  {
+    "id": 28,
+    "name": "FEDERACION TERR. PRINCIPADO DE ASTURIAS"
+  },
+  {
+    "id": 29,
+    "name": "FEDERACION TERRITORIAL BALEAR"
+  },
+  {
+    "id": 31,
+    "name": "FED. TERRITORIAL NAVARRA"
+  },
+  {
+    "id": 32,
+    "name": "FED. TERRITORIAL RIOJANA"
+  },
+  {
+    "id": 33,
+    "name": "FED. DE LA C. VALENCIANA"
+  },
+  {
+    "id": 35,
+    "name": "FED. TERRITORIAL CANTABRA"
+  },
+  {
+    "id": 36,
+    "name": "FED. TERRIT. DE CASTILLA Y LEON"
+  },
+  {
+    "id": 37,
+    "name": "FED. TERRITORIAL DE CANARIAS"
+  },
+  {
+    "id": 9999,
+    "name": "REAL FEDERACION ESPAÑOLA",
+    "shieldImageUrl": "https://www.rfebm.com/competiciones/images/logo.png",
+    "web": "https://www.rfebm.com/"
+  }
+]

@@ -16,12 +16,12 @@ export function useCSSVariables({
   const { cssVariables, setCssVar, setCssVariables } = useCSSVariablesReplicant(initialCssVariablesValues);
 
   const removeCssVar = (key: string) => {
-    const element = document.querySelector(rootElement) as HTMLElement;
+    const element = globalThis.document.querySelector(rootElement);
     element.style.removeProperty(key);
   };
 
   const getCssVariableFromElement = (cssVariable: string, element: string = ":root", defaultValue?: string) => {
-    const el = document.querySelector(element) as HTMLElement;
+    const el = globalThis.document.querySelector(element);
 
     return el.style.getPropertyValue(cssVariable) ?? defaultValue;
   };
@@ -34,7 +34,7 @@ export function useCSSVariables({
         return;
       }
 
-      const element = document.querySelector(rootElement) as HTMLElement;
+      const element = globalThis.document.querySelector(rootElement);
       const newValue = cssVariables[key]?.toString();
       const oldValue = element.style.getPropertyValue(key);
       if (newValue !== oldValue && newValue !== undefined) {

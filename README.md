@@ -1,8 +1,12 @@
 DISCLAIMER: This project is intendeed to run in local. The API is exposed publicly without security so run this in a public server will make it available publicly by any others who knows the url make it possible to modify your expected behaviour.
 
-## Stuff no compatible with bun
+## Installation
 
-`npm run build:schema` is not compatible for any reason with `bun.sh`
+After installing nodecg you need to install some packages in nodecg, stuff that it is executed on extension:
+
+```bash
+npm install --save shapr@0.33.0-alpha.6
+```
 
 ## Executing
 

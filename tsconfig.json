@@ -7,7 +7,6 @@
     "preserveConstEnums": true,
     "jsx": "react-jsx", // process JSX
     "jsxImportSource": "react",
-    "jsxFragmentFactory": "Fragment",
     "isolatedModules": true,
     "lib": [
       "dom",
@@ -36,7 +35,9 @@
     "pretty": true,
     "removeComments": true,
     "sourceMap": true,
-    "types": [],
+    "types": [
+      "bun-types",
+    ],
     "baseUrl": "./src",
     "paths": {
       "/*": [
@@ -59,8 +60,10 @@
     "./src/**/*.jsx",
     "./src/**/*.js",
     "src/hooks/use-match-actions",
-    "@nodecg/types/augment-window.d.ts"
-, "src/components/time-counter/lib/time-worker.ts.bak", "src/components/time-counter/lib/time-worker.ts.bak.2"  ],
+    "@nodecg/types/augment-window.d.ts",
+    "src/components/time-counter/lib/time-worker.ts.bak",
+    "src/components/time-counter/lib/time-worker.ts.bak.2"
+  ],
   "exclude": [
     "node_modules"
   ],
