@@ -16,7 +16,7 @@ const graphicsOutput = resolve(join(import.meta.dir, "..", "graphics"));
 // const extensionOutput = resolve(join(import.meta.dir, "..", "extension"));
 
 console.log("Building graphics...");
-await Bun.build({
+const graphics = await Bun.build({
   entrypoints: graphicsFiles,
   outdir: graphicsOutput,
   target: "browser",
@@ -32,8 +32,10 @@ await Bun.build({
   plugins: [html()],
 });
 
+console.log({ graphics });
+
 console.log("Building dashboards...");
-await Bun.build({
+const dashboards = await Bun.build({
   entrypoints: dashboardsFiles,
   outdir: dashboardOutput,
   target: "browser",
@@ -48,6 +50,8 @@ await Bun.build({
   // },
   plugins: [html()],
 });
+
+console.log({ dashboards });
 
 // console.log("Building extension...");
 // await Bun.build({
