@@ -201,11 +201,11 @@
   "devDependencies": {
     "@nodecg/types": "2.1.12",
     "@types/express-serve-static-core": "4.17.41",
-    "@types/react": "18.2.38",
+    "@types/react": "18.2.39",
     "@types/react-dom": "18.2.17",
     "@types/styled-components": "5.1.32",
-    "@typescript-eslint/eslint-plugin": "6.12.0",
-    "@typescript-eslint/parser": "6.12.0",
+    "@typescript-eslint/eslint-plugin": "6.13.1",
+    "@typescript-eslint/parser": "6.13.1",
     "buffer": "6.0.3",
     "eslint": "8.54.0",
     "eslint-config-prettier": "9.0.0",
@@ -217,7 +217,7 @@
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "events": "3.3.0",
-    "husky": "^8.0.0",
+    "husky": "^8.0.3",
     "json-schema-to-typescript": "13.1.1",
     "lint-staged": "15.1.0",
     "os-browserify": "0.3.0",
@@ -225,7 +225,7 @@
     "process": "0.11.10",
     "typescript": "5.2.2",
     "util": "0.12.5",
-    "bun-plugin-html": "1.3.2"
+    "bun-plugin-html": "1.3.3"
   },
   "dependencies": {
     "uuidv4": "6.2.13",
