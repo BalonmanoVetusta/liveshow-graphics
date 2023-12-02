@@ -78,5 +78,5 @@ await build({
   target: `node${nodeVersion}`,
   format: "cjs",
   sourcemap: "external",
-  external: ["sharp"],
+  // external: ["sharp"],
 });
