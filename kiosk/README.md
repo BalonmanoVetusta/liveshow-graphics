@@ -1,5 +1,12 @@
 ## Setup necessary packages
 
+## Raspberry Pi Setup
+
+In current version of raspberry pi you need to setup a user, this can be done by creating a file `userconf.txt` with `username:<ecrypted password>` and avoid gui to configure it:
+
+```shell
+echo "pi:$(echo "raspberry" | openssl passwd -6 -stdin)" > userconf.txt
+```
 
 ## Remove innecessary packages
 
