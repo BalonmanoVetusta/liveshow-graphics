@@ -1,4 +1,6 @@
-DISCLAIMER: This project is intendeed to run in local. The API is exposed publicly without security so run this in a public server will make it available publicly by any others who knows the url make it possible to modify your expected behaviour.
+DISCLAIMER: This project is intendeed to run in local. The API is exposed publicly without security so run this in a public server will make it available publicly by any others.
+
+## How do I stream
 
 ## Stuff no compatible with bun
 
@@ -17,9 +19,11 @@ npm run dev
 If you want to use assets and mounts and you are using include-nodecg with version 1.9.0 you should patch with this fix [#607](https://github.com/nodecg/nodecg/pull/607) manually.
 
 
-## Kiosk Mode (Untested yet)
+## Kiosk Mode
 
-Was thinked to be run on Raspberry Pi or any Debian based Linux with chromium.
+Was thinked to be run on Raspberry Pi or similar any Debian based Linux with chromium.
+
+**Important update** Raspberry Pi 4 with 4 Gb RAM is not enough. The stopwatch won't show an update every second so it is recomended to use another pc to inyect the graphics to the switcher if you are using anyone.
 
 ## Fonts
 
