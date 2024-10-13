@@ -21,18 +21,6 @@
       "description": "Background color of the body",
       "default": "#00ff00"
     },
-    "advertising": {
-      "type": "boolean",
-      "default": true,
-      "title": "Advertising",
-      "description": "If advertising must be showed"
-    },
-    "advertisingTime": {
-      "type": "number",
-      "default": 10,
-      "title": "Time to change",
-      "description": "Time in seconds that a banner is showed before change it if more than one banner is available"
-    },
     "music": {
       "type": "boolean",
       "default": false,
@@ -44,6 +32,18 @@
       "default": false,
       "title": "Play Spot",
       "description": "If a spot must be played"
+    },
+    "week": {
+      "type": "number",
+      "default": 0,
+      "title": "Week",
+      "description": "Week number"
+    },
+    "category": {
+      "type": "string",
+      "default": "PRIMERA NACIONAL",
+      "title": "Category",
+      "description": "Category name"
     },
     "localTeamName": {
       "type": "string",

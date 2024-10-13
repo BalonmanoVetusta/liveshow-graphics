@@ -4,47 +4,11 @@
   <head>
     <meta charset="utf-8" />
     <title>Handball Liveshow</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@400;600;700;900&display=swap"
-      rel="stylesheet" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="view-transition" content="same-origin" />
+    <link rel="stylesheet" href="./styles/fonts.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="./styles/global-position.css" type="text/css" charset="utf-8" />
     <style>
-      [data-position] {
-        position: fixed;
-      }
-
-      [data-position~="top"] {
-        top: max(var(--offset-top, var(--offset, 0)),
-            env(safe-area-inset-top, 0));
-      }
-
-      [data-position~="bottom"] {
-        bottom: var(--offset-bottom, var(--offset, 0));
-      }
-
-      [data-position~="right"] {
-        right: var(--offset-right, var(--offset, env(safe-area-inset-right, 0)));
-      }
-
-      [data-position~="left"] {
-        left: var(--offset-left, var(--offset, env(safe-area-inset-left, 0)));
-      }
-
-      [data-position~="center"] {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-
-      [data-position~="middle"] {
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    </style>
-    <style>
-      @import url("https://fonts.cdnfonts.com/css/cursed-timer-ulil");
-
       .national {
         font-family: "Alumni Sans", sans-serif;
         font-weight: 500;
@@ -68,29 +32,28 @@
         --visitor-shield-background-color: white;
         --advertising-background-color: var(--vetusta-new-yellow-color);
 
-        /* Not used yet */
-
-        --space-margin: calc(5px * var(--size-scale-factor, 1));
-        --scoreboard-space-margin: calc(10px * var(--size-scale-factor, 1));
-        --space-magin-score-left: calc(15px * var(--size-scale-factor, 1)) calc(5px* var(--size-scale-factor, 1)) calc(10px * var(--size-scale-factor, 1));
-        --space-margin-score-right: calc(5px * var(--size-scale-factor, 1)) calc(10px * var(--size-scale-factor, 1)) calc(5px * var(--size-scale-factor, 1)) calc(15px * var(--size-scale-factor, 1));
-        --score-border-radius-right: 0 calc(20px * var(--size-scale-factor, 1)) calc(20px * var(--size-scale-factor, 1)) 0;
-        --score-border-radius-left: calc(20px * var(--size-scale-factor, 1)) 0 0 calc(20px * var(--size-scale-factor, 1));
-        --font-size: calc(22px * var(--size-scale-factor, 1));
+        --space-margin: 5px;
+        --scoreboard-space-margin: 10px;
+        --space-magin-score-left: 15px 5px 10px;
+        --space-margin-score-right: 5px 10px 5px 15px;
+        --score-border-radius-right: 0 20px 20px 0;
+        --score-border-radius-left: 20px 0 0 20px;
+        --font-size: 22px;
         --font-color: black;
-        --font-score-size: calc(32px * var(--size-scale-factor, 1));
-        --shield-size: calc(35px * var(--size-scale-factor, 1));
-        --shield-div-scale: calc(1.8 * var(--size-scale-factor, 1));
-        --image-scale: calc(1.2 * var(--size-scale-factor, 1));
-        --font-size-info: calc(12px * var(--size-scale-factor, 1));
-        --font-size-time: calc(48px * var(--size-scale-factor, 1));
+        --font-score-size: 28px;
+        --shield-size: 35px;
+        --shield-div-scale: 1.6;
+        --image-scale: 1.05;
+        --font-size-info: 12px;
+        --font-size-time: 48px;
         --font-color-info: red;
-        --emty-goal-size: calc(16px * var(--size-scale-factor, 1));
+        --emty-goal-size: 16px;
 
+        --scoreboard-zoom: 1.1;
         --scoreboard-font-color: black;
 
-        --stopwatch-padding: calc(5px * var(--size-scale-factor, 1)) calc(5px * var(--size-scale-factor, 1));
-        --stopwatch-border-radius: calc(10px * var(--size-scale-factor, 1));
+        --stopwatch-padding: 5px 5px;
+        --stopwatch-border-radius: 10px;
         --stopwatch-background-color: var(--vetusta-yellow-color, transparent);
         --stopwatch-background-time-color: black;
         --stopwatch-font-time-color: white;
@@ -101,17 +64,16 @@
         --result-background-color-visitor: var(--stopwatch-background-color);
         --result-font-color-visitor: var(--font-color);
 
-        --shield-div-border-radius: calc(50px * var(--size-scale-factor, 1)) calc(40px * var(--size-scale-factor, 1));
-        --shield-border-size: calc(5px * var(--size-scale-factor, 1));
+        --shield-div-border-radius: 50px 40px;
+        --shield-border-size: 5px;
         --shield-border-style: solid;
         --shield-border-color-local: var(--stopwatch-background-color);
         --shield-border-color-visitor: var(--stopwatch-background-color);
 
         --banners-max-height: 120px;
 
-
-        --font-size-card: calc(10px * var(--size-scale-factor, 1));
-
+        --font-size-card: 10px;
+        --suspension-font-size: 18px;
       }
 
       body {
@@ -119,6 +81,7 @@
           sans-serif;
         color: var(--font-color, black);
         background-color: var(--background-color, #00ff00);
+        overflow: hidden;
       }
 
       p {
@@ -137,6 +100,7 @@
       }
 
       .scoreboard {
+        zoom: var(--scoreboard-zoom, 1);
         display: inline-flex;
         justify-content: center;
         align-items: center;
@@ -214,6 +178,8 @@
       }
 
       .shield {
+        display: flex;
+        justify-content: center;
         border-radius: var(--shield-div-border-radius, calc(50px * var(--size-scale-factor, 1)) calc(25px * var(--size-scale-factor, 1)));
         overflow: hidden;
         rotate: -45deg;
@@ -264,17 +230,18 @@
       }
 
       .shield img {
-        display: flex;
-        width: var(--shield-size, 30px);
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: cover;
         rotate: 45deg;
-        transform: scale(var(--image-scale, 1.2));
+        transform: scale(var(--image-scale, 1));
       }
 
-      .local-team>.shield>img {
+      .local-team>.shield {
         background-color: var(--local-shield-background-color, black);
       }
 
-      .visitor-team>.shield>img {
+      .visitor-team>.shield {
         background-color: var(--visitor-shield-background-color, yellow);
       }
 

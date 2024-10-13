@@ -4,6 +4,7 @@ import { useReplicant } from "../../../../../hooks/use-replicant";
 
 const DEFAULT_OPTION_VALUE = "DEFAULT";
 
+// TODO: This component logic is too complicated, use directly the replicants instead of a callback
 export function ShieldSelector({
   label = "Shield",
   initialValue = DEFAULT_OPTION_VALUE,
@@ -12,7 +13,7 @@ export function ShieldSelector({
 }: {
   label: string;
   initialValue: string | undefined;
-  onChange: (url: string) => void;
+  onChange: (url: string, previous?: string) => void;
   acceptManuallyInputUrl: boolean | undefined;
 }) {
   const id = useId();
@@ -26,16 +27,22 @@ export function ShieldSelector({
 
   return (
     <>
-      <label htmlFor={`${id}-shield`}>{label}</label>
+      <label htmlFor={`shield-${id}`}>{label}</label>
       <select
-        name={`${id}-shield`}
-        id={`${id}-shield`}
+        name={`shield-${id}`}
+        id={`shield-${id}`}
         onChange={(event) => {
           event.preventDefault();
-          const newShield = shields.find((s) => s.sum === event.target.value);
+          const newValue = event.target.value;
+          if (newValue.startsWith("http")) {
+            setShieldUrl(newValue);
+            onChange(newValue, shieldUrl);
+            return;
+          }
+          const newShield = shields.find((s) => s.sum === newValue);
+          onChange(newShield?.url || DEFAULT_OPTION_VALUE, shieldUrl);
           setSelectedShield(newShield?.sum || DEFAULT_OPTION_VALUE);
           setShieldUrl(newShield?.url || "");
-          onChange(newShield?.url || DEFAULT_OPTION_VALUE);
         }}
         value={searchShieldAsset(selectedShield)?.sum ?? DEFAULT_OPTION_VALUE}
       >

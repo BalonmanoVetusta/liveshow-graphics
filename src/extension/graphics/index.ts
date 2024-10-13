@@ -1,10 +1,13 @@
 import type NodeCG from "@nodecg/types";
+import { Advertising } from "types/schemas/advertising";
 import { Graphics } from "types/schemas/graphics";
 
 const GRAPHICS_REPLICANT_NAME = "graphics";
+const ADVERTISING_REPLICANT_NAME = "advertising";
 const DEFAULT_ROTATION_TIME = 15;
 
 let graphics: NodeCG.ServerReplicant<Graphics> | undefined = undefined;
+let advertising: NodeCG.ServerReplicant<Advertising> | undefined = undefined;
 
 function graphicsReplicant(nodecg: NodeCG.ServerAPI) {
   if (graphics) {
@@ -16,39 +19,65 @@ function graphicsReplicant(nodecg: NodeCG.ServerAPI) {
   return graphics;
 }
 
+function advertisingReplicant(nodecg: NodeCG.ServerAPI) {
+  if (advertising) {
+    return advertising;
+  }
+
+  advertising = nodecg.Replicant<Advertising>(ADVERTISING_REPLICANT_NAME, {});
+
+  return advertising;
+}
+
 export default async function handleGraphicsRoutes(nodecg: NodeCG.ServerAPI): Promise<void> {
   const router = nodecg.Router();
+  graphicsReplicant(nodecg);
+  advertisingReplicant(nodecg);
 
-  router.get("/advertising/:action?", (req, res) => {
-    const { action = "toggle" } = req.params;
+  router.post("/advertising/:action", (req, res) => {
+    const { action } = req.params;
     const formatedAction = action.toLowerCase();
 
-    const graphics = graphicsReplicant(nodecg);
-    graphics.value ??= {};
+    const advRpc = advertisingReplicant(nodecg);
+    advRpc.value ??= {};
 
     if (req.query?.advertisingTime) {
       const advertisingTime = Number(req.query.advertisingTime) || DEFAULT_ROTATION_TIME;
       const advertisingTimeInSeconds = advertisingTime * 1000;
-      graphics.value.advertisingTime = advertisingTimeInSeconds;
+      advRpc.value.sleep = advertisingTimeInSeconds;
     }
 
     if (formatedAction === "toggle") {
-      graphics.value.advertising = !graphics.value.advertising;
+      advRpc.value.show = !advRpc.value?.show;
     }
 
     if (formatedAction === "show") {
-      graphics.value.advertising = true;
+      advRpc.value.show = true;
     }
 
     if (formatedAction === "hide") {
-      graphics.value.advertising = false;
+      advRpc.value.show = false;
     }
 
     return res.json({
       ok: true,
-      advertising: graphics.value.advertising,
-      advertisingTime: graphics.value.advertisingTime,
+      show: advRpc.value.show,
+      advertisingTime: advRpc.value.sleep,
     });
+  });
+
+  router.get("/match-filename", (_, res) => {
+    const { value } = graphicsReplicant(nodecg);
+
+    const date = new Date(); // Will be used as fallback
+    const week = value?.week
+      ? `J${value.week.toString().padStart(2, "0")}`
+      : `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+    const local = value?.localTeamName ?? "Local";
+    const visitor = value?.visitorTeamName ?? "Visitante";
+    const payload = `${week} - ${local} - ${visitor}`;
+
+    return res.json(payload);
   });
 
   nodecg.mount(`/${nodecg.bundleName}/graphics`, router);

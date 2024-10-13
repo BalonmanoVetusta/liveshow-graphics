@@ -3,9 +3,10 @@ import { Team } from "hooks/use-match-actions/types";
 import { useTeamSide } from "hooks/use-team-side";
 import { ReactElement } from "react";
 import styled from "styled-components";
-import { AdvertisingConfig } from "./components/advertising-config";
 import { ShieldBgColor } from "./components/shield-bg-color";
 import { ShieldSelector } from "./components/shield-selector";
+import { WeekNumberInput } from "components/scoreboard/dashboard/inputs/week-number-input";
+import { TeamNameInput } from "components/scoreboard/dashboard/inputs/team-name-input";
 
 const Shield = styled.img`
   width: 80px;
@@ -22,32 +23,18 @@ const ShieldsComponent = styled.div<{ localTeamSide: string }>`
 
 function App(): ReactElement {
   const { localTeamSide = "LEFT", toggleSide } = useTeamSide();
-  const {
-    localShield,
-    visitorShield,
-    showShields = true,
-    showName = false,
-    visitorTeamName,
-    localTeamName,
-    setGraphics,
-  } = useGraphicsReplicant();
+  const { localShield, visitorShield, showShields = true, showName = false, setGraphics } = useGraphicsReplicant();
 
   return (
     <>
       <fieldset>
+        <legend>Global</legend>
+        <WeekNumberInput numberOfWeeks={30} />
+      </fieldset>
+      <fieldset>
         <legend>Local</legend>
         <div>
-          <input
-            type="text"
-            name="localTeamName"
-            id="localTeamName"
-            placeholder="Local Team name..."
-            value={localTeamName}
-            onChange={(e) => {
-              setGraphics({ localTeamName: e.target.value });
-            }}
-            disabled={true}
-          />
+          <TeamNameInput team={Team.LOCAL} />
         </div>
         <div>
           <ShieldSelector
@@ -80,17 +67,7 @@ function App(): ReactElement {
       <fieldset>
         <legend>Visitor</legend>
         <div>
-          <input
-            type="text"
-            name="visitorTeamName"
-            id="visitorTeamName"
-            placeholder="Visitor Team name..."
-            value={visitorTeamName}
-            onChange={(e) => {
-              setGraphics({ visitorTeamName: e.target.value });
-            }}
-            disabled={true}
-          />
+          <TeamNameInput team={Team.VISITOR} />
         </div>
         <div>
           <ShieldSelector
@@ -124,7 +101,6 @@ function App(): ReactElement {
           onChange={() => {
             setGraphics({ showName: !showName });
           }}
-          disabled={true}
         />
         <button
           id="changeSide"
@@ -135,8 +111,6 @@ function App(): ReactElement {
           Toggle Sides
         </button>
       </fieldset>
-
-      <AdvertisingConfig />
     </>
   );
 }

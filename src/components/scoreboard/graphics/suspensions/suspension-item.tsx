@@ -10,10 +10,11 @@ const StyledSuspensionItem = styled.li`
   border-radius: var(--suspension-border-radius, 8px);
   margin: 0;
   padding: 2px 5px;
+  font-size: var(--suspension-font-size, 18px);
 
   &[data-number]:before {
     content: attr(data-number);
-    color: var(--suspension-number-font-color, #ccc);
+    color: var(--suspension-number-font-color, #cccccc);
     border-radius: 5px;
     padding: 1px 5px;
   }
@@ -42,14 +43,14 @@ export default function SuspensionItem({
     const exactMatchTime = matchTime - oddTime;
     const calculatedCurrentSuspensionTime = suspensionTimeMilliseconds + 1000 - (time - exactMatchTime); // sum 1000 because the odd time causes to show always 1:59 instead of 2:00 even with stopped time
     const minutes = Math.floor(calculatedCurrentSuspensionTime / 60000);
-    const seconds = Math.floor((calculatedCurrentSuspensionTime % 60000) / 1000);
+    const seconds = minutes === 2 || minutes === 4 ? 0 : Math.floor((calculatedCurrentSuspensionTime % 60000) / 1000);
 
     return {
       minutes,
       seconds,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [time]);
+  }, [time, suspensionTimeMilliseconds]);
 
   if (minutes < 0 || seconds < 0) return <></>;
   const { payload } = action as MatchSuspensionActionType;

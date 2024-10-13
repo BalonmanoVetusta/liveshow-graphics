@@ -7,19 +7,8 @@ import { ScoreboardShield } from "./scoreboard-shield";
 import { ScoreboardTeamName } from "./scoreboard-team-name";
 import Suspensions from "./suspensions/suspensions";
 
-export function ScoreboardTeam({
-  src,
-  name,
-  team,
-  showTeamName = true,
-}: {
-  src?: string;
-  name?: string;
-  team: Team;
-  side?: string;
-  showTeamName?: boolean;
-}) {
-  const { showShields } = useGraphicsReplicant();
+export function ScoreboardTeam({ team }: { team: Team }) {
+  const { showShields, showName, localShield, visitorShield, localTeamName, visitorTeamName } = useGraphicsReplicant();
   const { getTeamActions, actions } = useMatchActions();
 
   const isSevenPlayers = useMemo(() => {
@@ -30,13 +19,16 @@ export function ScoreboardTeam({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actions]);
 
+  const name = team === Team.LOCAL ? localTeamName : visitorTeamName;
+  const src = team === Team.LOCAL ? localShield : visitorShield;
+
   return (
     <>
       <div className={`${team.toString().toLowerCase()}-team team`} data-active-info={isSevenPlayers}>
-        <ScoreboardShield team={Team.LOCAL} src={src} show={showShields} />
-        <ScoreboardTeamName name={name} show={showTeamName} />
+        <ScoreboardShield team={team} src={src} show={showShields} />
+        <ScoreboardTeamName name={name} show={showName} />
         <ScoreboardScore team={team} />
-        <Suspensions team={Team.LOCAL} />
+        <Suspensions team={team} />
       </div>
     </>
   );

@@ -25,12 +25,13 @@ const StyledScoreboardContainer = styled.div`
 
 export default function Scoreboard(): ReactElement | null {
   const { localTeamSide = "LEFT" } = useTeamSide();
-  const { scoreboardPosition = "top center", visitorTeamName, localTeamName, showName } = useGraphicsReplicant();
+  const { scoreboardPosition = "top center" } = useGraphicsReplicant();
+
   return (
     <>
       <StyledScoreboardContainer data-position={scoreboardPosition}>
         <div className="scoreboard" data-local-team-side={localTeamSide?.toLowerCase() === "left" ? "left" : "right"}>
-          <ScoreboardTeam team={Team.LOCAL} name={localTeamName} showTeamName={showName} />
+          <ScoreboardTeam team={Team.LOCAL} />
           <div className="stopwatch column">
             <div className="competition-banner">
               <img src="https://www.rfebm.com/competiciones/images/logo.png" alt="" width={16} />
@@ -46,7 +47,7 @@ export default function Scoreboard(): ReactElement | null {
               </svg> */}
             </div>
           </div>
-          <ScoreboardTeam team={Team.VISITOR} name={visitorTeamName} showTeamName={showName} />
+          <ScoreboardTeam team={Team.VISITOR} />
         </div>
       </StyledScoreboardContainer>
     </>

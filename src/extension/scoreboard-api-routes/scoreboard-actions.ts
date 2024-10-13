@@ -67,6 +67,16 @@ export function scoreboardActions(nodecg: NodeCG.ServerAPI, uuidGenerator: () =>
     setActions(actions.value.filter((action) => action.gmtTimestamp !== gmtTimestamp));
   };
 
+  const removeActionsByTeam = (team: Team, teamAction?: MatchActionType) => {
+    setActions(
+      actions.value.filter((action) => {
+        if (teamAction) return action.team !== team || (action.team === team && action.action !== teamAction);
+
+        return action.team !== team;
+      }),
+    );
+  };
+
   const addGoal = (team: Team, goal: GoalActionType = { quantity: 1 }) => {
     addAction({
       action: MatchActionType.GOAL,
@@ -101,6 +111,7 @@ export function scoreboardActions(nodecg: NodeCG.ServerAPI, uuidGenerator: () =>
     removeActionsByTimestamp,
     addGoal,
     removeLastGoal,
+    removeActionsByTeam,
     // addWarning,
     reset,
   };

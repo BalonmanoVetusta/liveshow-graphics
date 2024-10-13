@@ -21,7 +21,7 @@ const StyledSuspensionsList = styled.ul`
   list-style: none;
   margin: 0 5px;
   padding: 0;
-  gap: 5px;
+  gap: 2px;
 `;
 
 export declare interface SuspensionsProps {

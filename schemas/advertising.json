@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "show": {
+      "type": "boolean",
+      "default": true,
+      "title": "Advertising",
+      "description": "If advertising must be showed"
+    },
+    "transition": {
+      "type": "number",
+      "default": 2,
+      "title": "Animation Duration",
+      "description": "How long it takes to show the advertising"
+    },
+    "sleep": {
+      "type": "number",
+      "default": 5,
+      "title": "Time to show the advertising",
+      "description": "Time in seconds that a banner is showed before change it if more than one banner is available"
+    },
+    "current": {
+      "type": "number",
+      "default": 0,
+      "title": "The current index element",
+      "description": "The current advertising HTML Element that is showed. This will allow the restart if deactivate the advertising and activate it again"
+    },
+    "banners": {
+      "type": "array",
+      "title": "Banners to be showed",
+      "description": "Banners that must be showed"
+    },
+    "maxHeight": {
+      "type": "string",
+      "default": "120px",
+      "title": "Max Height",
+      "description": "Max height of the banner"
+    }
+  }
+}

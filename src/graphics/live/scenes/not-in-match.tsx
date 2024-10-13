@@ -11,11 +11,14 @@ import { Team } from "hooks/use-match-actions/types";
 import { useEffect } from "react";
 import { InfoNotInMatch } from "./not-in-match/info";
 import { TeamNotInMatch } from "./not-in-match/team";
+import { useStopwatchReplicantControl } from "hooks/use-stopwatch-replicant";
 
 export default function NotInMatch() {
   const { setCssVariables } = useCSSVariables();
+  const { stop } = useStopwatchReplicantControl();
 
   useEffect(() => {
+    stop();
     setCssVariables((prev) => ({
       ...prev,
       [BACKGROUND_COLOR_CSS_VAR]: "var(--vetusta-yellow, #fede58)",

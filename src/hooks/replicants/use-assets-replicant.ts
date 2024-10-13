@@ -1,8 +1,8 @@
+import NodeCG from "@nodecg/types";
 import { useReplicant } from "hooks/use-replicant";
-import { Asset } from "types/Asset";
 
-export function useAssetReplicant(assetName: string) {
-  const [assets] = useReplicant<Asset[]>(`assets:${assetName}`, []);
+export function useAssetReplicant(assetName: string): NodeCG.AssetFile[] {
+  const [assets] = useReplicant<NodeCG.AssetFile[]>(`assets:${assetName}`, []);
 
   return assets;
 }

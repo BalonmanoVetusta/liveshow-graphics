@@ -1,73 +1,8 @@
 import NodeCG from "@nodecg/types";
-import sharp, { OverlayOptions } from "sharp";
-import { resizeToProportional } from "./lib/resize-to-proportional";
-import { positionAreaToBeCentered } from "./lib/position-to-be-centered-coords";
-import { addTextOnImage } from "./lib/add-text-on-image";
 import { join } from "node:path";
+import { composeVetustaThumbnailImage } from "./lib/compose-vetusta-thumbnail-image";
 
 const assetsName = "shields";
-const VISITOR_SHIELD_START_POSITION_COORDINATES: Coordinates2D = [1130, 275];
-const CATEGORY_START_POSITION_COORDINATES: Coordinates2D = [639, 275];
-const VISITOR_SHIELD_MAX_AREA: Area = [400, 400];
-const WEEK_POSITION: Coordinates2D = [30, 820];
-
-async function composeImage(backgroundFilePath, shieldFilePath, week = "", categoryText = "") {
-  const shield = sharp(shieldFilePath).trim({ threshold: 0 }).png({ compressionLevel: 0, quality: 100 });
-  const { width: originalWidth = 0, height: originalHeight = 0 } = await shield.metadata();
-
-  // Positioning
-  const [rescaleWidth, rescaleHeight] = resizeToProportional([originalWidth, originalHeight], VISITOR_SHIELD_MAX_AREA);
-  const [x, y] = positionAreaToBeCentered(VISITOR_SHIELD_START_POSITION_COORDINATES, VISITOR_SHIELD_MAX_AREA, [
-    rescaleWidth,
-    rescaleHeight,
-  ]).map(Math.floor);
-
-  let shieldResized;
-  if (rescaleWidth !== originalWidth || rescaleHeight !== originalWidth) {
-    shieldResized = shield.clone().resize({
-      width: rescaleWidth,
-      height: rescaleHeight,
-    });
-  } else {
-    shieldResized = shield.clone();
-  }
-
-  const layers: Array<OverlayOptions> = [
-    {
-      input: await shieldResized.toBuffer(),
-      left: x,
-      top: y,
-    },
-  ];
-
-  if (week.length > 0) {
-    const input = addTextOnImage(`JORNADA ${week.toString().padStart(2, "0")}`, {
-      height: 64,
-      fontColor: "white",
-      anchor: "start",
-    });
-    if (input)
-      layers.push({
-        input,
-        left: WEEK_POSITION[0],
-        top: WEEK_POSITION[1],
-      });
-  }
-
-  if (categoryText.length > 0) {
-    const input = addTextOnImage(categoryText, { height: 108, fontColor: "black", anchor: "start" });
-    if (input)
-      layers.push({
-        input,
-        left: CATEGORY_START_POSITION_COORDINATES[0],
-        top: CATEGORY_START_POSITION_COORDINATES[1],
-      });
-  }
-  return sharp(backgroundFilePath).composite(layers).png({
-    compressionLevel: 0,
-    quality: 100,
-  });
-}
 
 export async function createThumnail(nodecg: NodeCG.ServerAPI): Promise<void> {
   nodecg.log.info("Create thumbnail endpoint");
@@ -81,7 +16,7 @@ export async function createThumnail(nodecg: NodeCG.ServerAPI): Promise<void> {
   });
 
   router.get("/png", async (req, res) => {
-    nodecg.log.info("Creating the image");
+    nodecg.log.info("Creating the image to view");
     const { shield: shieldQuery = "", week = "0", subtitle = "" } = req.query;
 
     try {
@@ -96,17 +31,23 @@ export async function createThumnail(nodecg: NodeCG.ServerAPI): Promise<void> {
 
       if (!asset) throw new Error("404");
 
-      composeImage(
+      composeVetustaThumbnailImage(
         backgroundFilePath,
         join(process.cwd(), decodeURI(asset.url)),
         week.toString(),
         decodeURI(subtitle.toString()),
-      ).then((image) => {
-        image.toBuffer().then((buffer) => {
-          res.type("png");
-          res.send(buffer);
+        `/bundles/${nodecg.bundleName}/assets/fonts/AlumniSans/AlumniSans-Black.ttf`,
+      )
+        .then((image) => {
+          image.toBuffer().then((buffer) => {
+            res.type("png");
+            res.send(buffer);
+          });
+        })
+        .catch((error) => {
+          nodecg.log.error(error);
+          throw new Error("500");
         });
-      });
     } catch (error) {
       try {
         const code = parseInt((error as unknown as string).toString());
@@ -120,7 +61,7 @@ export async function createThumnail(nodecg: NodeCG.ServerAPI): Promise<void> {
   });
 
   router.get("/png/download", async (req, res) => {
-    nodecg.log.info("Creating the image");
+    nodecg.log.info("Creating the image to download");
     const { shield: shieldQuery = "", week = "0", subtitle = "" } = req.query;
 
     try {
@@ -135,22 +76,28 @@ export async function createThumnail(nodecg: NodeCG.ServerAPI): Promise<void> {
 
       if (!asset) throw new Error("404");
 
-      composeImage(
+      composeVetustaThumbnailImage(
         backgroundFilePath,
         join(process.cwd(), decodeURI(asset.url)),
         week.toString(),
         decodeURI(subtitle.toString()),
-      ).then((image) => {
-        image.toBuffer().then((buffer) => {
-          res.setHeader("Content-Type", "application/force-download");
-          res.setHeader("Pragma", "public");
-          res.setHeader("Expires", 0);
-          res.setHeader("Cache-Control", "no-cache,must-revalidate,post-check=0,pre-check=0");
-          res.setHeader("Content-Disposition", `attachment;filename=${week.toString().padStart(2, "0")}.png`);
-          res.setHeader("Content-Length", buffer.length);
-          res.send(buffer);
+        `/bundles/${nodecg.bundleName}/assets/fonts/AlumniSans/AlumniSans-Black.ttf`,
+      )
+        .then((image) => {
+          image.toBuffer().then((buffer) => {
+            res.setHeader("Content-Type", "application/force-download");
+            res.setHeader("Pragma", "public");
+            res.setHeader("Expires", 0);
+            res.setHeader("Cache-Control", "no-cache,must-revalidate,post-check=0,pre-check=0");
+            res.setHeader("Content-Disposition", `attachment;filename=${week.toString().padStart(2, "0")}.png`);
+            res.setHeader("Content-Length", buffer.length);
+            res.send(buffer);
+          });
+        })
+        .catch((error) => {
+          nodecg.log.error(error);
+          throw new Error("500");
         });
-      });
     } catch (error) {
       try {
         const code = parseInt((error as unknown as string).toString());

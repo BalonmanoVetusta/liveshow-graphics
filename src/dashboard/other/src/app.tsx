@@ -1,3 +1,6 @@
+import { CategoryNameInput } from "components/scoreboard/dashboard/inputs/category-name-input";
+import { WeekNumberInput } from "components/scoreboard/dashboard/inputs/week-number-input";
+import { useGraphicsReplicant } from "hooks/replicants/use-graphics-replicant";
 import { useReplicant } from "hooks/use-replicant";
 import { ReactElement, useEffect, useId, useState } from "react";
 import { Asset, AssetsReplicant } from "types/Asset";
@@ -8,8 +11,7 @@ function App(): ReactElement {
     persistent: false,
   });
   const [selectedShield, setSelectedShield] = useState<string>("");
-  const [subtitle, setSubtitle] = useState("PRIMERA NACIONAL");
-  const [week, setWeek] = useState(0);
+  const { week, category } = useGraphicsReplicant();
   const [isDisabled, setIsDisabled] = useState(false);
 
   const searchShieldAsset = (value: string) => shields.find((s) => s.url === value || s.sum === value);
@@ -17,12 +19,12 @@ function App(): ReactElement {
   const handleImageCreation = (isDownload = false) => {
     let url = `/${nodecg.bundleName}/thumbnail/png${isDownload ? `/download` : ""}`;
     url += "?shield=" + selectedShield;
-    if (week > 0 && !isNaN(week)) {
+    if (week && week > 0 && !isNaN(week)) {
       url += "&week=" + week.toString();
     }
 
-    if (subtitle.length > 0) {
-      url += "&subtitle=" + subtitle;
+    if (category && category.length > 0) {
+      url += "&subtitle=" + category;
     }
 
     window.open(url);
@@ -32,7 +34,7 @@ function App(): ReactElement {
 
   useEffect(() => {
     setTimeout(() => setIsDisabled(false), 5000);
-  }, [subtitle, selectedShield, week]);
+  }, [category, selectedShield, week]);
 
   return (
     <>
@@ -40,8 +42,8 @@ function App(): ReactElement {
         <legend>Opciones para hacer la miniatura de Youtube</legend>
         <div>
           <select
-            name={`${id}-shield`}
-            id={`${id}-shield`}
+            name={`shield-${id}`}
+            id={`shield-${id}`}
             onChange={(event) => {
               event.preventDefault();
               const newShield = shields.find((s) => s.sum === event.target.value);
@@ -50,7 +52,7 @@ function App(): ReactElement {
             value={searchShieldAsset(selectedShield)?.sum ?? "0"}
           >
             <option value={0} aria-readonly disabled>
-              Choose from the list
+              Escoge de la lista
             </option>
             {/* <option value="https://www.rfebm.com/competiciones/images/escudos/sinescudo.jpg">No shield</option> */}
             {shields.length > 0 ? (
@@ -60,35 +62,20 @@ function App(): ReactElement {
                 </option>
               ))
             ) : (
-              <option>-- NO SHIELDS --</option>
+              <option aria-readonly disabled>
+                -- No hay escudos --
+              </option>
             )}
           </select>
         </div>
 
         <div>
-          <label htmlFor="week">Jornada (opcional, si es 0 es como no poner nada)</label>
-          <input
-            type="number"
-            name="week"
-            id="week"
-            step={1}
-            min={0}
-            max={50}
-            onChange={(event) => setWeek(+event.target.value)}
-            value={week}
-          />
+          <WeekNumberInput label="Jornada (opcional, si es 0 es como no poner nada)" numberOfWeeks={50} />
         </div>
 
         <div>
           <label htmlFor="category">Categoria o subtitulo (opcional)</label>
-          <input
-            type="text"
-            name="category"
-            id="category"
-            onChange={(event) => setSubtitle(event.target.value)}
-            placeholder="Texto que va justo debajo de 'Partido'"
-            value={subtitle}
-          />
+          <CategoryNameInput />
         </div>
 
         <div>
